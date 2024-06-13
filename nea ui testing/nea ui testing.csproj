@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{834FDE4D-A15E-4B33-AD9F-D15373D3200F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>nea_ui_testing</RootNamespace>
+    <AssemblyName>nea ui testing</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddQToAssignment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddQToAssignment.Designer.cs">
+      <DependentUpon>AddQToAssignment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddStudentToClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddStudentToClass.Designer.cs">
+      <DependentUpon>AddStudentToClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AssignmentMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssignmentMenu.Designer.cs">
+      <DependentUpon>AssignmentMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassManagementMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassManagementMenu.Designer.cs">
+      <DependentUpon>ClassManagementMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmationForm.Designer.cs">
+      <DependentUpon>ConfirmationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IndependentPracticeMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IndependentPracticeMenu.Designer.cs">
+      <DependentUpon>IndependentPracticeMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstantFeedbackForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstantFeedbackForm.Designer.cs">
+      <DependentUpon>InstantFeedbackForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionAttemptMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuestionAttemptMenu.Designer.cs">
+      <DependentUpon>QuestionAttemptMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionEitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuestionEitor.Designer.cs">
+      <DependentUpon>QuestionEitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuestionManagement.Designer.cs">
+      <DependentUpon>QuestionManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentAssignmentMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentAssignmentMenu.Designer.cs">
+      <DependentUpon>StudentAssignmentMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentCreator.Designer.cs">
+      <DependentUpon>StudentCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard.Designer.cs">
+      <DependentUpon>StudentDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentManagementMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentManagementMenu.Designer.cs">
+      <DependentUpon>StudentManagementMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentQuestionHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentQuestionHistory.Designer.cs">
+      <DependentUpon>StudentQuestionHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherOverview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherOverview.Designer.cs">
+      <DependentUpon>TeacherOverview.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AddQToAssignment.resx">
+      <DependentUpon>AddQToAssignment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddStudentToClass.resx">
+      <DependentUpon>AddStudentToClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssignmentMenu.resx">
+      <DependentUpon>AssignmentMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassManagementMenu.resx">
+      <DependentUpon>ClassManagementMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmationForm.resx">
+      <DependentUpon>ConfirmationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IndependentPracticeMenu.resx">
+      <DependentUpon>IndependentPracticeMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstantFeedbackForm.resx">
+      <DependentUpon>InstantFeedbackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="QuestionAttemptMenu.resx">
+      <DependentUpon>QuestionAttemptMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuestionEitor.resx">
+      <DependentUpon>QuestionEitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuestionManagement.resx">
+      <DependentUpon>QuestionManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentAssignmentMenu.resx">
+      <DependentUpon>StudentAssignmentMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentCreator.resx">
+      <DependentUpon>StudentCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentDashboard.resx">
+      <DependentUpon>StudentDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentManagementMenu.resx">
+      <DependentUpon>StudentManagementMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentQuestionHistory.resx">
+      <DependentUpon>StudentQuestionHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherOverview.resx">
+      <DependentUpon>TeacherOverview.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

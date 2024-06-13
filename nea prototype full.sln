@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nea prototype full", "nea prototype full.csproj", "{B5683745-16FD-4C19-95F8-E01819565F18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5683745-16FD-4C19-95F8-E01819565F18}.Debug|x86.ActiveCfg = Debug|x86
+		{B5683745-16FD-4C19-95F8-E01819565F18}.Debug|x86.Build.0 = Debug|x86
+		{B5683745-16FD-4C19-95F8-E01819565F18}.Release|x86.ActiveCfg = Release|x86
+		{B5683745-16FD-4C19-95F8-E01819565F18}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B54BBCE0-C723-4EE5-B9D7-11BB8D4E1F0A}
+	EndGlobalSection
+EndGlobal
