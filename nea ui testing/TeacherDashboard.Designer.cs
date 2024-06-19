@@ -134,6 +134,7 @@
             this.button4.TabIndex = 9;
             this.button4.Text = "Student manager";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.GoToStudentManager);
             // 
             // button5
             // 
@@ -152,6 +153,7 @@
             this.button6.TabIndex = 11;
             this.button6.Text = "Class manager";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.GoToClassManager);
             // 
             // TeacherDashboard
             // 

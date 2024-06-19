@@ -22,6 +22,11 @@ namespace nea_ui_testing
             // disable login button for now as fields are empty
             LoginButton.Enabled = false;
             LoggedOutLabel.Visible = false;
+
+            // FOR DEBUGGING
+            EmailField.Text = @"test@gmail.com";
+            PasswordField.Text = "password123";
+            //
         }
 
         private void AttemptLogin(object sender, EventArgs e)
@@ -61,7 +66,7 @@ namespace nea_ui_testing
                     };
                     td.Show();
                 }
-                else
+                else if (Program.loggedInUser != null && Program.loggedInUser.UserType == _UserType.Student)
                 {
                     // student dashboard here
                 }

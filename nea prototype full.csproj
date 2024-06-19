@@ -83,6 +83,7 @@
     <None Include="nea ui testing\Properties\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="HashingHelper.cs" />
@@ -92,11 +93,11 @@
     <Compile Include="nea ui testing\AddQToAssignment.Designer.cs">
       <DependentUpon>AddQToAssignment.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\AddStudentToClass.cs">
+    <Compile Include="nea ui testing\AddUserToClass.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\AddStudentToClass.Designer.cs">
-      <DependentUpon>AddStudentToClass.cs</DependentUpon>
+    <Compile Include="nea ui testing\AddUserToClass.Designer.cs">
+      <DependentUpon>AddUserToClass.cs</DependentUpon>
     </Compile>
     <Compile Include="nea ui testing\AssignmentMenu.cs">
       <SubType>Form</SubType>
@@ -199,6 +200,12 @@
     <Compile Include="nea ui testing\TeacherOverview.Designer.cs">
       <DependentUpon>TeacherOverview.cs</DependentUpon>
     </Compile>
+    <Compile Include="StudentCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentCreator.Designer.cs">
+      <DependentUpon>StudentCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subject.cs" />
     <Compile Include="Topic.cs" />
     <Compile Include="User.cs" />
@@ -207,8 +214,8 @@
     <EmbeddedResource Include="nea ui testing\AddQToAssignment.resx">
       <DependentUpon>AddQToAssignment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\AddStudentToClass.resx">
-      <DependentUpon>AddStudentToClass.cs</DependentUpon>
+    <EmbeddedResource Include="nea ui testing\AddUserToClass.resx">
+      <DependentUpon>AddUserToClass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="nea ui testing\AssignmentMenu.resx">
       <DependentUpon>AssignmentMenu.cs</DependentUpon>
@@ -277,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="nea ui testing\TeacherOverview.resx">
       <DependentUpon>TeacherOverview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentCreator.resx">
+      <DependentUpon>StudentCreator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

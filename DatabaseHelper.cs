@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace nea_prototype_full
 {
@@ -145,6 +146,386 @@ namespace nea_prototype_full
             }
             if (list.Count == 0) throw new Exception($"No topics found in database.");
             return list;
+        }
+
+        public void CreateNewStudent(string firstName, string lastName, string email, string hashedPassword, string salt)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO Students VALUES (@FirstnameParameter, @LastnameParameter, @EmailParameter, @HashedPasswordParameter, CAST(GETDATE() AS DATE), @SaltParameter)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", firstName);
+                    SqlParameter lnParameter = new SqlParameter("@LastnameParameter", lastName);
+                    SqlParameter emailParameter = new SqlParameter("@EmailParameter", email);
+                    SqlParameter hpParameter = new SqlParameter("@HashedPasswordParameter", hashedPassword);
+                    SqlParameter saltParameter = new SqlParameter("@SaltParameter", salt);
+                    cmd.Parameters.AddRange(new SqlParameter[] { fnParameter, lnParameter, emailParameter, hpParameter, saltParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void CreateNewClass(string className)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO Classes VALUES (@ClassnameParameter)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter cnParameter = new SqlParameter("@ClassnameParameter", className);
+                    cmd.Parameters.Add(cnParameter);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public List<Class> SearchForClasses(string className)
+        {
+            List<Class> list = new List<Class>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT * FROM Classes WHERE ClassName LIKE '%' + @ClassnameParameter + '%'";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter cnParameter = new SqlParameter("@ClassnameParameter", className);
+                    cmd.Parameters.Add(cnParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Class((int)reader[0], (string)reader[1]));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            if (list.Count == 0) throw new Exception($"No classes found in database.");
+            return list;
+        }
+
+        public List<User> GetStudentsInClass(Class _class)
+        {
+            List<User> studentList = new List<User>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT Students.StudentId, FirstName, Surname, Email FROM ClassStudents INNER JOIN Students ON ClassStudents.StudentId = Students.StudentId WHERE ClassId = @ClassIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.Add(cidParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            studentList.Add(new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Student));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            //if (studentList.Count == 0) throw new Exception($"No students found in this class.");
+            return studentList;
+        }
+
+        public List<User> GetTeachersInClass(Class _class)
+        {
+            List<User> teacherList = new List<User>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT Teachers.TeacherId, FirstName, Surname, Email FROM ClassTeachers INNER JOIN Teachers ON ClassTeachers.TeacherId = Teachers.TeacherId WHERE ClassId = @ClassIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.Add(cidParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            teacherList.Add(new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Teacher));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            //if (teacherList.Count == 0) throw new Exception($"No teachers found in this class.");
+            return teacherList;
+        }
+
+        public List<User> GetStudentsByFirstName(string name)
+        {
+            List<User> studentList = new List<User>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT StudentId, FirstName, Surname, Email FROM Students WHERE FirstName LIKE '%' + @FirstnameParameter + '%'";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", name);
+                    cmd.Parameters.Add(fnParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            studentList.Add(new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Student));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            //if (studentList.Count == 0) throw new Exception($"No students with this name.");
+            return studentList;
+        }
+
+        public List<User> GetTeachersByFirstName(string name)
+        {
+            List<User> teacherList = new List<User>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT TeacherId, FirstName, Surname, Email FROM Teachers WHERE FirstName LIKE '%' + @FirstnameParameter + '%'";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", name);
+                    cmd.Parameters.Add(fnParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            teacherList.Add(new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Teacher));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            //if (teacherList.Count == 0) throw new Exception($"No teachers with this name.");
+            return teacherList;
+        }
+
+        public List<User> GetStudentsMultimetric(string name, Class _class)
+        {
+            List<User> studentList = new List<User>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT Students.StudentId, FirstName, Surname, Email FROM Students INNER JOIN ClassStudents ON Students.StudentId = ClassStudents.StudentId WHERE FirstName LIKE '%' + @FirstnameParameter + '%' AND ClassId = @ClassIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", name);
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.AddRange(new SqlParameter[] {fnParameter, cidParameter});
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            studentList.Add(new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Student));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            if (studentList.Count == 0) throw new Exception($"No students with these credentials.");
+            return studentList;
+        }
+
+        public void AddStudentToClass(User student, Class _class)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO ClassStudents VALUES (@StudentIdParameter, @ClassIdParameter)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.AddRange(new SqlParameter[] {sidParameter, cidParameter});
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void AddTeacherToClass(User teacher, Class _class)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO ClassTeachers VALUES (@TeacherIdParameter, @ClassIdParameter)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter tidParameter = new SqlParameter("@TeacherIdParameter", teacher.Id);
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.AddRange(new SqlParameter[] { tidParameter, cidParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void RemoveStudentFromClass(User student, Class _class)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"DELETE FROM ClassStudents WHERE ClassId = @ClassIdParameter AND StudentId = @StudentIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.AddRange(new SqlParameter[] { sidParameter, cidParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void RemoveTeacherFromClass(User teacher, Class _class)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"DELETE FROM ClassTeachers WHERE ClassId = @ClassIdParameter AND TeacherId = @TeacherIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter tidParameter = new SqlParameter("@TeacherIdParameter", teacher.Id);
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.AddRange(new SqlParameter[] { tidParameter, cidParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public List<Class> GetAllClasses()
+        {
+            List<Class> list = new List<Class>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT * FROM Classes";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Class((int)reader[0], (string)reader[1]));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            if (list.Count == 0) throw new Exception($"No classes found in database.");
+            return list;
+        }
+
+        public List<Class> GetClassesOfStudent(User student)
+        {
+            List<Class> list = new List<Class>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT Classes.ClassId, ClassName FROM ClassStudents INNER JOIN Classes ON Classes.ClassId = ClassStudents.ClassId WHERE StudentId = @StudentIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
+                    cmd.Parameters.Add(sidParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Class((int)reader[0], (string)reader[1]));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return list;
+        }
+
+        public DateTime GetLastLoginOfStudent(User student)
+        {
+            DateTime lastLogin;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = $"SELECT LastLogin FROM Students WHERE StudentId = @StudentIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
+                    cmd.Parameters.Add(sidParameter);
+
+                    conn.Open();
+                    try
+                    {
+                        lastLogin = (DateTime)cmd.ExecuteScalar();
+                    }
+                    catch
+                    {
+                        throw new Exception("Couldn't fetch last login of student.");
+                    }
+                    conn.Close();
+                }
+            }
+            return lastLogin;
         }
     }
 }

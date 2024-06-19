@@ -30,8 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.NameField = new System.Windows.Forms.TextBox();
+            this.SubmitButton = new System.Windows.Forms.Button();
+            this.SuccessMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -56,32 +57,46 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Class name";
             // 
-            // textBox1
+            // NameField
             // 
-            this.textBox1.Location = new System.Drawing.Point(21, 105);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(360, 26);
-            this.textBox1.TabIndex = 6;
+            this.NameField.Location = new System.Drawing.Point(21, 105);
+            this.NameField.Name = "NameField";
+            this.NameField.Size = new System.Drawing.Size(360, 26);
+            this.NameField.TabIndex = 6;
+            this.NameField.TextChanged += new System.EventHandler(this.TestForData);
             // 
-            // button1
+            // SubmitButton
             // 
-            this.button1.Location = new System.Drawing.Point(398, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 109);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Submit";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SubmitButton.Location = new System.Drawing.Point(398, 22);
+            this.SubmitButton.Name = "SubmitButton";
+            this.SubmitButton.Size = new System.Drawing.Size(134, 109);
+            this.SubmitButton.TabIndex = 15;
+            this.SubmitButton.Text = "Submit";
+            this.SubmitButton.UseVisualStyleBackColor = true;
+            this.SubmitButton.Click += new System.EventHandler(this.SubmitEvent);
             // 
-            // StudentCreator
+            // SuccessMessage
+            // 
+            this.SuccessMessage.AutoSize = true;
+            this.SuccessMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.SuccessMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SuccessMessage.Location = new System.Drawing.Point(21, 146);
+            this.SuccessMessage.Name = "SuccessMessage";
+            this.SuccessMessage.Size = new System.Drawing.Size(72, 22);
+            this.SuccessMessage.TabIndex = 27;
+            this.SuccessMessage.Text = "Success";
+            // 
+            // ClassCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 156);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(544, 185);
+            this.Controls.Add(this.SuccessMessage);
+            this.Controls.Add(this.SubmitButton);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.NameField);
             this.Controls.Add(this.label1);
-            this.Name = "StudentCreator";
+            this.Name = "ClassCreator";
             this.Text = "ClassCreator";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -92,7 +107,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox NameField;
+        private System.Windows.Forms.Button SubmitButton;
+        private System.Windows.Forms.Label SuccessMessage;
     }
 }

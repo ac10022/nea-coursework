@@ -32,16 +32,16 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.ClassnameLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.SearchForClassButton = new System.Windows.Forms.Button();
+            this.ClassListBox = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.ClassNameFilter = new System.Windows.Forms.TextBox();
+            this.StudentsInClass = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.TeachersInClass = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -49,7 +49,8 @@
             this.listBox5 = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.EditClassnameButton = new System.Windows.Forms.Button();
+            this.SuccessMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button4
@@ -61,6 +62,7 @@
             this.button4.TabIndex = 23;
             this.button4.Text = "Back to dashboard";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.ReturnToDashboard);
             // 
             // button3
             // 
@@ -70,6 +72,7 @@
             this.button3.TabIndex = 22;
             this.button3.Text = "Create a new class";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.GoToClassCreatorMenu);
             // 
             // label2
             // 
@@ -97,14 +100,14 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "Class Manager";
             // 
-            // label8
+            // ClassnameLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(447, 207);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 20);
-            this.label8.TabIndex = 30;
-            this.label8.Text = "Name: [NAME]";
+            this.ClassnameLabel.AutoSize = true;
+            this.ClassnameLabel.Location = new System.Drawing.Point(447, 207);
+            this.ClassnameLabel.Name = "ClassnameLabel";
+            this.ClassnameLabel.Size = new System.Drawing.Size(113, 20);
+            this.ClassnameLabel.TabIndex = 30;
+            this.ClassnameLabel.Text = "Name: [NAME]";
             // 
             // label6
             // 
@@ -119,27 +122,25 @@
             this.label6.TabIndex = 29;
             this.label6.Text = "Class information";
             // 
-            // button1
+            // SearchForClassButton
             // 
-            this.button1.Location = new System.Drawing.Point(23, 202);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(393, 33);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SearchForClassButton.Location = new System.Drawing.Point(23, 202);
+            this.SearchForClassButton.Name = "SearchForClassButton";
+            this.SearchForClassButton.Size = new System.Drawing.Size(393, 33);
+            this.SearchForClassButton.TabIndex = 28;
+            this.SearchForClassButton.Text = "Search";
+            this.SearchForClassButton.UseVisualStyleBackColor = true;
+            this.SearchForClassButton.Click += new System.EventHandler(this.SearchForClass);
             // 
-            // listBox1
+            // ClassListBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
-            "Example Class 1",
-            "Example Class 2",
-            "Example Class 3"});
-            this.listBox1.Location = new System.Drawing.Point(23, 269);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(393, 324);
-            this.listBox1.TabIndex = 27;
+            this.ClassListBox.FormattingEnabled = true;
+            this.ClassListBox.ItemHeight = 20;
+            this.ClassListBox.Location = new System.Drawing.Point(23, 269);
+            this.ClassListBox.Name = "ClassListBox";
+            this.ClassListBox.Size = new System.Drawing.Size(393, 324);
+            this.ClassListBox.TabIndex = 27;
+            this.ClassListBox.SelectedIndexChanged += new System.EventHandler(this.NewClassSelected);
             // 
             // label5
             // 
@@ -159,25 +160,23 @@
             this.label3.TabIndex = 25;
             this.label3.Text = "Name";
             // 
-            // textBox1
+            // ClassNameFilter
             // 
-            this.textBox1.Location = new System.Drawing.Point(23, 161);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(393, 26);
-            this.textBox1.TabIndex = 24;
+            this.ClassNameFilter.Location = new System.Drawing.Point(23, 161);
+            this.ClassNameFilter.Name = "ClassNameFilter";
+            this.ClassNameFilter.Size = new System.Drawing.Size(393, 26);
+            this.ClassNameFilter.TabIndex = 24;
+            this.ClassNameFilter.TextChanged += new System.EventHandler(this.TestForData);
             // 
-            // listBox2
+            // StudentsInClass
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 20;
-            this.listBox2.Items.AddRange(new object[] {
-            "Example Student 1",
-            "Example Student 2",
-            "Example Student 3"});
-            this.listBox2.Location = new System.Drawing.Point(451, 269);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(393, 104);
-            this.listBox2.TabIndex = 32;
+            this.StudentsInClass.FormattingEnabled = true;
+            this.StudentsInClass.ItemHeight = 20;
+            this.StudentsInClass.Location = new System.Drawing.Point(451, 269);
+            this.StudentsInClass.Name = "StudentsInClass";
+            this.StudentsInClass.Size = new System.Drawing.Size(393, 104);
+            this.StudentsInClass.TabIndex = 32;
+            this.StudentsInClass.SelectedIndexChanged += new System.EventHandler(this.StudentChoiceChanged);
             // 
             // label4
             // 
@@ -188,18 +187,15 @@
             this.label4.TabIndex = 31;
             this.label4.Text = "Students";
             // 
-            // listBox3
+            // TeachersInClass
             // 
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 20;
-            this.listBox3.Items.AddRange(new object[] {
-            "Example Teacher 1",
-            "Example Teacher 2",
-            "Example Teacher 3"});
-            this.listBox3.Location = new System.Drawing.Point(451, 415);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(393, 104);
-            this.listBox3.TabIndex = 34;
+            this.TeachersInClass.FormattingEnabled = true;
+            this.TeachersInClass.ItemHeight = 20;
+            this.TeachersInClass.Location = new System.Drawing.Point(451, 415);
+            this.TeachersInClass.Name = "TeachersInClass";
+            this.TeachersInClass.Size = new System.Drawing.Size(393, 104);
+            this.TeachersInClass.TabIndex = 34;
+            this.TeachersInClass.SelectedIndexChanged += new System.EventHandler(this.TeacherChoiceChanged);
             // 
             // label7
             // 
@@ -218,6 +214,7 @@
             this.button2.TabIndex = 35;
             this.button2.Text = "Remove selected student/teacher";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.RemoveUserEvent);
             // 
             // button5
             // 
@@ -227,6 +224,7 @@
             this.button5.TabIndex = 36;
             this.button5.Text = "Add new student/teacher";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.GoToAddUserMenu);
             // 
             // button7
             // 
@@ -271,38 +269,50 @@
             this.label12.TabIndex = 37;
             this.label12.Text = "Class assignments";
             // 
-            // button6
+            // EditClassnameButton
             // 
-            this.button6.Location = new System.Drawing.Point(663, 207);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(103, 28);
-            this.button6.TabIndex = 44;
-            this.button6.Text = "Edit";
-            this.button6.UseVisualStyleBackColor = true;
+            this.EditClassnameButton.Location = new System.Drawing.Point(741, 211);
+            this.EditClassnameButton.Name = "EditClassnameButton";
+            this.EditClassnameButton.Size = new System.Drawing.Size(103, 41);
+            this.EditClassnameButton.TabIndex = 44;
+            this.EditClassnameButton.Text = "Edit";
+            this.EditClassnameButton.UseVisualStyleBackColor = true;
+            // 
+            // SuccessMessage
+            // 
+            this.SuccessMessage.AutoSize = true;
+            this.SuccessMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.SuccessMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SuccessMessage.Location = new System.Drawing.Point(388, 27);
+            this.SuccessMessage.Name = "SuccessMessage";
+            this.SuccessMessage.Size = new System.Drawing.Size(72, 22);
+            this.SuccessMessage.TabIndex = 45;
+            this.SuccessMessage.Text = "Success";
             // 
             // ClassManagementMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1241, 632);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.SuccessMessage);
+            this.Controls.Add(this.EditClassnameButton);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.listBox5);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.listBox3);
+            this.Controls.Add(this.TeachersInClass);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.StudentsInClass);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.ClassnameLabel);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.SearchForClassButton);
+            this.Controls.Add(this.ClassListBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.ClassNameFilter);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label2);
@@ -320,16 +330,16 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label ClassnameLabel;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button SearchForClassButton;
+        private System.Windows.Forms.ListBox ClassListBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.TextBox ClassNameFilter;
+        private System.Windows.Forms.ListBox StudentsInClass;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.ListBox TeachersInClass;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
@@ -337,6 +347,7 @@
         private System.Windows.Forms.ListBox listBox5;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button EditClassnameButton;
+        private System.Windows.Forms.Label SuccessMessage;
     }
 }
