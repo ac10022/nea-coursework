@@ -12,7 +12,7 @@ namespace nea_prototype_full
         Student
     }
     
-    internal class User
+    public class User
     {
         // fields
         private int id;

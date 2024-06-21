@@ -14,11 +14,20 @@ namespace nea_prototype_full
     public partial class StudentCreator : Form
     {
         private bool canCreate = false;
-        public StudentCreator()
+        private User studentRef;
+        public StudentCreator(User studentRef = null)
         {
             InitializeComponent();
             SubmitButton.Enabled = false;
             SuccessMessage.Visible = false;
+
+            if (studentRef != null)
+            {
+                this.studentRef = studentRef;
+                FirstnameInput.Text = studentRef.FirstName;
+                LastnameInput.Text = studentRef.Surname;
+                EmailInput.Text = studentRef.Email;
+            }
         }
 
         private void UserSubmit(object sender, EventArgs e)
@@ -28,9 +37,18 @@ namespace nea_prototype_full
                 HashingHelper hh = new HashingHelper();
                 (string salt, string hashedPassword) = hh.ComputeSaltAndHash(PasswordInput.Text);
                 DatabaseHelper dbh = new DatabaseHelper();
-                dbh.CreateNewStudent(FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
-                SuccessMessage.Visible = true;
-                SuccessMessage.Text = $"Successfully created student: {FirstnameInput.Text} {LastnameInput.Text}";
+                if (studentRef == null)
+                {
+                    dbh.CreateNewStudent(FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
+                    SuccessMessage.Visible = true;
+                    SuccessMessage.Text = $"Successfully created student: {FirstnameInput.Text} {LastnameInput.Text}";
+                }
+                else
+                {
+                    dbh.EditStudentDetails(studentRef, FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
+                    SuccessMessage.Visible = true;
+                    SuccessMessage.Text = $"Successfully edited student";
+                }
             }
             catch (Exception ex)
             {

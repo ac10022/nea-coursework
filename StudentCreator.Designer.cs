@@ -77,9 +77,9 @@
             this.label1.ForeColor = System.Drawing.Color.FloralWhite;
             this.label1.Location = new System.Drawing.Point(22, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(356, 44);
+            this.label1.Size = new System.Drawing.Size(328, 44);
             this.label1.TabIndex = 16;
-            this.label1.Text = "Student creator";
+            this.label1.Text = "Student editor";
             // 
             // label2
             // 

@@ -148,5 +148,18 @@ namespace nea_ui_testing
         {
             Close();
         }
+
+        private void EditClassNameEvent(object sender, EventArgs e)
+        {
+            Hide();
+            ClassCreator cc = new ClassCreator(foundClasses[ClassListBox.SelectedIndex]);
+
+            // form closed events
+            cc.Closed += (s, args) =>
+            {
+                Show();
+            };
+            cc.Show();
+        }
     }
 }

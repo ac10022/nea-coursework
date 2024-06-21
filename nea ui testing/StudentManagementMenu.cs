@@ -86,5 +86,18 @@ namespace nea_ui_testing
             ClassLabel.Text = $"Classes: {string.Join(", ", dbh.GetClassesOfStudent(selectedStudent).Select(x => x.ClassName))}";
             LastLoginLabel.Text = $"Last Login: {dbh.GetLastLoginOfStudent(selectedStudent)}";
         }
+
+        private void EditStudentEvent(object sender, EventArgs e)
+        {
+            Hide();
+            StudentCreator sc = new StudentCreator(usersFromSelection[StudentMatches.SelectedIndex]);
+
+            // form closed events
+            sc.Closed += (s, args) =>
+            {
+                Show();
+            };
+            sc.Show();
+        }
     }
 }

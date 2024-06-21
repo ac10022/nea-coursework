@@ -38,20 +38,20 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.SearchButton = new System.Windows.Forms.Button();
+            this.QuestionMatches = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.AuthorPicker = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.TopicPicker = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.DifficultyCheckbox1 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox2 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox4 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox3 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button5
@@ -72,6 +72,7 @@
             this.button4.TabIndex = 38;
             this.button4.Text = "Back to dashboard";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.BackToDashboard);
             // 
             // button3
             // 
@@ -81,6 +82,7 @@
             this.button3.TabIndex = 37;
             this.button3.Text = "Create a new question";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.GoToCreateQuestionMenu);
             // 
             // button2
             // 
@@ -149,34 +151,29 @@
             this.label6.TabIndex = 30;
             this.label6.Text = "Question information";
             // 
-            // button1
+            // SearchButton
             // 
-            this.button1.Location = new System.Drawing.Point(24, 234);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(540, 33);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SearchButton.Location = new System.Drawing.Point(24, 234);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(540, 33);
+            this.SearchButton.TabIndex = 29;
+            this.SearchButton.Text = "Search";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchEvent);
             // 
-            // listBox1
+            // QuestionMatches
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
-            "ExTopic     4     ExAuthor     In this question, select the headline which best c" +
-                "orresponds",
-            "ExTopic     3     ExAuthor     What phrase best describes the given paragraph",
-            "ExTopic     1     ExAuthor     Which adverb would most suitably fill the gap in t" +
-                "he following sentence?"});
-            this.listBox1.Location = new System.Drawing.Point(24, 309);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(540, 184);
-            this.listBox1.TabIndex = 28;
+            this.QuestionMatches.FormattingEnabled = true;
+            this.QuestionMatches.ItemHeight = 20;
+            this.QuestionMatches.Location = new System.Drawing.Point(24, 309);
+            this.QuestionMatches.Name = "QuestionMatches";
+            this.QuestionMatches.Size = new System.Drawing.Size(540, 184);
+            this.QuestionMatches.TabIndex = 28;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 281);
+            this.label5.Location = new System.Drawing.Point(20, 284);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 20);
             this.label5.TabIndex = 27;
@@ -191,13 +188,14 @@
             this.label4.TabIndex = 26;
             this.label4.Text = "Authoring teacher";
             // 
-            // comboBox1
+            // AuthorPicker
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(309, 162);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(255, 28);
-            this.comboBox1.TabIndex = 25;
+            this.AuthorPicker.FormattingEnabled = true;
+            this.AuthorPicker.Location = new System.Drawing.Point(309, 162);
+            this.AuthorPicker.Name = "AuthorPicker";
+            this.AuthorPicker.Size = new System.Drawing.Size(255, 28);
+            this.AuthorPicker.TabIndex = 25;
+            this.AuthorPicker.SelectedIndexChanged += new System.EventHandler(this.TestForData);
             // 
             // label2
             // 
@@ -234,57 +232,14 @@
             this.label3.TabIndex = 41;
             this.label3.Text = "Topic";
             // 
-            // comboBox2
+            // TopicPicker
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(24, 163);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(148, 28);
-            this.comboBox2.TabIndex = 40;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(189, 163);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(43, 24);
-            this.radioButton1.TabIndex = 42;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "1";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(189, 201);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(43, 24);
-            this.radioButton2.TabIndex = 43;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "2";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(248, 163);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(43, 24);
-            this.radioButton3.TabIndex = 44;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "3";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(248, 201);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(43, 24);
-            this.radioButton4.TabIndex = 45;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "4";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.TopicPicker.FormattingEnabled = true;
+            this.TopicPicker.Location = new System.Drawing.Point(24, 163);
+            this.TopicPicker.Name = "TopicPicker";
+            this.TopicPicker.Size = new System.Drawing.Size(148, 28);
+            this.TopicPicker.TabIndex = 40;
+            this.TopicPicker.SelectedIndexChanged += new System.EventHandler(this.TestForData);
             // 
             // label12
             // 
@@ -295,18 +250,62 @@
             this.label12.TabIndex = 46;
             this.label12.Text = "Difficulty";
             // 
+            // DifficultyCheckbox1
+            // 
+            this.DifficultyCheckbox1.AutoSize = true;
+            this.DifficultyCheckbox1.Location = new System.Drawing.Point(189, 164);
+            this.DifficultyCheckbox1.Name = "DifficultyCheckbox1";
+            this.DifficultyCheckbox1.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox1.TabIndex = 47;
+            this.DifficultyCheckbox1.Text = "1";
+            this.DifficultyCheckbox1.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox1.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
+            // DifficultyCheckbox2
+            // 
+            this.DifficultyCheckbox2.AutoSize = true;
+            this.DifficultyCheckbox2.Location = new System.Drawing.Point(239, 164);
+            this.DifficultyCheckbox2.Name = "DifficultyCheckbox2";
+            this.DifficultyCheckbox2.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox2.TabIndex = 48;
+            this.DifficultyCheckbox2.Text = "2";
+            this.DifficultyCheckbox2.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox2.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
+            // DifficultyCheckbox4
+            // 
+            this.DifficultyCheckbox4.AutoSize = true;
+            this.DifficultyCheckbox4.Location = new System.Drawing.Point(239, 194);
+            this.DifficultyCheckbox4.Name = "DifficultyCheckbox4";
+            this.DifficultyCheckbox4.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox4.TabIndex = 50;
+            this.DifficultyCheckbox4.Text = "4";
+            this.DifficultyCheckbox4.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox4.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
+            // DifficultyCheckbox3
+            // 
+            this.DifficultyCheckbox3.AutoSize = true;
+            this.DifficultyCheckbox3.Location = new System.Drawing.Point(189, 194);
+            this.DifficultyCheckbox3.Name = "DifficultyCheckbox3";
+            this.DifficultyCheckbox3.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox3.TabIndex = 49;
+            this.DifficultyCheckbox3.Text = "3";
+            this.DifficultyCheckbox3.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox3.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
             // QuestionManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 518);
+            this.Controls.Add(this.DifficultyCheckbox4);
+            this.Controls.Add(this.DifficultyCheckbox3);
+            this.Controls.Add(this.DifficultyCheckbox2);
+            this.Controls.Add(this.DifficultyCheckbox1);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.radioButton4);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.TopicPicker);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -317,11 +316,11 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.SearchButton);
+            this.Controls.Add(this.QuestionMatches);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.AuthorPicker);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "QuestionManagement";
@@ -343,19 +342,19 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button SearchButton;
+        private System.Windows.Forms.ListBox QuestionMatches;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox AuthorPicker;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.ComboBox TopicPicker;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox1;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox2;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox4;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox3;
     }
 }

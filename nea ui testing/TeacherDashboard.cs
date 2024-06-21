@@ -47,5 +47,18 @@ namespace nea_ui_testing
             };
             cmm.Show();
         }
+
+        private void GoToQuestionManager(object sender, EventArgs e)
+        {
+            Hide();
+            QuestionManagement qmm = new QuestionManagement();
+
+            // form closed events
+            qmm.Closed += (s, args) =>
+            {
+                Show();
+            };
+            qmm.Show();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -54,7 +55,7 @@ namespace nea_prototype_full
                     SqlParameter saltParameter = new SqlParameter("@SaltParameter", salt);
                     SqlParameter passwordParameter = new SqlParameter("@PasswordParameter", hashedPassword);
 
-                    cmd.Parameters.AddRange(new SqlParameter[] {saltParameter, passwordParameter});
+                    cmd.Parameters.AddRange(new SqlParameter[] { saltParameter, passwordParameter });
 
                     conn.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -79,7 +80,7 @@ namespace nea_prototype_full
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string entity = (user.UserType == _UserType.Teacher) ? "Teachers" : "Students";
-                string query = $"UPDATE Teachers SET LastLogin = CAST(GETDATE() AS date) WHERE {entity.Substring(0, 7)}Id = @IdParameter";
+                string query = $"UPDATE {entity} SET LastLogin = CAST(GETDATE() AS date) WHERE {entity.Substring(0, 7)}Id = @IdParameter";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -92,7 +93,7 @@ namespace nea_prototype_full
                 }
             }
         }
-        
+
         public Subject GetSubjectById(int id)
         {
             Subject subject = null;
@@ -349,7 +350,7 @@ namespace nea_prototype_full
                 {
                     SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", name);
                     SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
-                    cmd.Parameters.AddRange(new SqlParameter[] {fnParameter, cidParameter});
+                    cmd.Parameters.AddRange(new SqlParameter[] { fnParameter, cidParameter });
 
                     conn.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -379,7 +380,7 @@ namespace nea_prototype_full
                 {
                     SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
                     SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
-                    cmd.Parameters.AddRange(new SqlParameter[] {sidParameter, cidParameter});
+                    cmd.Parameters.AddRange(new SqlParameter[] { sidParameter, cidParameter });
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -472,6 +473,33 @@ namespace nea_prototype_full
             return list;
         }
 
+        public List<User> GetAllTeachers()
+        {
+            List<User> teacherList = new List<User>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT TeacherId, FirstName, Surname, Email FROM Teachers";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            teacherList.Add(new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Teacher));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            if (teacherList.Count == 0) throw new Exception($"No teachers found in database.");
+            return teacherList;
+        }
+
         public List<Class> GetClassesOfStudent(User student)
         {
             List<Class> list = new List<Class>();
@@ -501,6 +529,25 @@ namespace nea_prototype_full
             return list;
         }
 
+        public void ChangeClassName(Class _class, string newClassName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"UPDATE Classes SET ClassName = @ClassnameParameter WHERE ClassId = @ClassIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter cnParameter = new SqlParameter("@ClassnameParameter", newClassName);
+                    SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", _class.ClassId);
+                    cmd.Parameters.AddRange(new SqlParameter[] { cnParameter, cidParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
         public DateTime GetLastLoginOfStudent(User student)
         {
             DateTime lastLogin;
@@ -526,6 +573,114 @@ namespace nea_prototype_full
                 }
             }
             return lastLogin;
+        }
+
+        public void EditStudentDetails(User student, string newFirstName, string newLastName, string newEmail, string newHashedPassword, string newSalt)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"UPDATE Students SET FirstName =	@FirstnameParameter, Surname = @LastnameParameter, Email = @EmailParameter, Password = @HashedPasswordParameter, Salt = @SaltParameter WHERE StudentId = @StudentIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", newFirstName);
+                    SqlParameter lnParameter = new SqlParameter("@LastnameParameter", newLastName);
+                    SqlParameter emailParameter = new SqlParameter("@EmailParameter", newEmail);
+                    SqlParameter hpParameter = new SqlParameter("@HashedPasswordParameter", newHashedPassword);
+                    SqlParameter saltParameter = new SqlParameter("@SaltParameter", newSalt);
+                    SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
+                    cmd.Parameters.AddRange(new SqlParameter[] { fnParameter, lnParameter, emailParameter, hpParameter, saltParameter, sidParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public int CreateNewQuestion(Question question)
+        {
+            int index;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO Questions VALUES (@TopicIdParameter, @AuthorIdParameter, @DifficultyParameter, @QuestionContentParameter, CAST(@IsMultipleChoice AS BIT), @AnswerParameter, @AnswerKeyParameter, @MCAnswersParameter) SELECT @@Identity";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter tidParameter = new SqlParameter("@TopicIdParameter", question.Topic.TopicId);
+                    SqlParameter aidParameter = new SqlParameter("@AuthorIdParameter", question.Author.Id);
+                    SqlParameter difficultyParameter = new SqlParameter("@DifficultyParameter", question.Difficulty);
+                    SqlParameter qcParameter = new SqlParameter("@QuestionContentParameter", question.QuestionContent);
+                    SqlParameter isMCParameter = new SqlParameter("@IsMultipleChoice", question.IsMc);
+                    SqlParameter answerParameter = new SqlParameter("@AnswerParameter", string.Join(",", question.Answer));
+                    SqlParameter akParameter = new SqlParameter("@AnswerKeyParameter", question.AnswerKey);
+                    SqlParameter mcaParameter = new SqlParameter("@MCAnswersParameter", string.Join(",", question.McAnswers));
+                    cmd.Parameters.AddRange(new SqlParameter[] { tidParameter, aidParameter, difficultyParameter, qcParameter, isMCParameter, answerParameter, akParameter, mcaParameter });
+
+                    conn.Open();
+                    index = Convert.ToInt32((decimal)cmd.ExecuteScalar());
+                    conn.Close();
+                }
+            }
+            return index;
+        }
+
+        public void AppendImageToQuestion(int questionId, byte[] imageData)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO Images VALUES (@QuestionIdParameter, (CONVERT(VARBINARY(MAX), @ImageDataParameter)))";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter qidParameter = new SqlParameter("@QuestionIdParameter", questionId);
+                    SqlParameter idParameter = new SqlParameter("@ImageDataParameter", imageData);
+                    cmd.Parameters.AddRange(new SqlParameter[] { qidParameter, idParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public List<Question> GetQuestionsMultimetric(List<int> difficulties, Topic topic, User author)
+        {
+            List<Question> questionList = new List<Question>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                StringBuilder query = new StringBuilder();
+                query.Append($"SELECT * FROM Questions WHERE Difficulty IN ({string.Join(",", difficulties)})");
+                Console.WriteLine(string.Join(",", difficulties));
+                if (author != null) query.Append(@" AND AuthorId = @AuthorIdParameter");
+                if (topic != null) query.Append(@" AND TopicId = @TopicIdParameter");
+
+                using (SqlCommand cmd = new SqlCommand(query.ToString(), conn))
+                {
+                    if (author != null) cmd.Parameters.Add(new SqlParameter("@AuthorIdParameter", author.Id));
+                    if (topic != null) cmd.Parameters.Add(new SqlParameter("@TopicIdParameter", topic.TopicId));
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Question question = new Question(questionId: (int)reader[0], topic: topic, difficulty: (int)reader[3], questionContent: (string)reader[4], answer: ((string)reader[6]).Split(',').ToList(), author: author, answerKey: (string)reader[7]);
+                            
+                            // if multiple-choice
+                            if ((bool)reader[5]) question.ForceMc(((string)reader[8]).Split(',').ToList());
+
+                            questionList.Add(question);
+                            
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return questionList;
         }
     }
 }

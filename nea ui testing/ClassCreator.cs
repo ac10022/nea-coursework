@@ -14,11 +14,18 @@ namespace nea_ui_testing
     public partial class ClassCreator : Form
     {
         private bool canSubmit = false;
-        public ClassCreator()
+        private Class classRef;
+        public ClassCreator(Class classRef = null)
         {
             InitializeComponent();
             SubmitButton.Enabled = false;
             SuccessMessage.Visible = false;
+
+            if (classRef != null)
+            {
+                this.classRef = classRef;
+                NameField.Text = classRef.ClassName;
+            }
         }
 
         private void TestForData(object sender, EventArgs e)
@@ -33,9 +40,19 @@ namespace nea_ui_testing
             try
             {
                 DatabaseHelper dbh = new DatabaseHelper();
-                dbh.CreateNewClass(NameField.Text);
-                SuccessMessage.Visible = true;
-                SuccessMessage.Text = $"Successfully created class: {NameField.Text}";
+                if (classRef == null)
+                {   
+                    dbh.CreateNewClass(NameField.Text);
+                    SuccessMessage.Visible = true;
+                    SuccessMessage.Text = $"Successfully created class: {NameField.Text}";
+                }
+                else
+                {
+                    dbh.ChangeClassName(classRef, NameField.Text);
+                    SuccessMessage.Visible = true;
+                    SuccessMessage.Text = $"Successfully changed class name from {classRef.ClassName} to {NameField.Text}";
+                }
+                
             }
             catch (Exception ex)
             {

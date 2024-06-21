@@ -277,6 +277,7 @@
             this.EditClassnameButton.TabIndex = 44;
             this.EditClassnameButton.Text = "Edit";
             this.EditClassnameButton.UseVisualStyleBackColor = true;
+            this.EditClassnameButton.Click += new System.EventHandler(this.EditClassNameEvent);
             // 
             // SuccessMessage
             // 
