@@ -32,11 +32,11 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.ContentLabel = new System.Windows.Forms.Label();
+            this.DifficultyLabel = new System.Windows.Forms.Label();
+            this.AuthorLabel = new System.Windows.Forms.Label();
+            this.SubjectLabel = new System.Windows.Forms.Label();
+            this.TopicLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.SearchButton = new System.Windows.Forms.Button();
             this.QuestionMatches = new System.Windows.Forms.ListBox();
@@ -48,15 +48,18 @@
             this.label3 = new System.Windows.Forms.Label();
             this.TopicPicker = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.AnswerPreviewButton = new System.Windows.Forms.Button();
+            this.AnswerPreviewLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.DifficultyCheckbox1 = new System.Windows.Forms.CheckBox();
             this.DifficultyCheckbox2 = new System.Windows.Forms.CheckBox();
-            this.DifficultyCheckbox4 = new System.Windows.Forms.CheckBox();
             this.DifficultyCheckbox3 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox4 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(792, 359);
+            this.button5.Location = new System.Drawing.Point(792, 450);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(170, 43);
             this.button5.TabIndex = 39;
@@ -86,57 +89,57 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(596, 359);
+            this.button2.Location = new System.Drawing.Point(596, 450);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(181, 43);
             this.button2.TabIndex = 36;
             this.button2.Text = "Edit question";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // ContentLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(592, 323);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(311, 20);
-            this.label11.TabIndex = 35;
-            this.label11.Text = "Content preview: [TRUNCATEDCONTENT]";
+            this.ContentLabel.AutoSize = true;
+            this.ContentLabel.Location = new System.Drawing.Point(592, 323);
+            this.ContentLabel.Name = "ContentLabel";
+            this.ContentLabel.Size = new System.Drawing.Size(311, 20);
+            this.ContentLabel.TabIndex = 35;
+            this.ContentLabel.Text = "Content preview: [TRUNCATEDCONTENT]";
             // 
-            // label10
+            // DifficultyLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(592, 293);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(179, 20);
-            this.label10.TabIndex = 34;
-            this.label10.Text = "Difficulty: [DIFFICULTY]";
+            this.DifficultyLabel.AutoSize = true;
+            this.DifficultyLabel.Location = new System.Drawing.Point(592, 293);
+            this.DifficultyLabel.Name = "DifficultyLabel";
+            this.DifficultyLabel.Size = new System.Drawing.Size(179, 20);
+            this.DifficultyLabel.TabIndex = 34;
+            this.DifficultyLabel.Text = "Difficulty: [DIFFICULTY]";
             // 
-            // label9
+            // AuthorLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(592, 263);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(141, 20);
-            this.label9.TabIndex = 33;
-            this.label9.Text = "Author: [AUTHOR]";
+            this.AuthorLabel.AutoSize = true;
+            this.AuthorLabel.Location = new System.Drawing.Point(592, 263);
+            this.AuthorLabel.Name = "AuthorLabel";
+            this.AuthorLabel.Size = new System.Drawing.Size(141, 20);
+            this.AuthorLabel.TabIndex = 33;
+            this.AuthorLabel.Text = "Author: [AUTHOR]";
             // 
-            // label7
+            // SubjectLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(592, 234);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(152, 20);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Subject: [SUBJECT]";
+            this.SubjectLabel.AutoSize = true;
+            this.SubjectLabel.Location = new System.Drawing.Point(592, 234);
+            this.SubjectLabel.Name = "SubjectLabel";
+            this.SubjectLabel.Size = new System.Drawing.Size(152, 20);
+            this.SubjectLabel.TabIndex = 32;
+            this.SubjectLabel.Text = "Subject: [SUBJECT]";
             // 
-            // label8
+            // TopicLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(592, 203);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(110, 20);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "Topic: [TOPIC]";
+            this.TopicLabel.AutoSize = true;
+            this.TopicLabel.Location = new System.Drawing.Point(592, 203);
+            this.TopicLabel.Name = "TopicLabel";
+            this.TopicLabel.Size = new System.Drawing.Size(110, 20);
+            this.TopicLabel.TabIndex = 31;
+            this.TopicLabel.Text = "Topic: [TOPIC]";
             // 
             // label6
             // 
@@ -169,6 +172,7 @@
             this.QuestionMatches.Name = "QuestionMatches";
             this.QuestionMatches.Size = new System.Drawing.Size(540, 184);
             this.QuestionMatches.TabIndex = 28;
+            this.QuestionMatches.SelectedIndexChanged += new System.EventHandler(this.UpdateQuestionInformation);
             // 
             // label5
             // 
@@ -250,6 +254,36 @@
             this.label12.TabIndex = 46;
             this.label12.Text = "Difficulty";
             // 
+            // AnswerPreviewButton
+            // 
+            this.AnswerPreviewButton.Location = new System.Drawing.Point(596, 357);
+            this.AnswerPreviewButton.Name = "AnswerPreviewButton";
+            this.AnswerPreviewButton.Size = new System.Drawing.Size(181, 43);
+            this.AnswerPreviewButton.TabIndex = 51;
+            this.AnswerPreviewButton.Text = "Preview answer";
+            this.AnswerPreviewButton.UseVisualStyleBackColor = true;
+            this.AnswerPreviewButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PreviewAnswerEvent);
+            this.AnswerPreviewButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.HideAnswerEvent);
+            // 
+            // AnswerPreviewLabel
+            // 
+            this.AnswerPreviewLabel.AutoSize = true;
+            this.AnswerPreviewLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.AnswerPreviewLabel.Location = new System.Drawing.Point(598, 413);
+            this.AnswerPreviewLabel.Name = "AnswerPreviewLabel";
+            this.AnswerPreviewLabel.Size = new System.Drawing.Size(313, 22);
+            this.AnswerPreviewLabel.TabIndex = 52;
+            this.AnswerPreviewLabel.Text = "Content preview: [TRUNCATEDCONTENT]";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(792, 357);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(170, 43);
+            this.button1.TabIndex = 53;
+            this.button1.Text = "Print question";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // DifficultyCheckbox1
             // 
             this.DifficultyCheckbox1.AutoSize = true;
@@ -272,17 +306,6 @@
             this.DifficultyCheckbox2.UseVisualStyleBackColor = true;
             this.DifficultyCheckbox2.CheckedChanged += new System.EventHandler(this.TestForData);
             // 
-            // DifficultyCheckbox4
-            // 
-            this.DifficultyCheckbox4.AutoSize = true;
-            this.DifficultyCheckbox4.Location = new System.Drawing.Point(239, 194);
-            this.DifficultyCheckbox4.Name = "DifficultyCheckbox4";
-            this.DifficultyCheckbox4.Size = new System.Drawing.Size(44, 24);
-            this.DifficultyCheckbox4.TabIndex = 50;
-            this.DifficultyCheckbox4.Text = "4";
-            this.DifficultyCheckbox4.UseVisualStyleBackColor = true;
-            this.DifficultyCheckbox4.CheckedChanged += new System.EventHandler(this.TestForData);
-            // 
             // DifficultyCheckbox3
             // 
             this.DifficultyCheckbox3.AutoSize = true;
@@ -294,11 +317,25 @@
             this.DifficultyCheckbox3.UseVisualStyleBackColor = true;
             this.DifficultyCheckbox3.CheckedChanged += new System.EventHandler(this.TestForData);
             // 
+            // DifficultyCheckbox4
+            // 
+            this.DifficultyCheckbox4.AutoSize = true;
+            this.DifficultyCheckbox4.Location = new System.Drawing.Point(239, 194);
+            this.DifficultyCheckbox4.Name = "DifficultyCheckbox4";
+            this.DifficultyCheckbox4.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox4.TabIndex = 50;
+            this.DifficultyCheckbox4.Text = "4";
+            this.DifficultyCheckbox4.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox4.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
             // QuestionManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 518);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.AnswerPreviewLabel);
+            this.Controls.Add(this.AnswerPreviewButton);
             this.Controls.Add(this.DifficultyCheckbox4);
             this.Controls.Add(this.DifficultyCheckbox3);
             this.Controls.Add(this.DifficultyCheckbox2);
@@ -310,11 +347,11 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.ContentLabel);
+            this.Controls.Add(this.DifficultyLabel);
+            this.Controls.Add(this.AuthorLabel);
+            this.Controls.Add(this.SubjectLabel);
+            this.Controls.Add(this.TopicLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.QuestionMatches);
@@ -336,11 +373,11 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label ContentLabel;
+        private System.Windows.Forms.Label DifficultyLabel;
+        private System.Windows.Forms.Label AuthorLabel;
+        private System.Windows.Forms.Label SubjectLabel;
+        private System.Windows.Forms.Label TopicLabel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.ListBox QuestionMatches;
@@ -352,9 +389,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox TopicPicker;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button AnswerPreviewButton;
+        private System.Windows.Forms.Label AnswerPreviewLabel;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox DifficultyCheckbox1;
         private System.Windows.Forms.CheckBox DifficultyCheckbox2;
-        private System.Windows.Forms.CheckBox DifficultyCheckbox4;
         private System.Windows.Forms.CheckBox DifficultyCheckbox3;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox4;
     }
 }

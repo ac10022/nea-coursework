@@ -10,7 +10,7 @@ namespace nea_prototype_full
         English = 1,
         Maths = 2
     }
-    internal class Subject
+    public class Subject
     {
         private int subjectId;
         private string subjectName;

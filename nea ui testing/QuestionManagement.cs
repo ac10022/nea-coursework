@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +23,8 @@ namespace nea_ui_testing
         {
             InitializeComponent();
             SearchButton.Enabled = false;
+            AnswerPreviewButton.Enabled = false;
+            AnswerPreviewLabel.Visible = false;
 
             // load in all teachers and topics for selection
             DatabaseHelper dbh = new DatabaseHelper();
@@ -51,6 +54,7 @@ namespace nea_ui_testing
         private void TestForData(object sender, EventArgs e)
         {
             canSubmit = (DifficultyCheckbox1.Checked || DifficultyCheckbox2.Checked || DifficultyCheckbox3.Checked || DifficultyCheckbox4.Checked);
+            AnswerPreviewButton.Enabled = false;
             SearchButton.Enabled = canSubmit;
         }
 
@@ -61,6 +65,7 @@ namespace nea_ui_testing
 
         private void SearchEvent(object sender, EventArgs e)
         {
+            AnswerPreviewButton.Enabled = false;
             try
             {
                 // get label of checked checkboxes (so get all difficulties)
@@ -74,13 +79,35 @@ namespace nea_ui_testing
                 DatabaseHelper dbh = new DatabaseHelper();
                 questionsFromSearch = dbh.GetQuestionsMultimetric(selectedDifficulties, selectedTopic, selectedAuthor);
 
-                QuestionMatches.DataSource = questionsFromSearch.Select(x => $"ID{x.QuestionId}\t{x.QuestionContent.Substring(0, 20)}...\tDIF{x.Difficulty}").ToArray();
+                QuestionMatches.DataSource = questionsFromSearch.Select(x => $"{x.Topic.TopicName}\t{x.QuestionContent.Substring(0, Math.Min(20, x.QuestionContent.Length))}...\tD{x.Difficulty}\tby {x.Author.FirstName} {x.Author.Surname}").ToArray();
             }
             catch (Exception ex)
             {
                 ErrorHandler eh = new ErrorHandler(ex.Message);
                 eh.DisplayErrorForm();
             }
+        }
+
+        private void UpdateQuestionInformation(object sender, EventArgs e)
+        {
+            Question selectedQuestion = questionsFromSearch[QuestionMatches.SelectedIndex];
+            TopicLabel.Text = $"Topic: {selectedQuestion.Topic.TopicName}";
+            SubjectLabel.Text = $"Subject: {selectedQuestion.Topic.Subject.SubjectName}";
+            AuthorLabel.Text = $"Author: {selectedQuestion.Author.FirstName} {selectedQuestion.Author.Surname}";
+            DifficultyLabel.Text = $"Difficulty: D{selectedQuestion.Difficulty}";
+            ContentLabel.Text = $"{selectedQuestion.QuestionContent.Substring(0, Math.Min(50, selectedQuestion.QuestionContent.Length))}...";
+            AnswerPreviewLabel.Text = string.Join(",", selectedQuestion.Answer);
+            AnswerPreviewButton.Enabled = true;
+        }
+
+        private void PreviewAnswerEvent(object sender, MouseEventArgs e)
+        {
+            AnswerPreviewLabel.Visible = true;
+        }
+
+        private void HideAnswerEvent(object sender, MouseEventArgs e)
+        {
+            AnswerPreviewLabel.Visible = false;
         }
     }
 }

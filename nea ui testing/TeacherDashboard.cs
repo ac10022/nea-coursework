@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nea_prototype_full;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,12 @@ namespace nea_ui_testing
         public TeacherDashboard()
         {
             InitializeComponent();
+
+            DatabaseHelper dbh = new DatabaseHelper();
+
+            // load logged in teacher details
+            ClassesLabel.Text = $"Classes: {string.Join(", ", dbh.GetClassesOfTeacher(Program.loggedInUser).Select(x => x.ClassName))}";
+            NameLabel.Text = $"Name: {Program.loggedInUser.FirstName} {Program.loggedInUser.Surname}";
         }
 
         private void LogoutFromHere(object sender, EventArgs e)

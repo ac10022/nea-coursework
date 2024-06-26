@@ -24,8 +24,8 @@ namespace nea_ui_testing
             LoggedOutLabel.Visible = false;
 
             // FOR DEBUGGING
-            EmailField.Text = @"test@gmail.com";
-            PasswordField.Text = "password123";
+            EmailField.Text = @"udayjolly@gmail.com";
+            PasswordField.Text = "Password123";
             //
         }
 
@@ -68,7 +68,20 @@ namespace nea_ui_testing
                 }
                 else if (Program.loggedInUser != null && Program.loggedInUser.UserType == _UserType.Student)
                 {
-                    // student dashboard here
+                    // show teacher dashboard and hide this form
+                    LoggedOutLabel.Visible = false;
+                    Hide();
+                    StudentDashboard sd = new StudentDashboard();
+
+                    // form closed events -> log out and clear fields on this form
+                    sd.Closed += (s, args) =>
+                    {
+                        LogOutEvent();
+                        ClearFields();
+                        Show();
+                        LoggedOutLabel.Visible = true;
+                    };
+                    sd.Show();
                 }
 
             }

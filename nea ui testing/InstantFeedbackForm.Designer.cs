@@ -28,51 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.ContinueButton = new System.Windows.Forms.Button();
+            this.FeedbackMessage = new System.Windows.Forms.Label();
+            this.CorrectnessLabel = new System.Windows.Forms.Label();
+            this.AnswerKeyBox = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // ContinueButton
             // 
-            this.button1.Location = new System.Drawing.Point(27, 311);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 41);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Continue";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ContinueButton.Location = new System.Drawing.Point(27, 311);
+            this.ContinueButton.Name = "ContinueButton";
+            this.ContinueButton.Size = new System.Drawing.Size(112, 41);
+            this.ContinueButton.TabIndex = 7;
+            this.ContinueButton.Text = "Continue";
+            this.ContinueButton.UseVisualStyleBackColor = true;
+            this.ContinueButton.Click += new System.EventHandler(this.ContinueEvent);
             // 
-            // label1
+            // FeedbackMessage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 88);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(320, 40);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Your answer [ANSWER] was incorrect.\r\nThe actual answer was [ACTUALANSWER].\r\n";
+            this.FeedbackMessage.AutoSize = true;
+            this.FeedbackMessage.Location = new System.Drawing.Point(23, 88);
+            this.FeedbackMessage.MaximumSize = new System.Drawing.Size(350, 40);
+            this.FeedbackMessage.MinimumSize = new System.Drawing.Size(350, 40);
+            this.FeedbackMessage.Name = "FeedbackMessage";
+            this.FeedbackMessage.Size = new System.Drawing.Size(350, 40);
+            this.FeedbackMessage.TabIndex = 6;
+            this.FeedbackMessage.Text = "Your answer [ANSWER] was incorrect.\r\nThe actual answer was [ACTUALANSWER].\r\n";
             // 
-            // label2
+            // CorrectnessLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.SteelBlue;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Font = new System.Drawing.Font("Rockwell Extra Bold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(27, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(237, 44);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Incorrect!";
+            this.CorrectnessLabel.AutoSize = true;
+            this.CorrectnessLabel.BackColor = System.Drawing.Color.SteelBlue;
+            this.CorrectnessLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CorrectnessLabel.Font = new System.Drawing.Font("Rockwell Extra Bold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CorrectnessLabel.ForeColor = System.Drawing.Color.FloralWhite;
+            this.CorrectnessLabel.Location = new System.Drawing.Point(27, 30);
+            this.CorrectnessLabel.Name = "CorrectnessLabel";
+            this.CorrectnessLabel.Size = new System.Drawing.Size(237, 44);
+            this.CorrectnessLabel.TabIndex = 5;
+            this.CorrectnessLabel.Text = "Incorrect!";
             // 
-            // label3
+            // AnswerKeyBox
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 148);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(209, 140);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Marking Scheme:\r\n[1] for expanding brackets:\r\n2(x+2) = 0 -> 2x+4 = 0\r\n[1] for sim" +
+            this.AnswerKeyBox.AutoSize = true;
+            this.AnswerKeyBox.Location = new System.Drawing.Point(23, 148);
+            this.AnswerKeyBox.MaximumSize = new System.Drawing.Size(350, 150);
+            this.AnswerKeyBox.MinimumSize = new System.Drawing.Size(350, 150);
+            this.AnswerKeyBox.Name = "AnswerKeyBox";
+            this.AnswerKeyBox.Size = new System.Drawing.Size(350, 150);
+            this.AnswerKeyBox.TabIndex = 8;
+            this.AnswerKeyBox.Text = "Marking Scheme:\r\n[1] for expanding brackets:\r\n2(x+2) = 0 -> 2x+4 = 0\r\n[1] for sim" +
     "plifying expression:\r\n2x+4 = 0 -> 2x = -4\r\n[1] for simplifying expression:\r\n2x =" +
     " -4 -> x = -2";
             // 
@@ -81,10 +86,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(396, 381);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.AnswerKeyBox);
+            this.Controls.Add(this.ContinueButton);
+            this.Controls.Add(this.FeedbackMessage);
+            this.Controls.Add(this.CorrectnessLabel);
             this.Name = "InstantFeedbackForm";
             this.Text = "InstantFeedbackForm";
             this.ResumeLayout(false);
@@ -94,9 +99,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button ContinueButton;
+        private System.Windows.Forms.Label FeedbackMessage;
+        private System.Windows.Forms.Label CorrectnessLabel;
+        private System.Windows.Forms.Label AnswerKeyBox;
     }
 }

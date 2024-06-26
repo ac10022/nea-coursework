@@ -83,10 +83,20 @@
     <None Include="nea ui testing\Properties\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assignment.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="GraphingHelper.cs" />
     <Compile Include="HashingHelper.cs" />
+    <Compile Include="LargeImageDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LargeImageDisplay.Designer.cs">
+      <DependentUpon>LargeImageDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MatrixHelper.cs" />
     <Compile Include="nea ui testing\AddQToAssignment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,17 +211,27 @@
       <DependentUpon>TeacherOverview.cs</DependentUpon>
     </Compile>
     <Compile Include="Question.cs" />
+    <Compile Include="RandomQuestionHelper.cs" />
     <Compile Include="StudentCreator.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="StudentCreator.Designer.cs">
       <DependentUpon>StudentCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="StudentDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard.Designer.cs">
+      <DependentUpon>StudentDashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subject.cs" />
     <Compile Include="Topic.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LargeImageDisplay.resx">
+      <DependentUpon>LargeImageDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="nea ui testing\AddQToAssignment.resx">
       <DependentUpon>AddQToAssignment.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StudentCreator.resx">
       <DependentUpon>StudentCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentDashboard.resx">
+      <DependentUpon>StudentDashboard.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

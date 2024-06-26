@@ -8,19 +8,18 @@ using System.Windows.Forms;
 
 namespace nea_prototype_full
 {
-    internal class Question
+    public class Question
     {
         // fields
-        private int questionId;
-        private Topic topic;
-        private User author;
-        private int difficulty;
-        private string questionContent;
-        private bool isMc;
-        private List<string> answer;
-        private string answerKey;
-        private List<string> mcAnswers;
-        private Image questionImage;
+        protected int questionId;
+        protected Topic topic;
+        protected User author;
+        protected int difficulty;
+        protected string questionContent;
+        protected bool isMc;
+        protected List<string> answer;
+        protected string answerKey;
+        protected List<string> mcAnswers;
         
         // properties
         public int QuestionId { get { return questionId; } private set { questionId = value; } }
@@ -38,7 +37,6 @@ namespace nea_prototype_full
         public List<string> Answer { get { return answer; } private set { answer = value; } }
         public string AnswerKey { get { return answerKey; } private set { answerKey = value; } }
         public List<string> McAnswers { get { return mcAnswers; } private set { mcAnswers = value; } }
-        public Image QuestionImage { get { return questionImage; } private set { questionImage = value; } }
 
         // constructor
         public Question(Topic topic, int difficulty, string questionContent, List<string> answer, int questionId = -1, User author = null, string answerKey = "")
@@ -54,7 +52,6 @@ namespace nea_prototype_full
             // mc and image fields, not initialised here
             this.isMc = false;
             this.mcAnswers = new List<string>();
-            this.questionImage = new Bitmap(1, 1);
         }
 
         public void ForceMc(List<string> mcAnswers)
@@ -63,14 +60,26 @@ namespace nea_prototype_full
             this.mcAnswers = mcAnswers;
         }
 
-        public void AppendImage(Image image)
-        {
-            this.questionImage = image;
-        }
-
         public override string ToString()
         {
             return $"QuestionId:\t{questionId}\nTopicId:\t{topic}\nAuthorId:\t{author}\nDifficulty:\t{difficulty}\nContent:\t{questionContent}\nAnswer(s):\t{string.Join(", ", answer)}\nAnswer Key\t{answerKey}\nMultiple Choice?\t{isMc}\nMC Answers\t{string.Join(", ", mcAnswers)}";
+        }
+    }
+
+    public class RandomlyGeneratedQuestion : Question
+    {
+        // field
+        private Image rgqImage;
+
+        // property
+        public Image RgqImage { get { return rgqImage; } set { rgqImage = value; } }
+        
+        // constructor
+        public RandomlyGeneratedQuestion(Topic topic, int difficulty, string questionContent, List<string> answer, int questionId = -1, User author = null, string answerKey = "") : base(topic, difficulty, questionContent, answer, questionId, author, answerKey) { }
+
+        public void AttachImage(Image image)
+        {
+            this.rgqImage = image;
         }
     }
 }
