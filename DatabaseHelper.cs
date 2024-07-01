@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Data.Common;
 
 namespace nea_prototype_full
 {
@@ -14,6 +15,13 @@ namespace nea_prototype_full
     {
         private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""C:\Users\lucam\Documents\Visual Studio 2022\All Projects\nea ui testing\Database.mdf"";Integrated Security=True";
 
+        /// <summary>
+        /// Given an email and user type, returns the 5 character salt for the user.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="userType"></param>
+        /// <returns>A 5 character string containing the user salt.</returns>
+        /// <exception cref="Exception"></exception>
         public string GetSaltFromEmail(string email, _UserType userType)
         {
             string salt = null;
@@ -43,6 +51,14 @@ namespace nea_prototype_full
             return salt;
         }
 
+        /// <summary>
+        /// Given the salt, password and user type, returns the user entity.
+        /// </summary>
+        /// <param name="salt"></param>
+        /// <param name="hashedPassword"></param>
+        /// <param name="userType"></param>
+        /// <returns>An object containing user data.</returns>
+        /// <exception cref="Exception"></exception>
         public User GetUserFromSaltAndPassword(string salt, string hashedPassword, _UserType userType)
         {
             User result = null;
@@ -76,6 +92,10 @@ namespace nea_prototype_full
             return result;
         }
 
+        /// <summary>
+        /// Refreshes the last login date of the given user to the current day.
+        /// </summary>
+        /// <param name="user"></param>
         private void UpdateLastLogin(User user)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -95,34 +115,11 @@ namespace nea_prototype_full
             }
         }
 
-        public Subject GetSubjectById(int id)
-        {
-            Subject subject = null;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string query = @"SELECT * FROM Subjects WHERE SubjectId = @IdParameter";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    SqlParameter idParameter = new SqlParameter("@IdParameter", id);
-                    cmd.Parameters.Add(idParameter);
-
-                    conn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            subject = new Subject((int)reader[0], (string)reader[1]);
-                        }
-                    }
-                    conn.Close();
-                }
-            }
-            if (subject == null) throw new Exception($"Could not find a Subject with SubjectId: {id}");
-            return subject;
-        }
-
+        /// <summary>
+        /// Fetches all topics stored on the database.
+        /// </summary>
+        /// <returns>A list containing topic objects of all topics in the database.</returns>
+        /// <exception cref="Exception"></exception>
         public List<Topic> GetAllTopics()
         {
             List<Topic> list = new List<Topic>();
@@ -781,6 +778,115 @@ namespace nea_prototype_full
                     conn.Close();
                 }
             }
+        }
+
+        public void CreateAssignment(Assignment assignment)
+        {
+            int index;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string assignmentsQuery = @"INSERT INTO Assignments VALUES(@SetterIdParameter, @HwkNameParameter, CAST(@HwkDueDateParameter AS DATETIME)) SELECT @@Identity";
+                string assignmentClassesQuery = @"INSERT INTO AssignmentClasses VALUES(@AssignmentIdParameter, @ClassIdParameter)";
+                StringBuilder assignmentQuestionsQuery = new StringBuilder();
+                assignmentQuestionsQuery.Append(@"INSERT INTO AssignmentQuestions VALUES");
+
+                SqlCommand assignmentsCommand = new SqlCommand(assignmentsQuery, conn);
+                SqlParameter sidParameter = new SqlParameter("@SetterIdParameter", assignment.Setter.Id);
+                SqlParameter hwnParameter = new SqlParameter("@HwkNameParameter", assignment.HomeworkName);
+                SqlParameter hwddParameter = new SqlParameter("@HwkDueDateParameter", assignment.HomeworkDueDate);
+                assignmentsCommand.Parameters.AddRange(new SqlParameter[] { sidParameter, hwnParameter, hwddParameter });
+
+                conn.Open();
+                index = Convert.ToInt32((decimal)assignmentsCommand.ExecuteScalar());
+                conn.Close();
+
+                SqlCommand assignmentClassesCommand = new SqlCommand(assignmentClassesQuery, conn);
+                SqlParameter aidParameter = new SqlParameter("@AssignmentIdParameter", index);
+                SqlParameter cidParameter = new SqlParameter("@ClassIdParameter", assignment.TargetClass.ClassId);
+                assignmentClassesCommand.Parameters.AddRange(new SqlParameter[] { aidParameter, cidParameter });
+
+                conn.Open();
+                assignmentClassesCommand.ExecuteNonQuery();
+                conn.Close();
+
+                foreach (Question q in assignment.QuestionList)
+                {
+                    assignmentQuestionsQuery.Append($" ({index}, {q.QuestionId}),");
+                }
+
+                // remove last comma
+                assignmentQuestionsQuery.Length--;
+
+                SqlCommand assignmentQuestionsCommand = new SqlCommand(assignmentQuestionsQuery.ToString(), conn);
+
+                conn.Open();
+                assignmentQuestionsCommand.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+        /// <summary>
+        /// Given a class, fetches the assignments (excluding the list of questions) for this class, due both in the past and in the future.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <returns>A list of assignment objects (without their corresponding question items).</returns>
+        public List<Assignment> GetClassAssignments(Class _class)
+        {
+            List<Assignment> assignmentList = new List<Assignment>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetClassAssignments", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@ClassID", _class.ClassId));
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            assignmentList.Add(new Assignment(assignmentId: (int)reader[0], homeworkName: (string)reader[1], homeworkDueDate: (DateTime)reader[2], targetClass: _class, setter: new User((int)reader[3], (string)reader[4], (string)reader[5], (string)reader[6], _UserType.Teacher), questionList: null));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return assignmentList;
+        }
+
+        public List<Question> GetQuestionsFromAssignment(Assignment assignment)
+        {
+            List<Question> questionList = new List<Question>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetQuestionsFromAssignment", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@AssignmentId", assignment.AssignmentId));
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Question question = new Question(questionId: (int)reader[0], difficulty: (int)reader[1], questionContent: (string)reader[2], answer: ((string)reader[4]).Split(',').ToList(), author: new User((int)reader[7], (string)reader[8], (string)reader[9], (string)reader[10], _UserType.Teacher), answerKey: (string)reader[5], topic: new Topic((int)reader[11], (string)reader[12], (string)reader[13], new Subject((int)reader[14], (string)reader[15])));
+
+                            // if multiple-choice
+                            if ((bool)reader[3]) question.ForceMc(((string)reader[6]).Split(',').ToList());
+
+                            questionList.Add(question);
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return questionList;
         }
     }
 }

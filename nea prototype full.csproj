@@ -90,12 +90,6 @@
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="GraphingHelper.cs" />
     <Compile Include="HashingHelper.cs" />
-    <Compile Include="LargeImageDisplay.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LargeImageDisplay.Designer.cs">
-      <DependentUpon>LargeImageDisplay.cs</DependentUpon>
-    </Compile>
     <Compile Include="MatrixHelper.cs" />
     <Compile Include="nea ui testing\AddQToAssignment.cs">
       <SubType>Form</SubType>
@@ -229,9 +223,6 @@
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LargeImageDisplay.resx">
-      <DependentUpon>LargeImageDisplay.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="nea ui testing\AddQToAssignment.resx">
       <DependentUpon>AddQToAssignment.cs</DependentUpon>
     </EmbeddedResource>

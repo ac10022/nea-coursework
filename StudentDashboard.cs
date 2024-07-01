@@ -41,5 +41,18 @@ namespace nea_prototype_full
         {
             Close();
         }
+
+        private void GoToAssignments(object sender, EventArgs e)
+        {
+            Hide();
+            StudentAssignmentMenu sam = new StudentAssignmentMenu();
+
+            // form closed events
+            sam.Closed += (s, args) =>
+            {
+                Show();
+            };
+            sam.Show();
+        }
     }
 }

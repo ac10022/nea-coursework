@@ -21,15 +21,20 @@ namespace nea_ui_testing
         private Control[] MCA_CONTROLS;
         private Control[] FI_CONTROLS;
         private bool canSubmit = false;
+        private Assignment assignmentRef = null;
 
         private List<Image> questionImagesRef;
 
-        public QuestionAttemptMenu(List<Question> questionReference = null)
+        private Image originalImage;
+        private double zoomFactor = 1;
+
+        public QuestionAttemptMenu(List<Question> questionReference = null, Assignment assignmentRef = null)
         {
             InitializeComponent();
             questionRef = questionReference.First();
             questionReference.RemoveAt(0);
             questionList = questionReference;
+            this.assignmentRef = assignmentRef;
 
             MCA_CONTROLS = new Control[] { MCA_D, MCA_C, MCA_B, MCA_A, MCALabel };
             FI_CONTROLS = new Control[] { FI_4, FI_FIELD4, FI_3, FI_FIELD3, FI_2, FI_FIELD2, FI_1, FI_FIELD1, FILabel };
@@ -59,8 +64,6 @@ namespace nea_ui_testing
                 }
 
                 questionImagesRef = imageList;
-
-                if (imageList.Count == 0) DisplayImageButton.Enabled = false;
 
                 TopicLabel.Text = $"Topic: {questionRef.Topic.TopicName}";
                 SubjectLabel.Text = $"Subject: {questionRef.Topic.Subject.SubjectName}";
@@ -142,7 +145,10 @@ namespace nea_ui_testing
                     // sort out for more than one image
                     Image image = ResizeImageToWidth(imageList.First(), ImageBox.Width);
                     ImageBox.Height = image.Height;
-                    ImageBox.BackgroundImage = image;
+                    ImageBox.Image = image;
+                    ImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
+
+                    originalImage = image;
                 }
             }
             catch (Exception ex)
@@ -213,18 +219,18 @@ namespace nea_ui_testing
                 DatabaseHelper dbh = new DatabaseHelper();
                 if (questionRef is RandomlyGeneratedQuestion)
                 {
-                    dbh.InsertStudentQuestionAttemptWithTopic(questionRef.Topic, Program.loggedInUser, wasCorrect, wholeStudentAnswer);
+                    dbh.InsertStudentQuestionAttemptWithTopic(questionRef.Topic, Program.loggedInUser, wasCorrect, wholeStudentAnswer, assignmentRef);
                 }
                 else
                 {
-                    dbh.InsertStudentQuestionAttempt(questionRef, Program.loggedInUser, wasCorrect, wholeStudentAnswer);
+                    dbh.InsertStudentQuestionAttempt(questionRef, Program.loggedInUser, wasCorrect, wholeStudentAnswer, assignmentRef);
                 }
 
                 SubmitButton.Enabled = false;
                 DashboardButton.Enabled = false;
 
                 Hide();
-                InstantFeedbackForm iff = new InstantFeedbackForm(questionRef, questionList, wasCorrect);
+                InstantFeedbackForm iff = new InstantFeedbackForm(questionRef, questionList, wasCorrect, assignmentRef);
 
                 // form closed events
                 iff.Load += (s, args) =>
@@ -259,12 +265,17 @@ namespace nea_ui_testing
             SubmitButton.Enabled = canSubmit;
         }
 
-        private void DisplayLargeImageEvent(object sender, EventArgs e)
+        private void ZoomEvent(object sender, MouseEventArgs e)
         {
-            if (questionImagesRef.Count != 0)
+            if (originalImage != null)
             {
-                LargeImageDisplay lid = new LargeImageDisplay(questionImagesRef.First());
-                lid.Show();
+                if (e.Button.Equals(MouseButtons.Left) && zoomFactor < 4) zoomFactor *= 1.25;
+                else if (e.Button.Equals(MouseButtons.Right) && zoomFactor > 0.4) zoomFactor *= 0.8;
+
+                Size resize = new Size((int)(originalImage.Width * zoomFactor), (int)(originalImage.Height * zoomFactor));
+                Image newImage = new Bitmap(originalImage, resize);
+
+                ImageBox.Image = newImage;
             }
         }
     }

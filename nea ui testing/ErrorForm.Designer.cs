@@ -60,8 +60,10 @@
             // 
             this.ErrorDescription.AutoSize = true;
             this.ErrorDescription.Location = new System.Drawing.Point(27, 86);
+            this.ErrorDescription.MaximumSize = new System.Drawing.Size(360, 50);
+            this.ErrorDescription.MinimumSize = new System.Drawing.Size(360, 50);
             this.ErrorDescription.Name = "ErrorDescription";
-            this.ErrorDescription.Size = new System.Drawing.Size(316, 40);
+            this.ErrorDescription.Size = new System.Drawing.Size(360, 50);
             this.ErrorDescription.TabIndex = 2;
             this.ErrorDescription.Text = "This class name contains invalid characters.\r\nPlease try again.";
             // 

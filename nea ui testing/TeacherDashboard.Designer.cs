@@ -116,6 +116,7 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "Set an assignment";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.GoToAssignmentManager);
             // 
             // LogoutButton
             // 

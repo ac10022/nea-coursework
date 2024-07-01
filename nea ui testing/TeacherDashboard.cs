@@ -67,5 +67,18 @@ namespace nea_ui_testing
             };
             qmm.Show();
         }
+
+        private void GoToAssignmentManager(object sender, EventArgs e)
+        {
+            Hide();
+            AssignmentMenu am = new AssignmentMenu();
+
+            // form closed events
+            am.Closed += (s, args) =>
+            {
+                Show();
+            };
+            am.Show();
+        }
     }
 }

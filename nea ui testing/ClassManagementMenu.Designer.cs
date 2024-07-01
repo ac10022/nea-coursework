@@ -46,7 +46,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.listBox5 = new System.Windows.Forms.ListBox();
+            this.AssignmentsListBox = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.EditClassnameButton = new System.Windows.Forms.Button();
@@ -235,17 +235,14 @@
             this.button7.Text = "Delete selected assignment";
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // listBox5
+            // AssignmentsListBox
             // 
-            this.listBox5.FormattingEnabled = true;
-            this.listBox5.ItemHeight = 20;
-            this.listBox5.Items.AddRange(new object[] {
-            "Example Assignment 1",
-            "Example Assignment 2"});
-            this.listBox5.Location = new System.Drawing.Point(880, 235);
-            this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(327, 284);
-            this.listBox5.TabIndex = 40;
+            this.AssignmentsListBox.FormattingEnabled = true;
+            this.AssignmentsListBox.ItemHeight = 20;
+            this.AssignmentsListBox.Location = new System.Drawing.Point(880, 235);
+            this.AssignmentsListBox.Name = "AssignmentsListBox";
+            this.AssignmentsListBox.Size = new System.Drawing.Size(327, 284);
+            this.AssignmentsListBox.TabIndex = 40;
             // 
             // label10
             // 
@@ -298,7 +295,7 @@
             this.Controls.Add(this.SuccessMessage);
             this.Controls.Add(this.EditClassnameButton);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.listBox5);
+            this.Controls.Add(this.AssignmentsListBox);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.button5);
@@ -345,7 +342,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.ListBox listBox5;
+        private System.Windows.Forms.ListBox AssignmentsListBox;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button EditClassnameButton;

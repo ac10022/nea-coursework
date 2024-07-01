@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.label12 = new System.Windows.Forms.Label();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.TopicPicker = new System.Windows.Forms.ComboBox();
+            this.SearchButton = new System.Windows.Forms.Button();
+            this.QuestionMatches = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.AuthorPicker = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.AddQToAssignmentButton = new System.Windows.Forms.Button();
+            this.DifficultyCheckbox4 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox3 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox2 = new System.Windows.Forms.CheckBox();
+            this.DifficultyCheckbox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label12
@@ -54,50 +54,6 @@
             this.label12.TabIndex = 60;
             this.label12.Text = "Difficulty";
             // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(251, 202);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(43, 24);
-            this.radioButton4.TabIndex = 59;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "4";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(251, 164);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(43, 24);
-            this.radioButton3.TabIndex = 58;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "3";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(192, 202);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(43, 24);
-            this.radioButton2.TabIndex = 57;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "2";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(192, 164);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(43, 24);
-            this.radioButton1.TabIndex = 56;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "1";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -107,37 +63,33 @@
             this.label3.TabIndex = 55;
             this.label3.Text = "Topic";
             // 
-            // comboBox2
+            // TopicPicker
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(27, 164);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(148, 28);
-            this.comboBox2.TabIndex = 54;
+            this.TopicPicker.FormattingEnabled = true;
+            this.TopicPicker.Location = new System.Drawing.Point(27, 164);
+            this.TopicPicker.Name = "TopicPicker";
+            this.TopicPicker.Size = new System.Drawing.Size(148, 28);
+            this.TopicPicker.TabIndex = 54;
             // 
-            // button1
+            // SearchButton
             // 
-            this.button1.Location = new System.Drawing.Point(27, 235);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(540, 33);
-            this.button1.TabIndex = 53;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SearchButton.Location = new System.Drawing.Point(27, 235);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(540, 33);
+            this.SearchButton.TabIndex = 53;
+            this.SearchButton.Text = "Search";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchEvent);
             // 
-            // listBox1
+            // QuestionMatches
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
-            "ExTopic     4     ExAuthor     In this question, select the headline which best c" +
-                "orresponds",
-            "ExTopic     3     ExAuthor     What phrase best describes the given paragraph",
-            "ExTopic     1     ExAuthor     Which adverb would most suitably fill the gap in t" +
-                "he following sentence?"});
-            this.listBox1.Location = new System.Drawing.Point(27, 310);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(540, 184);
-            this.listBox1.TabIndex = 52;
+            this.QuestionMatches.FormattingEnabled = true;
+            this.QuestionMatches.ItemHeight = 20;
+            this.QuestionMatches.Location = new System.Drawing.Point(27, 310);
+            this.QuestionMatches.Name = "QuestionMatches";
+            this.QuestionMatches.Size = new System.Drawing.Size(540, 184);
+            this.QuestionMatches.TabIndex = 52;
+            this.QuestionMatches.SelectedIndexChanged += new System.EventHandler(this.TestForSelectedQuestion);
             // 
             // label5
             // 
@@ -157,13 +109,14 @@
             this.label4.TabIndex = 50;
             this.label4.Text = "Authoring teacher";
             // 
-            // comboBox1
+            // AuthorPicker
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(312, 163);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(255, 28);
-            this.comboBox1.TabIndex = 49;
+            this.AuthorPicker.FormattingEnabled = true;
+            this.AuthorPicker.Location = new System.Drawing.Point(312, 163);
+            this.AuthorPicker.Name = "AuthorPicker";
+            this.AuthorPicker.Size = new System.Drawing.Size(255, 28);
+            this.AuthorPicker.TabIndex = 49;
+            this.AuthorPicker.SelectedIndexChanged += new System.EventHandler(this.TestForData);
             // 
             // label2
             // 
@@ -191,33 +144,78 @@
             this.label1.TabIndex = 47;
             this.label1.Text = "Add a question";
             // 
-            // button2
+            // AddQToAssignmentButton
             // 
-            this.button2.Location = new System.Drawing.Point(27, 512);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(267, 36);
-            this.button2.TabIndex = 61;
-            this.button2.Text = "Add question to assignment";
-            this.button2.UseVisualStyleBackColor = true;
+            this.AddQToAssignmentButton.Location = new System.Drawing.Point(27, 512);
+            this.AddQToAssignmentButton.Name = "AddQToAssignmentButton";
+            this.AddQToAssignmentButton.Size = new System.Drawing.Size(267, 36);
+            this.AddQToAssignmentButton.TabIndex = 61;
+            this.AddQToAssignmentButton.Text = "Add question to assignment";
+            this.AddQToAssignmentButton.UseVisualStyleBackColor = true;
+            this.AddQToAssignmentButton.Click += new System.EventHandler(this.AddQToAssignmentEvent);
+            // 
+            // DifficultyCheckbox4
+            // 
+            this.DifficultyCheckbox4.AutoSize = true;
+            this.DifficultyCheckbox4.Location = new System.Drawing.Point(243, 195);
+            this.DifficultyCheckbox4.Name = "DifficultyCheckbox4";
+            this.DifficultyCheckbox4.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox4.TabIndex = 65;
+            this.DifficultyCheckbox4.Text = "4";
+            this.DifficultyCheckbox4.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox4.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
+            // DifficultyCheckbox3
+            // 
+            this.DifficultyCheckbox3.AutoSize = true;
+            this.DifficultyCheckbox3.Location = new System.Drawing.Point(193, 195);
+            this.DifficultyCheckbox3.Name = "DifficultyCheckbox3";
+            this.DifficultyCheckbox3.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox3.TabIndex = 64;
+            this.DifficultyCheckbox3.Text = "3";
+            this.DifficultyCheckbox3.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox3.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
+            // DifficultyCheckbox2
+            // 
+            this.DifficultyCheckbox2.AutoSize = true;
+            this.DifficultyCheckbox2.Location = new System.Drawing.Point(243, 165);
+            this.DifficultyCheckbox2.Name = "DifficultyCheckbox2";
+            this.DifficultyCheckbox2.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox2.TabIndex = 63;
+            this.DifficultyCheckbox2.Text = "2";
+            this.DifficultyCheckbox2.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox2.CheckedChanged += new System.EventHandler(this.TestForData);
+            // 
+            // DifficultyCheckbox1
+            // 
+            this.DifficultyCheckbox1.AutoSize = true;
+            this.DifficultyCheckbox1.Location = new System.Drawing.Point(193, 165);
+            this.DifficultyCheckbox1.Name = "DifficultyCheckbox1";
+            this.DifficultyCheckbox1.Size = new System.Drawing.Size(44, 24);
+            this.DifficultyCheckbox1.TabIndex = 62;
+            this.DifficultyCheckbox1.Text = "1";
+            this.DifficultyCheckbox1.UseVisualStyleBackColor = true;
+            this.DifficultyCheckbox1.CheckedChanged += new System.EventHandler(this.TestForData);
             // 
             // AddQToAssignment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 570);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.DifficultyCheckbox4);
+            this.Controls.Add(this.DifficultyCheckbox3);
+            this.Controls.Add(this.DifficultyCheckbox2);
+            this.Controls.Add(this.DifficultyCheckbox1);
+            this.Controls.Add(this.AddQToAssignmentButton);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.radioButton4);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.TopicPicker);
+            this.Controls.Add(this.SearchButton);
+            this.Controls.Add(this.QuestionMatches);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.AuthorPicker);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "AddQToAssignment";
@@ -230,19 +228,19 @@
         #endregion
 
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ComboBox TopicPicker;
+        private System.Windows.Forms.Button SearchButton;
+        private System.Windows.Forms.ListBox QuestionMatches;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox AuthorPicker;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button AddQToAssignmentButton;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox4;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox3;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox2;
+        private System.Windows.Forms.CheckBox DifficultyCheckbox1;
     }
 }

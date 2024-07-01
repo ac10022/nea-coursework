@@ -19,6 +19,7 @@ namespace nea_ui_testing
 
         private List<User> studentsInSelectedClass;
         private List<User> teachersInSelectedClass;
+        private List<Assignment> selectedClassAssignments;
 
         public ClassManagementMenu()
         {
@@ -74,11 +75,14 @@ namespace nea_ui_testing
                 DatabaseHelper dbh = new DatabaseHelper();
                 studentsInSelectedClass = dbh.GetStudentsInClass(selectedClass);
                 teachersInSelectedClass = dbh.GetTeachersInClass(selectedClass);
+                selectedClassAssignments = dbh.GetClassAssignments(selectedClass);
 
                 StudentsInClass.DataSource = studentsInSelectedClass.Select(x => $"{x.FirstName} {x.Surname}").ToArray();
                 StudentsInClass.ClearSelected();
                 TeachersInClass.DataSource = teachersInSelectedClass.Select(x => $"{x.FirstName} {x.Surname}").ToArray();
                 TeachersInClass.ClearSelected();
+                AssignmentsListBox.DataSource = selectedClassAssignments.Select(x => $"{x.HomeworkName}\tdue {x.HomeworkDueDate}\t set by {x.Setter.FirstName} {x.Setter.Surname}").ToArray();
+                AssignmentsListBox.ClearSelected();
             }
             catch (Exception ex)
             {
