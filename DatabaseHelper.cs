@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Data.Common;
+using System.Reflection;
 
 namespace nea_prototype_full
 {
@@ -887,6 +888,25 @@ namespace nea_prototype_full
                 }
             }
             return questionList;
+        }
+
+        public bool StudentCompletedAssignmentTest(Assignment assignment, User student)
+        {
+            bool studentHasCompleted = false;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("StudentCompletedAssignmentTest", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@AssignmentId", assignment.AssignmentId));
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+
+                    conn.Open();
+                    studentHasCompleted = (bool)cmd.ExecuteScalar();
+                    conn.Close();
+                }
+            }
+            return studentHasCompleted;
         }
     }
 }

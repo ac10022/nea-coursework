@@ -30,17 +30,19 @@
         {
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.ShowCompletedButton = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button4
             // 
             this.button4.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.button4.Location = new System.Drawing.Point(474, 26);
+            this.button4.Location = new System.Drawing.Point(590, 26);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(314, 43);
+            this.button4.Size = new System.Drawing.Size(198, 43);
             this.button4.TabIndex = 42;
             this.button4.Text = "Back to dashboard";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.GoBackToDashboard);
             // 
             // label1
             // 
@@ -55,11 +57,22 @@
             this.label1.TabIndex = 39;
             this.label1.Text = "Assignments";
             // 
+            // ShowCompletedButton
+            // 
+            this.ShowCompletedButton.AutoSize = true;
+            this.ShowCompletedButton.Location = new System.Drawing.Point(337, 46);
+            this.ShowCompletedButton.Name = "ShowCompletedButton";
+            this.ShowCompletedButton.Size = new System.Drawing.Size(247, 24);
+            this.ShowCompletedButton.TabIndex = 44;
+            this.ShowCompletedButton.Text = "Show completed assignments";
+            this.ShowCompletedButton.UseVisualStyleBackColor = true;
+            // 
             // StudentAssignmentMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 601);
+            this.Controls.Add(this.ShowCompletedButton);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label1);
             this.Name = "StudentAssignmentMenu";
@@ -73,5 +86,6 @@
 
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox ShowCompletedButton;
     }
 }
