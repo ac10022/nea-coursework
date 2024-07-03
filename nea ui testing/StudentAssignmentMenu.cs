@@ -37,7 +37,7 @@ namespace nea_ui_testing
                     foreach (Assignment assignment in dbh.GetClassAssignments(_class))
                     {
                         // only show assignments which are incomplete
-                        if (!dbh.StudentCompletedAssignmentTest(assignment, Program.loggedInUser))
+                        if (dbh.StudentCompletedAssignmentTest(assignment, Program.loggedInUser) != (double)1)
                         {
                             assignmentList.Add(assignment);
                         }        
@@ -55,7 +55,7 @@ namespace nea_ui_testing
                 Assignment currentAssignment = assignmentList[i];
                 bool studentHasCompleted = false;
 
-                if (showCompleted) studentHasCompleted = dbh.StudentCompletedAssignmentTest(currentAssignment, Program.loggedInUser);
+                if (showCompleted) studentHasCompleted = dbh.StudentCompletedAssignmentTest(currentAssignment, Program.loggedInUser) == (double)1;
 
                 Label newLabel = new Label();
 
@@ -74,7 +74,7 @@ namespace nea_ui_testing
                 newLabel.Name = $"label{i + 1}";
                 newLabel.Size = new System.Drawing.Size(637, 28);
                 newLabel.TabIndex = 44 + 2 * i;
-                newLabel.Text = $"{currentAssignment.HomeworkName} \tset by {currentAssignment.Setter.FirstName} {currentAssignment.Setter.Surname} \tdue {currentAssignment.HomeworkDueDate}";
+                newLabel.Text = $"{currentAssignment.HomeworkName}    set by {currentAssignment.Setter.FirstName}    due {currentAssignment.HomeworkDueDate.ToShortDateString()}";
 
                 Controls.Add(newLabel);
 

@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Data.Common;
 using System.Reflection;
+using nea_ui_testing;
 
 namespace nea_prototype_full
 {
@@ -890,9 +891,9 @@ namespace nea_prototype_full
             return questionList;
         }
 
-        public bool StudentCompletedAssignmentTest(Assignment assignment, User student)
+        public double StudentCompletedAssignmentTest(Assignment assignment, User student)
         {
-            bool studentHasCompleted = false;
+            double studentHasCompleted = 0;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("StudentCompletedAssignmentTest", conn))
@@ -902,11 +903,110 @@ namespace nea_prototype_full
                     cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
 
                     conn.Open();
-                    studentHasCompleted = (bool)cmd.ExecuteScalar();
+                    studentHasCompleted = (double)cmd.ExecuteScalar();
                     conn.Close();
                 }
             }
             return studentHasCompleted;
+        }
+
+        /// <summary>
+        /// Given an assignment, fetches questions and their corresponding correctness.
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns>A dictionary: key containing the question, value containing the amount of times it was correctly answered for that assignment.</returns>
+        public Dictionary<Question, int> PerformancePerAssignmentQuestion(Assignment assignment)
+        {
+            Dictionary<Question, int> questionCorrectness = new Dictionary<Question, int>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("PerformancePerAssignmentQuestion", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@AssignmentId", assignment.AssignmentId));
+
+                    conn.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            // 0 QC.CorrectTally, 1 Q.QuestionId, 2 Q.Difficulty, 3 Q.QuContent, 4 Q.IsMC, 5 Q.Answer, 6 Q.AnswerKey, 7 Q.MCAnswers, 8 A.AuthorId, 9 A.FirstName, 10 A.Surname, 11 A.Email, 12 ST.TopicId, 13 ST.TopicName, 14 ST.VideoLink, 15 ST.SubjectId, 16 ST.SubjectName
+                            Question question = new Question(questionId: (int)reader[1], difficulty: (int)reader[2], questionContent: (string)reader[3], answer: ((string)reader[5]).Split(',').ToList(), author: new User((int)reader[8], (string)reader[9], (string)reader[10], (string)reader[11], _UserType.Teacher), answerKey: (string)reader[6], topic: new Topic((int)reader[12], (string)reader[13], (string)reader[14], new Subject((int)reader[15], (string)reader[16])));
+
+                            // if multiple-choice
+                            if ((bool)reader[4]) question.ForceMc(((string)reader[7]).Split(',').ToList());
+
+                            questionCorrectness.Add(question, (int)reader[0]);
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return questionCorrectness;
+        }
+
+        public Dictionary<Question, int> PercentagePerAssignmentQuestion(Assignment assignment)
+        {
+            Dictionary<Question, int> questionCorrectness = new Dictionary<Question, int>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("PerformancePerAssignmentQuestion", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@AssignmentId", assignment.AssignmentId));
+
+                    conn.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            // 0 QC.CorrectTally, 1 Q.QuestionId, 2 Q.Difficulty, 3 Q.QuContent, 4 Q.IsMC, 5 Q.Answer, 6 Q.AnswerKey, 7 Q.MCAnswers, 8 A.AuthorId, 9 A.FirstName, 10 A.Surname, 11 A.Email, 12 ST.TopicId, 13 ST.TopicName, 14 ST.VideoLink, 15 ST.SubjectId, 16 ST.SubjectName
+                            Question question = new Question(questionId: (int)reader[1], difficulty: (int)reader[2], questionContent: (string)reader[3], answer: ((string)reader[5]).Split(',').ToList(), author: new User((int)reader[8], (string)reader[9], (string)reader[10], (string)reader[11], _UserType.Teacher), answerKey: (string)reader[6], topic: new Topic((int)reader[12], (string)reader[13], (string)reader[14], new Subject((int)reader[15], (string)reader[16])));
+
+                            // if multiple-choice
+                            if ((bool)reader[4]) question.ForceMc(((string)reader[7]).Split(',').ToList());
+
+                            questionCorrectness.Add(question, (int)(Math.Round(Convert.ToDouble((int)reader[0]) / Convert.ToDouble((int)reader[17]), 3) * 100));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return questionCorrectness;
+        }
+
+        public List<Assignment> GetAllAssignmentsOfStudent(User student)
+        {
+            List<Assignment> assignmentList = new List<Assignment>();
+            foreach (Class _class in GetClassesOfStudent(student)) assignmentList.AddRange(GetClassAssignments(_class));
+            return assignmentList;
+        }
+
+        public double StudentCorrectnessAssignmentTest(Assignment assignment, User student)
+        {
+            double studentCorrectness = 0;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("StudentCorrectnessAssignmentTest", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@AssignmentId", assignment.AssignmentId));
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+
+                    conn.Open();
+                    studentCorrectness = (double)cmd.ExecuteScalar();
+                    conn.Close();
+                }
+            }
+            return studentCorrectness;
         }
     }
 }

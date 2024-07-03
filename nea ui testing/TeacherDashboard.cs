@@ -80,5 +80,18 @@ namespace nea_ui_testing
             };
             am.Show();
         }
+
+        private void GoToTeacherOverview(object sender, EventArgs e)
+        {
+            Hide();
+            TeacherOverview to = new TeacherOverview();
+
+            // form closed events
+            to.Closed += (s, args) =>
+            {
+                Show();
+            };
+            to.Show();
+        }
     }
 }

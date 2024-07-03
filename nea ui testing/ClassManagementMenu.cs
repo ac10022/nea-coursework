@@ -83,6 +83,16 @@ namespace nea_ui_testing
                 TeachersInClass.ClearSelected();
                 AssignmentsListBox.DataSource = selectedClassAssignments.Select(x => $"{x.HomeworkName}\tdue {x.HomeworkDueDate}\t set by {x.Setter.FirstName} {x.Setter.Surname}").ToArray();
                 AssignmentsListBox.ClearSelected();
+
+                // DEBUG
+
+                StatisticsHelper sh = new StatisticsHelper();
+                foreach (KeyValuePair<Question, double> kvp in sh.AnalyseAssignmentPerformace(selectedClassAssignments.Last()))
+                {
+                    Console.WriteLine($"{kvp.Key.QuestionContent}\t{kvp.Value}");
+                }
+
+
             }
             catch (Exception ex)
             {

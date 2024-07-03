@@ -24,8 +24,8 @@ namespace nea_ui_testing
             LoggedOutLabel.Visible = false;
 
             // FOR DEBUGGING
-            EmailField.Text = @"udayjolly@gmail.com";
-            PasswordField.Text = "Password123";
+            EmailField.Text = @"test@gmail.com";
+            PasswordField.Text = "password123";
             //
         }
 

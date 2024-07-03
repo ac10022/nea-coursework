@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label19.Text" xml:space="preserve">
+  <data name="TopicAnalysisField.Text" xml:space="preserve">
     <value>For improvement:
 - [TOPIC]: [SCALED Z SCORE]
 - [TOPIC]: [SCALED Z SCORE]

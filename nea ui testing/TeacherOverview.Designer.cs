@@ -33,27 +33,27 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.ClassPicker = new System.Windows.Forms.ComboBox();
+            this.StudentsInClass = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.LastLoginField = new System.Windows.Forms.Label();
+            this.NameField = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.SAP_1 = new System.Windows.Forms.Label();
+            this.SAP_2 = new System.Windows.Forms.Label();
+            this.SAP_3 = new System.Windows.Forms.Label();
+            this.SAP_5 = new System.Windows.Forms.Label();
+            this.SAP_4 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.ClassNameField = new System.Windows.Forms.Label();
+            this.CorrectnessPerQuestion = new System.Windows.Forms.ListBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.AssignmentPicker = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.TopicAnalysisField = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button4
@@ -65,6 +65,7 @@
             this.button4.TabIndex = 27;
             this.button4.Text = "Back to dashboard";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.GoBackToDashboard);
             // 
             // label2
             // 
@@ -100,28 +101,24 @@
             this.label3.Size = new System.Drawing.Size(48, 20);
             this.label3.TabIndex = 43;
             this.label3.Text = "Class";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // comboBox2
+            // ClassPicker
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(25, 161);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(148, 28);
-            this.comboBox2.TabIndex = 42;
+            this.ClassPicker.FormattingEnabled = true;
+            this.ClassPicker.Location = new System.Drawing.Point(25, 161);
+            this.ClassPicker.Name = "ClassPicker";
+            this.ClassPicker.Size = new System.Drawing.Size(148, 28);
+            this.ClassPicker.TabIndex = 42;
             // 
-            // listBox2
+            // StudentsInClass
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 20;
-            this.listBox2.Items.AddRange(new object[] {
-            "Example Student 1",
-            "Example Student 2",
-            "Example Student 3"});
-            this.listBox2.Location = new System.Drawing.Point(25, 224);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(148, 324);
-            this.listBox2.TabIndex = 45;
+            this.StudentsInClass.FormattingEnabled = true;
+            this.StudentsInClass.ItemHeight = 20;
+            this.StudentsInClass.Location = new System.Drawing.Point(25, 224);
+            this.StudentsInClass.Name = "StudentsInClass";
+            this.StudentsInClass.Size = new System.Drawing.Size(148, 324);
+            this.StudentsInClass.TabIndex = 45;
+            this.StudentsInClass.SelectedIndexChanged += new System.EventHandler(this.StudentSelected);
             // 
             // label4
             // 
@@ -141,23 +138,23 @@
             this.button2.Text = "See student question history";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // label7
+            // LastLoginField
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(199, 215);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(237, 20);
-            this.label7.TabIndex = 48;
-            this.label7.Text = "Last Log-in: [LASTLOGINDATE]";
+            this.LastLoginField.AutoSize = true;
+            this.LastLoginField.Location = new System.Drawing.Point(199, 215);
+            this.LastLoginField.Name = "LastLoginField";
+            this.LastLoginField.Size = new System.Drawing.Size(237, 20);
+            this.LastLoginField.TabIndex = 48;
+            this.LastLoginField.Text = "Last Log-in: [LASTLOGINDATE]";
             // 
-            // label8
+            // NameField
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(199, 184);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 20);
-            this.label8.TabIndex = 47;
-            this.label8.Text = "Name: [NAME]";
+            this.NameField.AutoSize = true;
+            this.NameField.Location = new System.Drawing.Point(199, 184);
+            this.NameField.Name = "NameField";
+            this.NameField.Size = new System.Drawing.Size(113, 20);
+            this.NameField.TabIndex = 47;
+            this.NameField.Text = "Name: [NAME]";
             // 
             // label6
             // 
@@ -185,53 +182,53 @@
             this.label5.TabIndex = 53;
             this.label5.Text = "Performance";
             // 
-            // label10
+            // SAP_1
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.label10.Location = new System.Drawing.Point(199, 307);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(242, 20);
-            this.label10.TabIndex = 54;
-            this.label10.Text = "[ASSIGNMENTNAME]: [SCORE]";
+            this.SAP_1.AutoSize = true;
+            this.SAP_1.BackColor = System.Drawing.Color.Transparent;
+            this.SAP_1.Location = new System.Drawing.Point(199, 307);
+            this.SAP_1.Name = "SAP_1";
+            this.SAP_1.Size = new System.Drawing.Size(242, 20);
+            this.SAP_1.TabIndex = 54;
+            this.SAP_1.Text = "[ASSIGNMENTNAME]: [SCORE]";
             // 
-            // label9
+            // SAP_2
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.label9.Location = new System.Drawing.Point(200, 341);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(242, 20);
-            this.label9.TabIndex = 55;
-            this.label9.Text = "[ASSIGNMENTNAME]: [SCORE]";
+            this.SAP_2.AutoSize = true;
+            this.SAP_2.BackColor = System.Drawing.Color.Transparent;
+            this.SAP_2.Location = new System.Drawing.Point(200, 341);
+            this.SAP_2.Name = "SAP_2";
+            this.SAP_2.Size = new System.Drawing.Size(242, 20);
+            this.SAP_2.TabIndex = 55;
+            this.SAP_2.Text = "[ASSIGNMENTNAME]: [SCORE]";
             // 
-            // label11
+            // SAP_3
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(200, 375);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(242, 20);
-            this.label11.TabIndex = 56;
-            this.label11.Text = "[ASSIGNMENTNAME]: [SCORE]";
+            this.SAP_3.AutoSize = true;
+            this.SAP_3.Location = new System.Drawing.Point(200, 375);
+            this.SAP_3.Name = "SAP_3";
+            this.SAP_3.Size = new System.Drawing.Size(242, 20);
+            this.SAP_3.TabIndex = 56;
+            this.SAP_3.Text = "[ASSIGNMENTNAME]: [SCORE]";
             // 
-            // label12
+            // SAP_5
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(200, 444);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(242, 20);
-            this.label12.TabIndex = 58;
-            this.label12.Text = "[ASSIGNMENTNAME]: [SCORE]";
+            this.SAP_5.AutoSize = true;
+            this.SAP_5.Location = new System.Drawing.Point(200, 444);
+            this.SAP_5.Name = "SAP_5";
+            this.SAP_5.Size = new System.Drawing.Size(242, 20);
+            this.SAP_5.TabIndex = 58;
+            this.SAP_5.Text = "[ASSIGNMENTNAME]: [SCORE]";
             // 
-            // label13
+            // SAP_4
             // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.label13.Location = new System.Drawing.Point(200, 410);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(242, 20);
-            this.label13.TabIndex = 57;
-            this.label13.Text = "[ASSIGNMENTNAME]: [SCORE]";
+            this.SAP_4.AutoSize = true;
+            this.SAP_4.BackColor = System.Drawing.Color.Transparent;
+            this.SAP_4.Location = new System.Drawing.Point(200, 410);
+            this.SAP_4.Name = "SAP_4";
+            this.SAP_4.Size = new System.Drawing.Size(242, 20);
+            this.SAP_4.TabIndex = 57;
+            this.SAP_4.Text = "[ASSIGNMENTNAME]: [SCORE]";
             // 
             // label14
             // 
@@ -246,28 +243,28 @@
             this.label14.TabIndex = 59;
             this.label14.Text = "Class performance";
             // 
-            // label16
+            // ClassNameField
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(563, 184);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(156, 20);
-            this.label16.TabIndex = 60;
-            this.label16.Text = "Class Name: [NAME]";
+            this.ClassNameField.AutoSize = true;
+            this.ClassNameField.Location = new System.Drawing.Point(563, 184);
+            this.ClassNameField.Name = "ClassNameField";
+            this.ClassNameField.Size = new System.Drawing.Size(156, 20);
+            this.ClassNameField.TabIndex = 60;
+            this.ClassNameField.Text = "Class Name: [NAME]";
             // 
-            // listBox1
+            // CorrectnessPerQuestion
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
+            this.CorrectnessPerQuestion.FormattingEnabled = true;
+            this.CorrectnessPerQuestion.ItemHeight = 20;
+            this.CorrectnessPerQuestion.Items.AddRange(new object[] {
             "Q1   94%",
             "Q2   65%",
             "Q3   100%",
             "Q4   8%"});
-            this.listBox1.Location = new System.Drawing.Point(567, 307);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(148, 224);
-            this.listBox1.TabIndex = 63;
+            this.CorrectnessPerQuestion.Location = new System.Drawing.Point(567, 307);
+            this.CorrectnessPerQuestion.Name = "CorrectnessPerQuestion";
+            this.CorrectnessPerQuestion.Size = new System.Drawing.Size(148, 224);
+            this.CorrectnessPerQuestion.TabIndex = 63;
             // 
             // label17
             // 
@@ -287,13 +284,13 @@
             this.label15.TabIndex = 65;
             this.label15.Text = "Assignment";
             // 
-            // comboBox1
+            // AssignmentPicker
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(567, 237);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(148, 28);
-            this.comboBox1.TabIndex = 64;
+            this.AssignmentPicker.FormattingEnabled = true;
+            this.AssignmentPicker.Location = new System.Drawing.Point(567, 237);
+            this.AssignmentPicker.Name = "AssignmentPicker";
+            this.AssignmentPicker.Size = new System.Drawing.Size(148, 28);
+            this.AssignmentPicker.TabIndex = 64;
             // 
             // label18
             // 
@@ -308,42 +305,42 @@
             this.label18.TabIndex = 66;
             this.label18.Text = "By topic";
             // 
-            // label19
+            // TopicAnalysisField
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(779, 330);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(229, 180);
-            this.label19.TabIndex = 67;
-            this.label19.Text = resources.GetString("label19.Text");
+            this.TopicAnalysisField.AutoSize = true;
+            this.TopicAnalysisField.Location = new System.Drawing.Point(779, 330);
+            this.TopicAnalysisField.Name = "TopicAnalysisField";
+            this.TopicAnalysisField.Size = new System.Drawing.Size(229, 180);
+            this.TopicAnalysisField.TabIndex = 67;
+            this.TopicAnalysisField.Text = resources.GetString("TopicAnalysisField.Text");
             // 
             // TeacherOverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1078, 568);
-            this.Controls.Add(this.label19);
+            this.Controls.Add(this.TopicAnalysisField);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.AssignmentPicker);
+            this.Controls.Add(this.CorrectnessPerQuestion);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
+            this.Controls.Add(this.ClassNameField);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label10);
+            this.Controls.Add(this.SAP_5);
+            this.Controls.Add(this.SAP_4);
+            this.Controls.Add(this.SAP_3);
+            this.Controls.Add(this.SAP_2);
+            this.Controls.Add(this.SAP_1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.LastLoginField);
+            this.Controls.Add(this.NameField);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.StudentsInClass);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.ClassPicker);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -360,26 +357,26 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ComboBox ClassPicker;
+        private System.Windows.Forms.ListBox StudentsInClass;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label LastLoginField;
+        private System.Windows.Forms.Label NameField;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label SAP_1;
+        private System.Windows.Forms.Label SAP_2;
+        private System.Windows.Forms.Label SAP_3;
+        private System.Windows.Forms.Label SAP_5;
+        private System.Windows.Forms.Label SAP_4;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label ClassNameField;
+        private System.Windows.Forms.ListBox CorrectnessPerQuestion;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox AssignmentPicker;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label TopicAnalysisField;
     }
 }
