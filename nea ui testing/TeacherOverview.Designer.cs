@@ -36,7 +36,7 @@
             this.ClassPicker = new System.Windows.Forms.ComboBox();
             this.StudentsInClass = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.SeeQHistoryButton = new System.Windows.Forms.Button();
             this.LastLoginField = new System.Windows.Forms.Label();
             this.NameField = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -129,14 +129,15 @@
             this.label4.TabIndex = 44;
             this.label4.Text = "Students";
             // 
-            // button2
+            // SeeQHistoryButton
             // 
-            this.button2.Location = new System.Drawing.Point(203, 505);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(254, 43);
-            this.button2.TabIndex = 52;
-            this.button2.Text = "See student question history";
-            this.button2.UseVisualStyleBackColor = true;
+            this.SeeQHistoryButton.Location = new System.Drawing.Point(203, 505);
+            this.SeeQHistoryButton.Name = "SeeQHistoryButton";
+            this.SeeQHistoryButton.Size = new System.Drawing.Size(254, 43);
+            this.SeeQHistoryButton.TabIndex = 52;
+            this.SeeQHistoryButton.Text = "See student question history";
+            this.SeeQHistoryButton.UseVisualStyleBackColor = true;
+            this.SeeQHistoryButton.Click += new System.EventHandler(this.SeeStudentHistory);
             // 
             // LastLoginField
             // 
@@ -333,7 +334,7 @@
             this.Controls.Add(this.SAP_2);
             this.Controls.Add(this.SAP_1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.SeeQHistoryButton);
             this.Controls.Add(this.LastLoginField);
             this.Controls.Add(this.NameField);
             this.Controls.Add(this.label6);
@@ -360,7 +361,7 @@
         private System.Windows.Forms.ComboBox ClassPicker;
         private System.Windows.Forms.ListBox StudentsInClass;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button SeeQHistoryButton;
         private System.Windows.Forms.Label LastLoginField;
         private System.Windows.Forms.Label NameField;
         private System.Windows.Forms.Label label6;

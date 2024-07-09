@@ -741,7 +741,7 @@ namespace nea_prototype_full
             return imageList;
         }
 
-        public void InsertStudentQuestionAttempt(Question question, User student,  bool wasCorrect, string studentAnswer, Assignment assignment = null)
+        public void InsertStudentQuestionAttempt(Question question, User student,  bool wasCorrect, string studentAnswer, DateTime timeQOpened, Assignment assignment = null)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -754,6 +754,7 @@ namespace nea_prototype_full
                     cmd.Parameters.Add(new SqlParameter("@TopicId", question.Topic.TopicId));
                     cmd.Parameters.Add(new SqlParameter("@WasCorrect", wasCorrect));
                     cmd.Parameters.Add(new SqlParameter("@StudentAnswer", studentAnswer));
+                    cmd.Parameters.Add(new SqlParameter("@TimeQuestionOpened", timeQOpened));
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -762,7 +763,7 @@ namespace nea_prototype_full
             }
         }
 
-        public void InsertStudentQuestionAttemptWithTopic(Topic topic, User student, bool wasCorrect, string studentAnswer, Assignment assignment = null)
+        public void InsertStudentQuestionAttemptWithTopic(Topic topic, User student, bool wasCorrect, string studentAnswer, DateTime timeQOpened, Assignment assignment = null)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -774,6 +775,9 @@ namespace nea_prototype_full
                     cmd.Parameters.Add(new SqlParameter("@TopicId", topic.TopicId));
                     cmd.Parameters.Add(new SqlParameter("@WasCorrect", wasCorrect));
                     cmd.Parameters.Add(new SqlParameter("@StudentAnswer", studentAnswer));
+                    cmd.Parameters.Add(new SqlParameter("@TimeQuestionOpened", timeQOpened));
+
+                    //
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -1007,6 +1011,86 @@ namespace nea_prototype_full
                 }
             }
             return studentCorrectness;
+        }
+
+        public List<QuestionAttempt> GetStudentQuestionAttempts(User student)
+        {
+            List<QuestionAttempt> questionAttempts = new List<QuestionAttempt>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetStudentQuestionAttempts", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Question question = null;
+                            
+                            // if a question is attached to the attempt, i.e. not an attempt of a rgq
+                            if (reader[0].GetType().Name != "DBNull")
+                            {
+                                question = new Question(questionId: (int)reader[0], difficulty: (int)reader[1], questionContent: (string)reader[2], answer: ((string)reader[4]).Split(',').ToList(), author: new User((int)reader[7], (string)reader[8], (string)reader[9], (string)reader[10], _UserType.Teacher), answerKey: (string)reader[5], topic: new Topic((int)reader[11], (string)reader[12], (string)reader[13], new Subject((int)reader[14], (string)reader[15])));
+
+                                // if multiple-choice
+                                if ((bool)reader[3]) question.ForceMc(((string)reader[6]).Split(',').ToList());
+                            }
+
+
+                            // 0 QR.QuestionId, 1 QR.Difficulty, 2 QR.QuContent, 3 QR.IsMC, 4 QR.Answer, 5 QR.AnswerKey, 6 QR.MCAnswers, 7 QR.AuthorId, 8 QR.FirstName, 9 QR.Surname, 10 QR.Email, 11 QR.TopicId, 12 QR.TopicName, 13 QR.VideoLink, 14 QR.SubjectId, 15 QR.SubjectName, 16 QA.AttemptId, 17 QA.WasCorrect, 18 QA.StudentAns, 19 QA.TimeOfAtt, 20 QA.TimeQuOpened
+
+                            DateTime timeQuestionOpened = reader[20].GetType().Name == "DBNull" ? DateTime.MinValue : (DateTime)reader[20];
+
+                            QuestionAttempt questionAttempt = new QuestionAttempt((int)reader[16], (bool)reader[17], (string)reader[18], (DateTime)reader[19], timeQuestionOpened, student, question);
+
+                            // if rgq
+                            if (reader[0].GetType().Name == "DBNull")
+                            {
+                                questionAttempt.AppendPseudotopic((_Topic)((int)reader[21]));
+                            }
+
+                            questionAttempts.Add(questionAttempt);
+
+                            //new Topic((int)reader[11], (string)reader[12], (string)reader[13], new Subject((int)reader[14], (string)reader[15]))
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return questionAttempts;
+        }
+
+        public Topic GetTopicFromId(int topicId)
+        {
+            Topic topic = null;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT TopicId, TopicName, VideoLink, Subjects.SubjectId, Subjects.SubjectName FROM Topics INNER JOIN Subjects ON Topics.SubjectId = Subjects.SubjectId WHERE TopicId = @TopicId";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@TopicId", topicId));
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            topic = new Topic((int)reader[0], (string)reader[1], (string)reader[2], new Subject((int)reader[3], (string)reader[4]));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return topic;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace nea_ui_testing
         private bool canSubmit = false;
         private Assignment assignmentRef = null;
 
+        private DateTime timeQuestionOpened = DateTime.MinValue;
+
         private List<Image> questionImagesRef;
 
         private Image originalImage;
@@ -35,6 +37,8 @@ namespace nea_ui_testing
             questionReference.RemoveAt(0);
             questionList = questionReference;
             this.assignmentRef = assignmentRef;
+
+            timeQuestionOpened = DateTime.Now;
 
             MCA_CONTROLS = new Control[] { MCA_D, MCA_C, MCA_B, MCA_A, MCALabel };
             FI_CONTROLS = new Control[] { FI_4, FI_FIELD4, FI_3, FI_FIELD3, FI_2, FI_FIELD2, FI_1, FI_FIELD1, FILabel };
@@ -219,11 +223,11 @@ namespace nea_ui_testing
                 DatabaseHelper dbh = new DatabaseHelper();
                 if (questionRef is RandomlyGeneratedQuestion)
                 {
-                    dbh.InsertStudentQuestionAttemptWithTopic(questionRef.Topic, Program.loggedInUser, wasCorrect, wholeStudentAnswer, assignmentRef);
+                    dbh.InsertStudentQuestionAttemptWithTopic(questionRef.Topic, Program.loggedInUser, wasCorrect, wholeStudentAnswer, timeQuestionOpened, assignmentRef);
                 }
                 else
                 {
-                    dbh.InsertStudentQuestionAttempt(questionRef, Program.loggedInUser, wasCorrect, wholeStudentAnswer, assignmentRef);
+                    dbh.InsertStudentQuestionAttempt(questionRef, Program.loggedInUser, wasCorrect, wholeStudentAnswer, timeQuestionOpened, assignmentRef);
                 }
 
                 SubmitButton.Enabled = false;

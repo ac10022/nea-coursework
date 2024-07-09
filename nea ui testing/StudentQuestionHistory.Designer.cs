@@ -28,33 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.AttemptList = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.AnalysisLabel = new System.Windows.Forms.Label();
+            this.ContentLabel = new System.Windows.Forms.Label();
+            this.DifficultyLabel = new System.Windows.Forms.Label();
+            this.TopicLabel = new System.Windows.Forms.Label();
+            this.AnswerLabel = new System.Windows.Forms.Label();
+            this.StudentAnswerLabel = new System.Windows.Forms.Label();
+            this.TimeTakenLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // listBox1
+            // AttemptList
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
-            "✓ [QUESTIONID] In this question...",
-            "✗ [QUESTIONID] In this question...",
-            "✗ [QUESTIONID] In this question...",
-            "✓ [QUESTIONID] In this question..."});
-            this.listBox1.Location = new System.Drawing.Point(23, 106);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(393, 444);
-            this.listBox1.TabIndex = 31;
+            this.AttemptList.FormattingEnabled = true;
+            this.AttemptList.ItemHeight = 20;
+            this.AttemptList.Items.AddRange(new object[] {
+            ""});
+            this.AttemptList.Location = new System.Drawing.Point(23, 106);
+            this.AttemptList.Name = "AttemptList";
+            this.AttemptList.Size = new System.Drawing.Size(393, 444);
+            this.AttemptList.TabIndex = 31;
+            this.AttemptList.SelectedIndexChanged += new System.EventHandler(this.QuestionSelectEvent);
             // 
             // label5
             // 
@@ -85,7 +83,7 @@
             this.label14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label14.Font = new System.Drawing.Font("Rockwell Extra Bold", 14F, System.Drawing.FontStyle.Bold);
             this.label14.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label14.Location = new System.Drawing.Point(438, 275);
+            this.label14.Location = new System.Drawing.Point(438, 303);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(338, 34);
             this.label14.TabIndex = 60;
@@ -98,92 +96,92 @@
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label2.Font = new System.Drawing.Font("Rockwell Extra Bold", 14F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(438, 106);
+            this.label2.Location = new System.Drawing.Point(438, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(411, 34);
             this.label2.TabIndex = 61;
             this.label2.Text = "Topics to improve upon";
             // 
-            // label19
+            // AnalysisLabel
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(434, 148);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(190, 100);
-            this.label19.TabIndex = 68;
-            this.label19.Text = "For improvement:\r\n[TOPIC], [TOPIC], [TOPIC]\r\n\r\nStrengths:\r\n[TOPIC], [TOPIC], [TOP" +
+            this.AnalysisLabel.AutoSize = true;
+            this.AnalysisLabel.Location = new System.Drawing.Point(434, 112);
+            this.AnalysisLabel.Name = "AnalysisLabel";
+            this.AnalysisLabel.Size = new System.Drawing.Size(190, 100);
+            this.AnalysisLabel.TabIndex = 68;
+            this.AnalysisLabel.Text = "For improvement:\r\n[TOPIC], [TOPIC], [TOPIC]\r\n\r\nStrengths:\r\n[TOPIC], [TOPIC], [TOP" +
     "IC]";
             // 
-            // label11
+            // ContentLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(434, 384);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(311, 20);
-            this.label11.TabIndex = 73;
-            this.label11.Text = "Content preview: [TRUNCATEDCONTENT]";
+            this.ContentLabel.AutoSize = true;
+            this.ContentLabel.Location = new System.Drawing.Point(434, 412);
+            this.ContentLabel.Name = "ContentLabel";
+            this.ContentLabel.Size = new System.Drawing.Size(311, 20);
+            this.ContentLabel.TabIndex = 73;
+            this.ContentLabel.Text = "Content preview: [TRUNCATEDCONTENT]";
             // 
-            // label10
+            // DifficultyLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(434, 354);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(179, 20);
-            this.label10.TabIndex = 72;
-            this.label10.Text = "Difficulty: [DIFFICULTY]";
+            this.DifficultyLabel.AutoSize = true;
+            this.DifficultyLabel.Location = new System.Drawing.Point(434, 382);
+            this.DifficultyLabel.Name = "DifficultyLabel";
+            this.DifficultyLabel.Size = new System.Drawing.Size(179, 20);
+            this.DifficultyLabel.TabIndex = 72;
+            this.DifficultyLabel.Text = "Difficulty: [DIFFICULTY]";
             // 
-            // label8
+            // TopicLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(434, 325);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(110, 20);
-            this.label8.TabIndex = 69;
-            this.label8.Text = "Topic: [TOPIC]";
+            this.TopicLabel.AutoSize = true;
+            this.TopicLabel.Location = new System.Drawing.Point(434, 353);
+            this.TopicLabel.Name = "TopicLabel";
+            this.TopicLabel.Size = new System.Drawing.Size(110, 20);
+            this.TopicLabel.TabIndex = 69;
+            this.TopicLabel.Text = "Topic: [TOPIC]";
             // 
-            // label3
+            // AnswerLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(434, 437);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 20);
-            this.label3.TabIndex = 74;
-            this.label3.Text = "Answer: [ANSWER]";
+            this.AnswerLabel.AutoSize = true;
+            this.AnswerLabel.Location = new System.Drawing.Point(434, 465);
+            this.AnswerLabel.Name = "AnswerLabel";
+            this.AnswerLabel.Size = new System.Drawing.Size(149, 20);
+            this.AnswerLabel.TabIndex = 74;
+            this.AnswerLabel.Text = "Answer: [ANSWER]";
             // 
-            // label4
+            // StudentAnswerLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.label4.Location = new System.Drawing.Point(434, 466);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(283, 20);
-            this.label4.TabIndex = 75;
-            this.label4.Text = "Student answer: [STUDENTANSWER]";
+            this.StudentAnswerLabel.AutoSize = true;
+            this.StudentAnswerLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.StudentAnswerLabel.Location = new System.Drawing.Point(434, 494);
+            this.StudentAnswerLabel.Name = "StudentAnswerLabel";
+            this.StudentAnswerLabel.Size = new System.Drawing.Size(283, 20);
+            this.StudentAnswerLabel.TabIndex = 75;
+            this.StudentAnswerLabel.Text = "Student answer: [STUDENTANSWER]";
             // 
-            // label6
+            // TimeTakenLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(434, 498);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(193, 20);
-            this.label6.TabIndex = 76;
-            this.label6.Text = "Time taken: [TIMETAKEN]";
+            this.TimeTakenLabel.AutoSize = true;
+            this.TimeTakenLabel.Location = new System.Drawing.Point(434, 526);
+            this.TimeTakenLabel.Name = "TimeTakenLabel";
+            this.TimeTakenLabel.Size = new System.Drawing.Size(193, 20);
+            this.TimeTakenLabel.TabIndex = 76;
+            this.TimeTakenLabel.Text = "Time taken: [TIMETAKEN]";
             // 
             // StudentQuestionHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(872, 571);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label19);
+            this.Controls.Add(this.TimeTakenLabel);
+            this.Controls.Add(this.StudentAnswerLabel);
+            this.Controls.Add(this.AnswerLabel);
+            this.Controls.Add(this.ContentLabel);
+            this.Controls.Add(this.DifficultyLabel);
+            this.Controls.Add(this.TopicLabel);
+            this.Controls.Add(this.AnalysisLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.AttemptList);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
             this.Name = "StudentQuestionHistory";
@@ -195,17 +193,17 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox AttemptList;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label AnalysisLabel;
+        private System.Windows.Forms.Label ContentLabel;
+        private System.Windows.Forms.Label DifficultyLabel;
+        private System.Windows.Forms.Label TopicLabel;
+        private System.Windows.Forms.Label AnswerLabel;
+        private System.Windows.Forms.Label StudentAnswerLabel;
+        private System.Windows.Forms.Label TimeTakenLabel;
     }
 }

@@ -8,6 +8,12 @@ using System.Windows.Forms;
 
 namespace nea_prototype_full
 {
+    enum _QuestionType
+    {
+        FreeInput,
+        MultipleChoice
+    }
+
     public class Question
     {
         // fields

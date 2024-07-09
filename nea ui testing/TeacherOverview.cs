@@ -31,6 +31,7 @@ namespace nea_ui_testing
             ClassPicker.SelectedIndex = -1;
 
             ClassPicker.SelectedIndexChanged += ClassSelected;
+            SeeQHistoryButton.Enabled = false;
 
             SAPs = new Control[] { SAP_5, SAP_4, SAP_3, SAP_2, SAP_1 };
         }
@@ -47,6 +48,7 @@ namespace nea_ui_testing
                 if (StudentsInClass.SelectedIndex != -1)
                 {
                     User selectedStudent = studentsInSelectedClass[StudentsInClass.SelectedIndex];
+                    SeeQHistoryButton.Enabled = true;
 
                     NameField.Text = $"Name: {selectedStudent.FirstName} {selectedStudent.Surname}";
                     LastLoginField.Text = $"Last log-in: {dbh.GetLastLoginOfStudent(selectedStudent).ToShortDateString()}";
@@ -99,7 +101,10 @@ namespace nea_ui_testing
                             SAPs[4 - i].Text = $"{studentAssignments[i].HomeworkName}\t {studentPerformance}%";
                         }
                     }
-
+                }
+                else
+                {
+                    SeeQHistoryButton.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -203,6 +208,19 @@ namespace nea_ui_testing
             c.Enabled = true;
             c.BringToFront();
             c.BackColor = Color.Transparent;
+        }
+
+        private void SeeStudentHistory(object sender, EventArgs e)
+        {
+            Hide();
+            StudentQuestionHistory sqh = new StudentQuestionHistory(studentsInSelectedClass[StudentsInClass.SelectedIndex]);
+
+            // form closed events
+            sqh.Closed += (s, args) =>
+            {
+                Show();
+            };
+            sqh.Show();
         }
     }
 }

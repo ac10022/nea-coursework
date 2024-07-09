@@ -28,6 +28,7 @@ namespace nea_prototype_full
         AveragesRangesModeMedian,
         PerimeterAreaVolume
     }
+
     public class Topic
     {
         private int topicId;
