@@ -97,13 +97,7 @@ namespace nea_ui_testing
             Question selectedQuestion = questionsFromSearch[QuestionMatches.SelectedIndex];
 
             Hide();
-            QuestionAttemptMenu qam = new QuestionAttemptMenu(new List<Question> { selectedQuestion });
-
-            // form closed events
-            qam.Closed += (s, args) =>
-            {
-                Show();
-            };
+            QuestionAttemptMenu qam = new QuestionAttemptMenu(new List<Question> { selectedQuestion }, null, this);
             qam.Show();
         }
 
@@ -181,7 +175,7 @@ namespace nea_ui_testing
                 }
 
                 Hide();
-                QuestionAttemptMenu qam = new QuestionAttemptMenu(listToPractice);
+                QuestionAttemptMenu qam = new QuestionAttemptMenu(listToPractice, null, this);
                 qam.Show();
 
             }

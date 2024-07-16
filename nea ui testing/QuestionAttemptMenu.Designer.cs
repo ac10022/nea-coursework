@@ -42,7 +42,6 @@
             this.MCA_B = new System.Windows.Forms.RadioButton();
             this.MCA_D = new System.Windows.Forms.RadioButton();
             this.MCA_C = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.button3 = new System.Windows.Forms.Button();
             this.FI_FIELD1 = new System.Windows.Forms.Label();
             this.FI_1 = new System.Windows.Forms.TextBox();
@@ -56,22 +55,26 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.QuestionContentBox = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.ImageBox = new System.Windows.Forms.PictureBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.FILabel = new System.Windows.Forms.Label();
+            this.DrawingBox = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.QuestionsRemainingLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DrawingBox)).BeginInit();
             this.SuspendLayout();
             // 
             // DashboardButton
             // 
             this.DashboardButton.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.DashboardButton.Location = new System.Drawing.Point(794, 21);
+            this.DashboardButton.Location = new System.Drawing.Point(854, 21);
             this.DashboardButton.Name = "DashboardButton";
-            this.DashboardButton.Size = new System.Drawing.Size(240, 43);
+            this.DashboardButton.Size = new System.Drawing.Size(180, 43);
             this.DashboardButton.TabIndex = 24;
             this.DashboardButton.Text = "Back to dashboard";
             this.DashboardButton.UseVisualStyleBackColor = false;
@@ -197,14 +200,6 @@
             this.MCA_C.UseVisualStyleBackColor = true;
             this.MCA_C.CheckedChanged += new System.EventHandler(this.TestForData);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(607, 82);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(427, 491);
-            this.panel1.TabIndex = 34;
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(607, 42);
@@ -213,6 +208,7 @@
             this.button3.TabIndex = 35;
             this.button3.Text = "Clear";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.ClearDrawing);
             // 
             // FI_FIELD1
             // 
@@ -332,12 +328,6 @@
             this.tabPage2.Text = "Image(s)";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // ImageBox
             // 
             this.ImageBox.Location = new System.Drawing.Point(29, 6);
@@ -346,6 +336,12 @@
             this.ImageBox.TabIndex = 2;
             this.ImageBox.TabStop = false;
             this.ImageBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ZoomEvent);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FILabel
             // 
@@ -357,11 +353,45 @@
             this.FILabel.TabIndex = 36;
             this.FILabel.Text = "Enter answer(s):";
             // 
+            // DrawingBox
+            // 
+            this.DrawingBox.BackColor = System.Drawing.Color.White;
+            this.DrawingBox.Location = new System.Drawing.Point(607, 82);
+            this.DrawingBox.Name = "DrawingBox";
+            this.DrawingBox.Size = new System.Drawing.Size(427, 491);
+            this.DrawingBox.TabIndex = 46;
+            this.DrawingBox.TabStop = false;
+            this.DrawingBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+            this.DrawingBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+            this.DrawingBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(715, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(102, 20);
+            this.label1.TabIndex = 47;
+            this.label1.Text = "Qs remaining";
+            // 
+            // QuestionsRemainingLabel
+            // 
+            this.QuestionsRemainingLabel.AutoSize = true;
+            this.QuestionsRemainingLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.QuestionsRemainingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.QuestionsRemainingLabel.Location = new System.Drawing.Point(750, 43);
+            this.QuestionsRemainingLabel.Name = "QuestionsRemainingLabel";
+            this.QuestionsRemainingLabel.Size = new System.Drawing.Size(2, 31);
+            this.QuestionsRemainingLabel.TabIndex = 48;
+            // 
             // QuestionAttemptMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 793);
+            this.Controls.Add(this.QuestionsRemainingLabel);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DrawingBox);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.FI_4);
             this.Controls.Add(this.FI_FIELD4);
@@ -373,7 +403,6 @@
             this.Controls.Add(this.FI_FIELD1);
             this.Controls.Add(this.FILabel);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.MCA_D);
             this.Controls.Add(this.MCA_C);
             this.Controls.Add(this.MCA_B);
@@ -384,6 +413,7 @@
             this.Controls.Add(this.DashboardButton);
             this.Name = "QuestionAttemptMenu";
             this.Text = "QuestionAttemptMenu";
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -391,6 +421,7 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DrawingBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,7 +441,6 @@
         private System.Windows.Forms.RadioButton MCA_B;
         private System.Windows.Forms.RadioButton MCA_D;
         private System.Windows.Forms.RadioButton MCA_C;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label FI_FIELD1;
         private System.Windows.Forms.TextBox FI_1;
@@ -427,5 +457,8 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.PictureBox ImageBox;
         private System.Windows.Forms.Label FILabel;
+        private System.Windows.Forms.PictureBox DrawingBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label QuestionsRemainingLabel;
     }
 }

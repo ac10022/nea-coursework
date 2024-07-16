@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button5 = new System.Windows.Forms.Button();
+            this.DeleteQuestionButton = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.EditQuestionButton = new System.Windows.Forms.Button();
             this.ContentLabel = new System.Windows.Forms.Label();
             this.DifficultyLabel = new System.Windows.Forms.Label();
             this.AuthorLabel = new System.Windows.Forms.Label();
@@ -50,7 +50,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.AnswerPreviewButton = new System.Windows.Forms.Button();
             this.AnswerPreviewLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.PrintButton = new System.Windows.Forms.Button();
             this.DifficultyCheckbox1 = new System.Windows.Forms.CheckBox();
             this.DifficultyCheckbox2 = new System.Windows.Forms.CheckBox();
             this.DifficultyCheckbox3 = new System.Windows.Forms.CheckBox();
@@ -59,14 +59,15 @@
             this.SuccessMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button5
+            // DeleteQuestionButton
             // 
-            this.button5.Location = new System.Drawing.Point(792, 450);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(170, 43);
-            this.button5.TabIndex = 39;
-            this.button5.Text = "Delete question";
-            this.button5.UseVisualStyleBackColor = true;
+            this.DeleteQuestionButton.Location = new System.Drawing.Point(792, 450);
+            this.DeleteQuestionButton.Name = "DeleteQuestionButton";
+            this.DeleteQuestionButton.Size = new System.Drawing.Size(170, 43);
+            this.DeleteQuestionButton.TabIndex = 39;
+            this.DeleteQuestionButton.Text = "Delete question";
+            this.DeleteQuestionButton.UseVisualStyleBackColor = true;
+            this.DeleteQuestionButton.Click += new System.EventHandler(this.DeleteQuestionEvent);
             // 
             // button4
             // 
@@ -89,14 +90,15 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.GoToCreateQuestionMenu);
             // 
-            // button2
+            // EditQuestionButton
             // 
-            this.button2.Location = new System.Drawing.Point(596, 450);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(181, 43);
-            this.button2.TabIndex = 36;
-            this.button2.Text = "Edit question";
-            this.button2.UseVisualStyleBackColor = true;
+            this.EditQuestionButton.Location = new System.Drawing.Point(596, 450);
+            this.EditQuestionButton.Name = "EditQuestionButton";
+            this.EditQuestionButton.Size = new System.Drawing.Size(181, 43);
+            this.EditQuestionButton.TabIndex = 36;
+            this.EditQuestionButton.Text = "Edit question";
+            this.EditQuestionButton.UseVisualStyleBackColor = true;
+            this.EditQuestionButton.Click += new System.EventHandler(this.EditQuestionEvent);
             // 
             // ContentLabel
             // 
@@ -277,15 +279,15 @@
             this.AnswerPreviewLabel.TabIndex = 52;
             this.AnswerPreviewLabel.Text = "Content preview: [TRUNCATEDCONTENT]";
             // 
-            // button1
+            // PrintButton
             // 
-            this.button1.Location = new System.Drawing.Point(792, 357);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(170, 43);
-            this.button1.TabIndex = 53;
-            this.button1.Text = "Print question";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.PrintQuestionEvent);
+            this.PrintButton.Location = new System.Drawing.Point(792, 357);
+            this.PrintButton.Name = "PrintButton";
+            this.PrintButton.Size = new System.Drawing.Size(170, 43);
+            this.PrintButton.TabIndex = 53;
+            this.PrintButton.Text = "Print question";
+            this.PrintButton.UseVisualStyleBackColor = true;
+            this.PrintButton.Click += new System.EventHandler(this.PrintQuestionEvent);
             // 
             // DifficultyCheckbox1
             // 
@@ -348,7 +350,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 518);
             this.Controls.Add(this.SuccessMessage);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.PrintButton);
             this.Controls.Add(this.AnswerPreviewLabel);
             this.Controls.Add(this.AnswerPreviewButton);
             this.Controls.Add(this.DifficultyCheckbox4);
@@ -358,10 +360,10 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TopicPicker);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.DeleteQuestionButton);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.EditQuestionButton);
             this.Controls.Add(this.ContentLabel);
             this.Controls.Add(this.DifficultyLabel);
             this.Controls.Add(this.AuthorLabel);
@@ -384,10 +386,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button DeleteQuestionButton;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button EditQuestionButton;
         private System.Windows.Forms.Label ContentLabel;
         private System.Windows.Forms.Label DifficultyLabel;
         private System.Windows.Forms.Label AuthorLabel;
@@ -406,7 +408,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button AnswerPreviewButton;
         private System.Windows.Forms.Label AnswerPreviewLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button PrintButton;
         private System.Windows.Forms.CheckBox DifficultyCheckbox1;
         private System.Windows.Forms.CheckBox DifficultyCheckbox2;
         private System.Windows.Forms.CheckBox DifficultyCheckbox3;

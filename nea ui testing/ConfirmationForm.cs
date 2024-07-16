@@ -12,9 +12,23 @@ namespace nea_ui_testing
 {
     public partial class ConfirmationForm : Form
     {
-        public ConfirmationForm()
+        public bool wasSuccess = false;
+
+        public ConfirmationForm(string message = "")
         {
             InitializeComponent();
+            ConfirmationMessage.Text = message;
+        }
+
+        private void Confirmed(object sender, EventArgs e)
+        {
+            wasSuccess = true;
+            Close();
+        }
+
+        private void CloseForm(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

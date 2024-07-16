@@ -49,10 +49,10 @@
             this.UploadImageButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.ImageTrackingList = new System.Windows.Forms.ListBox();
-            this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.AnswerKeyField = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SuccessMessage = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -330,6 +330,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "QuestionEditor";
             this.Text = "QuestionEditor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClose);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

@@ -108,13 +108,7 @@ namespace nea_ui_testing
             List<Question> assignmentQuestions = dbh.GetQuestionsFromAssignment(assignment);
 
             Hide();
-            QuestionAttemptMenu qam = new QuestionAttemptMenu(assignmentQuestions, assignment);
-
-            // form closed events
-            qam.Closed += (s, args) =>
-            {
-                Show();
-            };
+            QuestionAttemptMenu qam = new QuestionAttemptMenu(assignmentQuestions, assignment, this);
             qam.Show();
         }
 

@@ -10,11 +10,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ListExtensionMethods;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace nea_ui_testing
 {
     public partial class QuestionAttemptMenu : Form
     {
+        // question fields
         private Question questionRef;
         private List<Question> questionList;
         private Random random = new Random();
@@ -30,18 +33,34 @@ namespace nea_ui_testing
         private Image originalImage;
         private double zoomFactor = 1;
 
-        public QuestionAttemptMenu(List<Question> questionReference = null, Assignment assignmentRef = null)
+        private Form formReturn;
+
+        // drawing fields
+        private bool isDrawing = false;
+        private Point mouseDownPosition;
+        private Point mouseUpPosition;
+        private Graphics drawing;
+        private Pen pen = new Pen(Color.Black, 3);
+
+        public QuestionAttemptMenu(List<Question> questionReference = null, Assignment assignmentRef = null, Form formReturnRef = null)
         {
             InitializeComponent();
+
             questionRef = questionReference.First();
             questionReference.RemoveAt(0);
             questionList = questionReference;
             this.assignmentRef = assignmentRef;
 
+            QuestionsRemainingLabel.Text = questionReference.Count.ToString();
+
             timeQuestionOpened = DateTime.Now;
 
             MCA_CONTROLS = new Control[] { MCA_D, MCA_C, MCA_B, MCA_A, MCALabel };
             FI_CONTROLS = new Control[] { FI_4, FI_FIELD4, FI_3, FI_FIELD3, FI_2, FI_FIELD2, FI_1, FI_FIELD1, FILabel };
+
+            isDrawing = false;
+
+            formReturn = formReturnRef;
 
             LoadQuestionData();
         }
@@ -164,7 +183,26 @@ namespace nea_ui_testing
 
         private void GoBackToDashboard(object sender, EventArgs e)
         {
-            Close();
+            Hide();
+            ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to quit? You will lose progress.");
+            bool wasSuccess = false;
+
+            // form closed events
+            cf.FormClosing += (s, args) =>
+            {
+                wasSuccess = cf.wasSuccess;
+            };
+            cf.Closed += (s, args) =>
+            {
+                if (wasSuccess)
+                {
+                    Hide();
+                    formReturn.Show();
+                    Close();
+                }
+                else Show();
+            };
+            cf.Show();
         }
 
         private void SetVisible(Control c)
@@ -234,7 +272,7 @@ namespace nea_ui_testing
                 DashboardButton.Enabled = false;
 
                 Hide();
-                InstantFeedbackForm iff = new InstantFeedbackForm(questionRef, questionList, wasCorrect, assignmentRef);
+                InstantFeedbackForm iff = new InstantFeedbackForm(questionRef, questionList, wasCorrect, assignmentRef, formReturn);
 
                 // form closed events
                 iff.Load += (s, args) =>
@@ -281,6 +319,57 @@ namespace nea_ui_testing
 
                 ImageBox.Image = newImage;
             }
+        }
+
+        private void OnFormLoad(object sender, EventArgs e)
+        {
+            // create graphics object from drawing box background so that lines can be drawn on it
+            DrawingBox.BackgroundImage = new Bitmap(DrawingBox.Width, DrawingBox.Height, PixelFormat.Format24bppRgb);
+            drawing = Graphics.FromImage(DrawingBox.BackgroundImage);
+
+            // smooth rendering
+            drawing.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // set drawing box background to white
+            drawing.Clear(Color.White);
+
+            // smooth pen edges
+            pen.StartCap = LineCap.Round;
+            pen.EndCap = LineCap.Round;
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs e)
+        {
+            isDrawing = true;
+
+            // set first point for mouse move invocations
+            mouseDownPosition = e.Location;
+        }
+
+        private void OnMouseUp(object sender, MouseEventArgs e)
+        {
+            isDrawing = false;
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDrawing)
+            {
+                // draw a line from point of previous invocation to this invocation, refresh to apply changes
+                mouseUpPosition = e.Location;
+                drawing.DrawLine(pen, mouseDownPosition, mouseUpPosition);
+                DrawingBox.Refresh();
+
+                // set point of previous invocation to point of this invocation to set up next invocation
+                mouseDownPosition = mouseUpPosition;
+            }
+        }
+
+        private void ClearDrawing(object sender, EventArgs e)
+        {
+            // reset background to white and refresh to apply changes
+            drawing.Clear(Color.White);
+            DrawingBox.Refresh();
         }
     }
 }

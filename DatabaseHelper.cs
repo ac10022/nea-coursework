@@ -1248,5 +1248,102 @@ namespace nea_prototype_full
                 }
             }
         }
+
+        public void DeleteAssignment(Assignment assignment)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("DeleteAssignment", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@AssignmentId", assignment.AssignmentId));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void DeleteQuestionImages(Question question)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"DELETE FROM Images WHERE QuestionId = @QuestionId";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@QuestionId", question.QuestionId));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void UpdateQuestion(Question question)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Questions SET TopicId = @TopicId, Difficulty = @Difficulty, QuContent = @QuestionContent, IsMC = CAST(@IsMC AS BIT), Answer = @Answer, AnswerKey = @AnswerKey, MCAnswers = @MCAnswers WHERE QuestionId = @QuestionId";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@TopicId", question.Topic.TopicId));
+                    cmd.Parameters.Add(new SqlParameter("@Difficulty", question.Difficulty));
+                    cmd.Parameters.Add(new SqlParameter("@QuestionContent", question.QuestionContent));
+                    cmd.Parameters.Add(new SqlParameter("@IsMC", question.IsMc ? 1 : 0));
+                    cmd.Parameters.Add(new SqlParameter("@Answer", string.Join(",", question.Answer)));
+                    cmd.Parameters.Add(new SqlParameter("@AnswerKey", question.AnswerKey));
+
+                    string mcAnswers = string.Empty;
+                    // if there are multiple choice answers
+                    if (question.McAnswers != null && question.McAnswers.Count != 0)
+                    {
+                        mcAnswers = string.Join(",", question.McAnswers);
+                    }
+
+                    cmd.Parameters.Add(new SqlParameter("@MCAnswers", mcAnswers));
+                    cmd.Parameters.Add(new SqlParameter("@QuestionId", question.QuestionId));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void DeleteQuestion(Question question)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("DeleteQuestion", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@QuestionId", question.QuestionId));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void DeleteStudent(User student)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("DeleteStudent", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
     }
 }

@@ -16,13 +16,16 @@ namespace nea_ui_testing
         private Question questionRef;
         private List<Question> questionList;
         private Assignment assignmentRef;
-        public InstantFeedbackForm(Question questionRef = null, List<Question> questionList = null, bool wasCorrect = false, Assignment assignmentRef = null)
+        private Form formReturn;
+
+        public InstantFeedbackForm(Question questionRef = null, List<Question> questionList = null, bool wasCorrect = false, Assignment assignmentRef = null, Form formReturnRef = null)
         {
             InitializeComponent();
 
             this.questionRef = questionRef;
             this.questionList = questionList;
             this.assignmentRef = assignmentRef;
+            formReturn = formReturnRef;
 
             if (questionRef != null)
             {
@@ -40,7 +43,7 @@ namespace nea_ui_testing
             if (questionList.Count != 0)
             {
                 Hide();
-                QuestionAttemptMenu qam = new QuestionAttemptMenu(questionList, assignmentRef);
+                QuestionAttemptMenu qam = new QuestionAttemptMenu(questionList, assignmentRef, formReturn);
 
                 // form closed events
                 qam.Closed += (s, args) =>
@@ -51,6 +54,8 @@ namespace nea_ui_testing
             }
             else
             {
+                Hide();
+                formReturn.Show();
                 Close();
             }
         }

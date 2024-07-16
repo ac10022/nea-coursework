@@ -45,7 +45,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.DeleteAssignmentButton = new System.Windows.Forms.Button();
             this.AssignmentsListBox = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -226,14 +226,15 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.GoToAddUserMenu);
             // 
-            // button7
+            // DeleteAssignmentButton
             // 
-            this.button7.Location = new System.Drawing.Point(1018, 536);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(189, 57);
-            this.button7.TabIndex = 43;
-            this.button7.Text = "Delete selected assignment";
-            this.button7.UseVisualStyleBackColor = true;
+            this.DeleteAssignmentButton.Location = new System.Drawing.Point(1018, 536);
+            this.DeleteAssignmentButton.Name = "DeleteAssignmentButton";
+            this.DeleteAssignmentButton.Size = new System.Drawing.Size(189, 57);
+            this.DeleteAssignmentButton.TabIndex = 43;
+            this.DeleteAssignmentButton.Text = "Delete selected assignment";
+            this.DeleteAssignmentButton.UseVisualStyleBackColor = true;
+            this.DeleteAssignmentButton.Click += new System.EventHandler(this.DeleteAssignmentEvent);
             // 
             // AssignmentsListBox
             // 
@@ -243,6 +244,7 @@
             this.AssignmentsListBox.Name = "AssignmentsListBox";
             this.AssignmentsListBox.Size = new System.Drawing.Size(327, 284);
             this.AssignmentsListBox.TabIndex = 40;
+            this.AssignmentsListBox.SelectedIndexChanged += new System.EventHandler(this.AssignmentSelected);
             // 
             // label10
             // 
@@ -294,7 +296,7 @@
             this.ClientSize = new System.Drawing.Size(1241, 632);
             this.Controls.Add(this.SuccessMessage);
             this.Controls.Add(this.EditClassnameButton);
-            this.Controls.Add(this.button7);
+            this.Controls.Add(this.DeleteAssignmentButton);
             this.Controls.Add(this.AssignmentsListBox);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label12);
@@ -341,7 +343,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button DeleteAssignmentButton;
         private System.Windows.Forms.ListBox AssignmentsListBox;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nea_ui_testing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,21 +35,38 @@ namespace nea_prototype_full
         {
             try
             {
-                HashingHelper hh = new HashingHelper();
-                (string salt, string hashedPassword) = hh.ComputeSaltAndHash(PasswordInput.Text);
-                DatabaseHelper dbh = new DatabaseHelper();
-                if (studentRef == null)
+                Hide();
+                ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to create student {FirstnameInput.Text} {LastnameInput.Text}?");
+                bool wasSuccess = false;
+
+                // form closed events
+                cf.FormClosing += (s, args) =>
                 {
-                    dbh.CreateNewStudent(FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
-                    SuccessMessage.Visible = true;
-                    SuccessMessage.Text = $"Successfully created student: {FirstnameInput.Text} {LastnameInput.Text}";
-                }
-                else
+                    wasSuccess = cf.wasSuccess;
+                };
+                cf.Closed += (s, args) =>
                 {
-                    dbh.EditStudentDetails(studentRef, FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
-                    SuccessMessage.Visible = true;
-                    SuccessMessage.Text = $"Successfully edited student";
-                }
+                    Show();
+                    if (wasSuccess)
+                    {
+                        HashingHelper hh = new HashingHelper();
+                        (string salt, string hashedPassword) = hh.ComputeSaltAndHash(PasswordInput.Text);
+                        DatabaseHelper dbh = new DatabaseHelper();
+                        if (studentRef == null)
+                        {
+                            dbh.CreateNewStudent(FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
+                            SuccessMessage.Visible = true;
+                            SuccessMessage.Text = $"Successfully created student: {FirstnameInput.Text} {LastnameInput.Text}";
+                        }
+                        else
+                        {
+                            dbh.EditStudentDetails(studentRef, FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
+                            SuccessMessage.Visible = true;
+                            SuccessMessage.Text = $"Successfully edited student";
+                        }
+                    }
+                };
+                cf.Show();
             }
             catch (Exception ex)
             {

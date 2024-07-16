@@ -15,10 +15,12 @@ namespace nea_ui_testing
     {
         private List<Class> allClasses;
         private List<User> usersFromSelection;
+
+        private DatabaseHelper dbh = new DatabaseHelper();
+
         public StudentManagementMenu()
         {
             InitializeComponent();
-            DatabaseHelper dbh = new DatabaseHelper();
             allClasses = dbh.GetAllClasses();
 
             // fill dropdown and clear selection
@@ -51,7 +53,6 @@ namespace nea_ui_testing
                 // as long as one field is filled
                 if (NameField.TextLength != 0 || ClassPicker.SelectedIndex != -1)
                 {
-                    DatabaseHelper dbh = new DatabaseHelper();
                     // if only name field
                     if (ClassPicker.SelectedIndex == -1)
                     {
@@ -79,7 +80,6 @@ namespace nea_ui_testing
 
         private void UpdateStudentInformation(object sender, EventArgs e)
         {
-            DatabaseHelper dbh = new DatabaseHelper();
             User selectedStudent = usersFromSelection[StudentMatches.SelectedIndex];
             NameLabel.Text = $"Name: {selectedStudent.FirstName} {selectedStudent.Surname}";
             EmailLabel.Text = $"Email: {selectedStudent.Email}";
@@ -98,6 +98,48 @@ namespace nea_ui_testing
                 Show();
             };
             sc.Show();
+        }
+
+        private void GoToStudentImportMenu(object sender, EventArgs e)
+        {
+            Hide();
+            StudentImportMenu sim = new StudentImportMenu();
+
+            // form closed events
+            sim.Closed += (s, args) =>
+            {
+                Show();
+            };
+            sim.Show();
+        }
+
+        private void DeleteStudentEvent(object sender, EventArgs e)
+        {
+            User selectedStudent = usersFromSelection[StudentMatches.SelectedIndex];
+
+            Hide();
+            ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to delete student {selectedStudent.FirstName} {selectedStudent.Surname}?");
+            bool wasSuccess = false;
+
+            // form closed events
+            cf.FormClosing += (s, args) =>
+            {
+                wasSuccess = cf.wasSuccess;
+                
+                if (wasSuccess)
+                {
+                    dbh.DeleteStudent(selectedStudent);
+                    MessageBox.Show($"Successfully deleted student {selectedStudent.FirstName} {selectedStudent.Surname}");
+                }
+            };
+            cf.Closed += (s, args) =>
+            {
+                Show();
+
+                // refresh search
+                SearchForStudents_Click(null, null);
+            };
+            cf.Show();
         }
     }
 }

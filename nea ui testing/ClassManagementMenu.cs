@@ -21,11 +21,14 @@ namespace nea_ui_testing
         private List<User> teachersInSelectedClass;
         private List<Assignment> selectedClassAssignments;
 
+        private DatabaseHelper dbh = new DatabaseHelper();
+
         public ClassManagementMenu()
         {
             InitializeComponent();
             SearchForClassButton.Enabled = false;
             EditClassnameButton.Enabled = false;
+            DeleteAssignmentButton.Enabled = false;
             SuccessMessage.Visible = false;
         }
 
@@ -46,7 +49,6 @@ namespace nea_ui_testing
         {
             try
             {
-                DatabaseHelper dbh = new DatabaseHelper();
                 foundClasses = dbh.SearchForClasses(ClassNameFilter.Text);
                 ClassListBox.DataSource = foundClasses.Select(x => $"{x.ClassId}\t{x.ClassName}").ToArray();
             }
@@ -72,7 +74,6 @@ namespace nea_ui_testing
                 ClassnameLabel.Text = $"Name: {selectedClass.ClassName}";
                 EditClassnameButton.Enabled = true;
 
-                DatabaseHelper dbh = new DatabaseHelper();
                 studentsInSelectedClass = dbh.GetStudentsInClass(selectedClass);
                 teachersInSelectedClass = dbh.GetTeachersInClass(selectedClass);
                 selectedClassAssignments = dbh.GetClassAssignments(selectedClass);
@@ -120,26 +121,44 @@ namespace nea_ui_testing
         {
             try
             {
-                DatabaseHelper dbh = new DatabaseHelper();
-                if (StudentsInClass.SelectedIndex != -1)
+                Class selectedClass = foundClasses[ClassListBox.SelectedIndex];
+
+                Hide();
+                ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to remove this user from {selectedClass.ClassName}?");
+                bool wasSuccess = false;
+
+                // form closed events
+                cf.FormClosing += (s, args) =>
                 {
-                    User selectedStudent = studentsInSelectedClass[StudentsInClass.SelectedIndex];
-                    dbh.RemoveStudentFromClass(selectedStudent, foundClasses[ClassListBox.SelectedIndex]);
-
-                    SuccessMessage.Text = $"Removed {selectedStudent.FirstName} {selectedStudent.Surname} from selected class.";
-                    SuccessMessage.Visible = true;
-                }
-                else
+                    wasSuccess = cf.wasSuccess;
+                };
+                cf.Closed += (s, args) =>
                 {
-                    User selectedTeacher = teachersInSelectedClass[TeachersInClass.SelectedIndex];
-                    dbh.RemoveTeacherFromClass(selectedTeacher, foundClasses[ClassListBox.SelectedIndex]);
+                    if (wasSuccess)
+                    {
+                        if (StudentsInClass.SelectedIndex != -1)
+                        {
+                            User selectedStudent = studentsInSelectedClass[StudentsInClass.SelectedIndex];
+                            dbh.RemoveStudentFromClass(selectedStudent, selectedClass);
 
-                    SuccessMessage.Text = $"Removed {selectedTeacher.FirstName} {selectedTeacher.Surname} from selected class.";
-                    SuccessMessage.Visible = true;
-                }
+                            SuccessMessage.Text = $"Removed {selectedStudent.FirstName} {selectedStudent.Surname} from selected class.";
+                            SuccessMessage.Visible = true;
+                        }
+                        else
+                        {
+                            User selectedTeacher = teachersInSelectedClass[TeachersInClass.SelectedIndex];
+                            dbh.RemoveTeacherFromClass(selectedTeacher, selectedClass);
 
-                // refresh search
-                SearchForClass(null, null);
+                            SuccessMessage.Text = $"Removed {selectedTeacher.FirstName} {selectedTeacher.Surname} from selected class.";
+                            SuccessMessage.Visible = true;
+                        }
+
+                        // refresh search
+                        SearchForClass(null, null);
+                    }
+                    Show();
+                };
+                cf.Show();
             }
             catch (Exception ex)
             {
@@ -164,6 +183,48 @@ namespace nea_ui_testing
                 Show();
             };
             cc.Show();
+        }
+
+        private void DeleteAssignmentEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                if (AssignmentsListBox.SelectedIndex != -1)
+                {
+                    Assignment selectedAssignment = selectedClassAssignments[AssignmentsListBox.SelectedIndex];
+
+                    Hide();
+                    ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to delete this assignment: {selectedAssignment.HomeworkName}?");
+                    bool wasSuccess = false;
+
+                    // form closed events
+                    cf.FormClosing += (s, args) =>
+                    {
+                        wasSuccess = cf.wasSuccess;
+                    };
+                    cf.Closed += (s, args) =>
+                    {
+                        if (wasSuccess)
+                        {
+                            dbh.DeleteAssignment(selectedAssignment);
+                            // refresh class assignments
+                            NewClassSelected(null, null);
+                        }
+                        Show();
+                    };
+                    cf.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler eh = new ErrorHandler(ex.Message);
+                eh.DisplayErrorForm();
+            }
+        }
+
+        private void AssignmentSelected(object sender, EventArgs e)
+        {
+            DeleteAssignmentButton.Enabled = AssignmentsListBox.SelectedIndex != -1;
         }
     }
 }
