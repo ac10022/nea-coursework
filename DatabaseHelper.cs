@@ -1092,5 +1092,161 @@ namespace nea_prototype_full
             }
             return topic;
         }
+
+        public List<Topic> GetStudentLastPracticedTopics(User student)
+        {
+            List<Topic> topics = new List<Topic>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetStudentLastPracticedTopics", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            topics.Add(new Topic((int)reader[0], (string)reader[1], (string)reader[2], new Subject((int)reader[3], (string)reader[4])));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return topics;
+        }
+
+        public List<Topic> GetClassSOWTopics(Class _class)
+        {
+            List<Topic> topics = new List<Topic>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetClassSOWTopics", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@ClassId", _class.ClassId));
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            topics.Add(new Topic((int)reader[0], (string)reader[1], (string)reader[2], new Subject((int)reader[3], (string)reader[4])));
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            return topics;
+        }
+
+        public void ChangeClassSOW(Class _class, List<Topic> newSOW)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                StringBuilder query = new StringBuilder();
+                query.Append("DELETE FROM SchemeOfWork WHERE ClassId = @ClassId DELETE FROM ChecklistData WHERE ClassId = @ClassId INSERT INTO SchemeOfWork VALUES");
+
+                foreach (Topic topic in newSOW)
+                {
+                    query.Append($" ({_class.ClassId}, {topic.TopicId}),");
+                }
+
+                // remove last comma
+                query.Length--;
+
+                using (SqlCommand cmd = new SqlCommand(query.ToString(), conn))
+                {
+                    SqlParameter cidParameter = new SqlParameter("@ClassId", _class.ClassId);
+                    cmd.Parameters.Add(cidParameter);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public List<int> GetStudentChecklistData(Class _class, User student)
+        {
+            try
+            {
+                List<int> result = new List<int>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT SerialisedData FROM ChecklistData WHERE StudentId = @StudentId AND ClassId = @ClassId";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@ClassId", _class.ClassId));
+                        cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+
+                        conn.Open();
+                        string serialisedString = (string)cmd.ExecuteScalar();
+                        if (serialisedString == null) return null;
+                        result = DeserialiseChecklistData(serialisedString);
+                        conn.Close();
+                    }
+                }
+                return result;
+            } 
+            catch
+            {
+                return null;
+            }
+        }
+
+        private List<int> DeserialiseChecklistData(string serialisedData)
+        {
+            List<int> result = new List<int>();
+            char[] chars = serialisedData.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                result.Add(chars[i] - '0');
+            }
+            return result;
+        }
+
+        public void UpdateSeralisedSOWData(Class _class, User student, string serialisedData)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM ChecklistData WHERE StudentId = @StudentId AND ClassId = @ClassId INSERT INTO ChecklistData VALUES (@StudentId, @ClassId, @SerialisedData)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@ClassId", _class.ClassId));
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", student.Id));
+                    cmd.Parameters.Add(new SqlParameter("@SerialisedData", serialisedData));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void OverrideAttemptCorrectness(QuestionAttempt questionAttempt, bool newCorrectness)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = $"UPDATE QuestionAttempts SET WasCorrect = CAST({Convert.ToInt32(newCorrectness)} AS BIT) WHERE AttemptId = @AttemptId";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@AttemptId", questionAttempt.AttemptId));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
     }
 }

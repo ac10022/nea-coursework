@@ -125,7 +125,6 @@ namespace automatic_question_generation_testing
         {
             double panelHeight = panel.Size.Height;
             (double rangeMin, double rangeMax) = GetRange();
-            Console.WriteLine($"RangeMIN: {rangeMin}, RangeMAX: {rangeMax}");
             double maxDistanceFromAxis;
             if ((rangeMin >= 0 && rangeMax >= 0) || rangeMin <= 0 && rangeMax <= 0)
             {

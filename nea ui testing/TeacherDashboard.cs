@@ -93,5 +93,18 @@ namespace nea_ui_testing
             };
             to.Show();
         }
+
+        private void GoToSOWManager(object sender, EventArgs e)
+        {
+            Hide();
+            SchemeOfWorkManager sowm = new SchemeOfWorkManager();
+
+            // form closed events
+            sowm.Closed += (s, args) =>
+            {
+                Show();
+            };
+            sowm.Show();
+        }
     }
 }

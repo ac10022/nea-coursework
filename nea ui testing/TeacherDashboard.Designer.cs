@@ -39,6 +39,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -150,19 +151,30 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(224, 382);
+            this.button6.Location = new System.Drawing.Point(31, 382);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(347, 57);
+            this.button6.Size = new System.Drawing.Size(352, 57);
             this.button6.TabIndex = 11;
             this.button6.Text = "Class manager";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.GoToClassManager);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(414, 381);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(347, 57);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Scheme of work manager";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.GoToSOWManager);
             // 
             // TeacherDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -194,5 +206,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button3;
     }
 }

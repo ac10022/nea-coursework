@@ -31,10 +31,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.AnalysisLabel = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.PanelForDrawing = new System.Windows.Forms.Panel();
             this.BeginTopicPracticeButton = new System.Windows.Forms.Button();
             this.RGQCheckbox = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -53,7 +52,8 @@
             this.SearchButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.TopicPicker = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.PanelForDrawing = new System.Windows.Forms.Panel();
+            this.WhileLabel = new System.Windows.Forms.Label();
             this.DashboardButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -94,27 +94,27 @@
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label3.Font = new System.Drawing.Font("Rockwell Extra Bold", 14F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(21, 250);
+            this.label3.Location = new System.Drawing.Point(21, 329);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(271, 34);
             this.label3.TabIndex = 51;
             this.label3.Text = "Start a practice";
             // 
-            // label19
+            // AnalysisLabel
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(17, 127);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(190, 100);
-            this.label19.TabIndex = 69;
-            this.label19.Text = "For improvement:\r\n[TOPIC], [TOPIC], [TOPIC]\r\n\r\nStrengths:\r\n[TOPIC], [TOPIC], [TOP" +
+            this.AnalysisLabel.AutoSize = true;
+            this.AnalysisLabel.Location = new System.Drawing.Point(17, 127);
+            this.AnalysisLabel.Name = "AnalysisLabel";
+            this.AnalysisLabel.Size = new System.Drawing.Size(190, 100);
+            this.AnalysisLabel.TabIndex = 69;
+            this.AnalysisLabel.Text = "For improvement:\r\n[TOPIC], [TOPIC], [TOPIC]\r\n\r\nStrengths:\r\n[TOPIC], [TOPIC], [TOP" +
     "IC]";
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(21, 298);
+            this.tabControl1.Location = new System.Drawing.Point(21, 377);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(757, 336);
@@ -135,13 +135,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "By topic";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // PanelForDrawing
-            // 
-            this.PanelForDrawing.Location = new System.Drawing.Point(784, 634);
-            this.PanelForDrawing.Name = "PanelForDrawing";
-            this.PanelForDrawing.Size = new System.Drawing.Size(200, 200);
-            this.PanelForDrawing.TabIndex = 73;
             // 
             // BeginTopicPracticeButton
             // 
@@ -343,14 +336,21 @@
             this.TopicPicker.TabIndex = 77;
             this.TopicPicker.SelectedIndexChanged += new System.EventHandler(this.TestForData);
             // 
-            // label6
+            // PanelForDrawing
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(414, 127);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(190, 40);
-            this.label6.TabIndex = 71;
-            this.label6.Text = "Not covered in a while:\r\n[TOPIC], [TOPIC], [TOPIC]";
+            this.PanelForDrawing.Location = new System.Drawing.Point(785, 711);
+            this.PanelForDrawing.Name = "PanelForDrawing";
+            this.PanelForDrawing.Size = new System.Drawing.Size(200, 200);
+            this.PanelForDrawing.TabIndex = 73;
+            // 
+            // WhileLabel
+            // 
+            this.WhileLabel.AutoSize = true;
+            this.WhileLabel.Location = new System.Drawing.Point(414, 127);
+            this.WhileLabel.Name = "WhileLabel";
+            this.WhileLabel.Size = new System.Drawing.Size(190, 40);
+            this.WhileLabel.TabIndex = 71;
+            this.WhileLabel.Text = "Not covered in a while:\r\n[TOPIC], [TOPIC], [TOPIC]";
             // 
             // DashboardButton
             // 
@@ -367,12 +367,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 657);
+            this.ClientSize = new System.Drawing.Size(800, 731);
             this.Controls.Add(this.PanelForDrawing);
             this.Controls.Add(this.DashboardButton);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.WhileLabel);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.label19);
+            this.Controls.Add(this.AnalysisLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -394,7 +394,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label AnalysisLabel;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -403,7 +403,7 @@
         private System.Windows.Forms.NumericUpDown NoQuestionSelector;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox TopicPicker2;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label WhileLabel;
         private System.Windows.Forms.Button BeginTopicPracticeButton;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label7;

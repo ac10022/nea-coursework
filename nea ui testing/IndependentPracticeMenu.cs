@@ -22,6 +22,9 @@ namespace nea_ui_testing
         private _Topic[] topicsWithRGQ = { _Topic.Gerunds, _Topic.Tenses, _Topic.AdjectivesAdverbs, _Topic.Algebra, _Topic.Graphs, _Topic.Inequalities, _Topic.Sequences, _Topic.RatioProportion, _Topic.SimultaneousEq, _Topic.Quadratics, _Topic.AveragesRangesModeMedian, _Topic.PerimeterAreaVolume };
         int[] indexesOfTopicsWithRGQ;
 
+        private DatabaseHelper dbh = new DatabaseHelper();
+        private StatisticsHelper sh = new StatisticsHelper();
+
         public IndependentPracticeMenu()
         {
             InitializeComponent();
@@ -32,8 +35,6 @@ namespace nea_ui_testing
             PanelForDrawing.SendToBack();
             PanelForDrawing.Width = 400;
             PanelForDrawing.Height = 400;
-
-            DatabaseHelper dbh = new DatabaseHelper();
 
             topicList = dbh.GetAllTopics();
 
@@ -46,6 +47,8 @@ namespace nea_ui_testing
             // by topic
             TopicPicker2.DataSource = topicList.Select(x => x.TopicName).ToArray();
             TopicPicker2.SelectedIndex = -1;
+
+            LoadStudentAnalysis();
         }
 
         private void TestForData(object sender, EventArgs e)
@@ -68,7 +71,6 @@ namespace nea_ui_testing
                 Topic selectedTopic = null;
                 if (TopicPicker.SelectedIndex != -1) selectedTopic = topicList[TopicPicker.SelectedIndex];
 
-                DatabaseHelper dbh = new DatabaseHelper();
                 questionsFromSearch = dbh.GetQuestionsMultimetric(selectedDifficulties, selectedTopic, null);
 
                 QuestionMatches.DataSource = questionsFromSearch.Select(x => $"{x.Topic.TopicName}\t{x.QuestionContent.Substring(0, Math.Min(x.QuestionContent.Length, 20))}...\tD{x.Difficulty}\tby {x.Author.FirstName} {x.Author.Surname}").ToArray();
@@ -123,7 +125,6 @@ namespace nea_ui_testing
                 int noOfQuestions = (int)Math.Abs(Math.Round(NoQuestionSelector.Value));
                 Topic selectedTopic = topicList[TopicPicker2.SelectedIndex];
 
-                DatabaseHelper dbh = new DatabaseHelper();
                 // any difficulty, selected topic, any teacher
                 List<Question> topicQuestions = dbh.GetQuestionsMultimetric(new List<int> { 1, 2, 3, 4 }, selectedTopic, null);
 
@@ -179,8 +180,6 @@ namespace nea_ui_testing
                     }
                 }
 
-                Console.WriteLine(listToPractice.Count);
-
                 Hide();
                 QuestionAttemptMenu qam = new QuestionAttemptMenu(listToPractice);
                 qam.Show();
@@ -191,6 +190,49 @@ namespace nea_ui_testing
                 ErrorHandler eh = new ErrorHandler(ex.Message);
                 eh.DisplayErrorForm();
             }
+        }
+
+        private void LoadStudentAnalysis()
+        {
+            List<QuestionAttempt> questionAttempts = dbh.GetStudentQuestionAttempts(Program.loggedInUser);
+            Dictionary<int, double> topicAnalysis = sh.AnalyseStudentQuestionAttempts(questionAttempts);
+
+            int topicsToTake = Math.Min(3, topicAnalysis.Count);
+            List<Topic> worstAnsweredTopics = sh.GetWorstAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
+            List<Topic> bestAnsweredTopics = sh.GetBestAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
+
+            StringBuilder analysisText = new StringBuilder();
+            analysisText.AppendLine("Topics to practice:");
+
+            foreach (Topic topic in worstAnsweredTopics)
+            {
+                analysisText.AppendLine($"- {topic.TopicName}: {Math.Round(topicAnalysis[topic.TopicId], 2)}");
+            }
+
+            analysisText.AppendLine();
+            analysisText.AppendLine("Strengths:");
+
+            foreach (Topic topic in bestAnsweredTopics)
+            {
+                analysisText.AppendLine($"- {topic.TopicName}: {Math.Round(topicAnalysis[topic.TopicId], 2)}");
+            }
+
+            AnalysisLabel.Text = analysisText.ToString();
+
+            List<Topic> lastPracticedTopics = dbh.GetStudentLastPracticedTopics(Program.loggedInUser);
+            lastPracticedTopics.Reverse();
+
+            int lastPracticedTopicsToTake = Math.Min(3, lastPracticedTopics.Count);
+
+            StringBuilder whileText = new StringBuilder();
+            whileText.AppendLine("Not covered in a while:");
+            
+            foreach (Topic topic in lastPracticedTopics.Take(lastPracticedTopicsToTake))
+            {
+                whileText.AppendLine($"- {topic.TopicName}");
+            }
+
+            WhileLabel.Text = whileText.ToString();
         }
     }
 }

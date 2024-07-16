@@ -36,6 +36,7 @@
             this.NameLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LogoutButton
@@ -52,7 +53,7 @@
             // 
             this.button2.Location = new System.Drawing.Point(405, 249);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(347, 176);
+            this.button2.Size = new System.Drawing.Size(347, 86);
             this.button2.TabIndex = 18;
             this.button2.Text = "Independent Practice";
             this.button2.UseVisualStyleBackColor = true;
@@ -125,11 +126,22 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Student Dashboard";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(405, 341);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(347, 84);
+            this.button3.TabIndex = 20;
+            this.button3.Text = "Scheme of work";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.GoToSchemeOfWork);
+            // 
             // StudentDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 450);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
@@ -154,5 +166,6 @@
         private System.Windows.Forms.Label NameLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button3;
     }
 }

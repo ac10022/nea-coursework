@@ -54,5 +54,18 @@ namespace nea_prototype_full
             };
             sam.Show();
         }
+
+        private void GoToSchemeOfWork(object sender, EventArgs e)
+        {
+            Hide();
+            SchemeOfWorkTracker sowt = new SchemeOfWorkTracker();
+
+            // form closed events
+            sowt.Closed += (s, args) =>
+            {
+                Show();
+            };
+            sowt.Show();
+        }
     }
 }

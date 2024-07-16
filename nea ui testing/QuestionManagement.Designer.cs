@@ -55,6 +55,8 @@
             this.DifficultyCheckbox2 = new System.Windows.Forms.CheckBox();
             this.DifficultyCheckbox3 = new System.Windows.Forms.CheckBox();
             this.DifficultyCheckbox4 = new System.Windows.Forms.CheckBox();
+            this.SFD = new System.Windows.Forms.SaveFileDialog();
+            this.SuccessMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button5
@@ -283,6 +285,7 @@
             this.button1.TabIndex = 53;
             this.button1.Text = "Print question";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.PrintQuestionEvent);
             // 
             // DifficultyCheckbox1
             // 
@@ -328,11 +331,23 @@
             this.DifficultyCheckbox4.UseVisualStyleBackColor = true;
             this.DifficultyCheckbox4.CheckedChanged += new System.EventHandler(this.TestForData);
             // 
+            // SuccessMessage
+            // 
+            this.SuccessMessage.AutoSize = true;
+            this.SuccessMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.SuccessMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SuccessMessage.Location = new System.Drawing.Point(461, 31);
+            this.SuccessMessage.Name = "SuccessMessage";
+            this.SuccessMessage.Size = new System.Drawing.Size(72, 22);
+            this.SuccessMessage.TabIndex = 54;
+            this.SuccessMessage.Text = "Success";
+            // 
             // QuestionManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 518);
+            this.Controls.Add(this.SuccessMessage);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.AnswerPreviewLabel);
             this.Controls.Add(this.AnswerPreviewButton);
@@ -396,5 +411,7 @@
         private System.Windows.Forms.CheckBox DifficultyCheckbox2;
         private System.Windows.Forms.CheckBox DifficultyCheckbox3;
         private System.Windows.Forms.CheckBox DifficultyCheckbox4;
+        private System.Windows.Forms.SaveFileDialog SFD;
+        private System.Windows.Forms.Label SuccessMessage;
     }
 }

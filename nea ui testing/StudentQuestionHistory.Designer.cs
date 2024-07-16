@@ -40,6 +40,7 @@
             this.AnswerLabel = new System.Windows.Forms.Label();
             this.StudentAnswerLabel = new System.Windows.Forms.Label();
             this.TimeTakenLabel = new System.Windows.Forms.Label();
+            this.OverrideButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // AttemptList
@@ -167,11 +168,22 @@
             this.TimeTakenLabel.TabIndex = 76;
             this.TimeTakenLabel.Text = "Time taken: [TIMETAKEN]";
             // 
+            // OverrideButton
+            // 
+            this.OverrideButton.Location = new System.Drawing.Point(744, 483);
+            this.OverrideButton.Name = "OverrideButton";
+            this.OverrideButton.Size = new System.Drawing.Size(116, 42);
+            this.OverrideButton.TabIndex = 77;
+            this.OverrideButton.Text = "Override";
+            this.OverrideButton.UseVisualStyleBackColor = true;
+            this.OverrideButton.Click += new System.EventHandler(this.OverrideEvent);
+            // 
             // StudentQuestionHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(872, 571);
+            this.Controls.Add(this.OverrideButton);
             this.Controls.Add(this.TimeTakenLabel);
             this.Controls.Add(this.StudentAnswerLabel);
             this.Controls.Add(this.AnswerLabel);
@@ -205,5 +217,6 @@
         private System.Windows.Forms.Label AnswerLabel;
         private System.Windows.Forms.Label StudentAnswerLabel;
         private System.Windows.Forms.Label TimeTakenLabel;
+        private System.Windows.Forms.Button OverrideButton;
     }
 }

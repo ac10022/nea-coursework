@@ -49,6 +49,7 @@ namespace nea_ui_testing
         private void LoadQuestionData()
         {
             canSubmit = false;
+            SubmitButton.Enabled = canSubmit;
 
             try
             {
@@ -62,7 +63,6 @@ namespace nea_ui_testing
                 }
                 else
                 {
-                    Console.WriteLine("is randomly generated");
                     AuthorLabel.Text = "Randomly generated question";
                     if ((questionRef as RandomlyGeneratedQuestion).RgqImage != null) imageList.Add((questionRef as RandomlyGeneratedQuestion).RgqImage);
                 }

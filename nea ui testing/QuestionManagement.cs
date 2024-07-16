@@ -25,6 +25,7 @@ namespace nea_ui_testing
             SearchButton.Enabled = false;
             AnswerPreviewButton.Enabled = false;
             AnswerPreviewLabel.Visible = false;
+            SuccessMessage.Visible = false;
 
             // load in all teachers and topics for selection
             DatabaseHelper dbh = new DatabaseHelper();
@@ -108,6 +109,36 @@ namespace nea_ui_testing
         private void HideAnswerEvent(object sender, MouseEventArgs e)
         {
             AnswerPreviewLabel.Visible = false;
+        }
+
+        private void PrintQuestionEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                Question selectedQuestion = questionsFromSearch[QuestionMatches.SelectedIndex];
+                string path = string.Empty;
+
+                SFD.InitialDirectory = @"C:\";
+                SFD.Title = @"Choose where to save the question";
+                SFD.DefaultExt = @".doc";
+                SFD.CheckPathExists = true;
+                SFD.Filter = @"DOC files (*.doc)|*.doc";
+                SFD.RestoreDirectory = true;
+
+                if (SFD.ShowDialog() == DialogResult.OK)
+                {
+                    path = SFD.FileName;
+                    PrintingHelper ph = new PrintingHelper(selectedQuestion, path);
+                    ph.PrintQuestion();
+                    SuccessMessage.Visible = true;
+                    SuccessMessage.Text = $"Printed question to {path}";
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler eh = new ErrorHandler(ex.Message);
+                eh.DisplayErrorForm();
+            }
         }
     }
 }
