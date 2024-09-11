@@ -19,7 +19,7 @@ namespace nea_ui_testing
         private List<Topic> topicList;
         private List<Question> questionsFromSearch;
 
-        private _Topic[] topicsWithRGQ = { _Topic.Gerunds, _Topic.Tenses, _Topic.AdjectivesAdverbs, _Topic.Algebra, _Topic.Graphs, _Topic.Inequalities, _Topic.Sequences, _Topic.RatioProportion, _Topic.SimultaneousEq, _Topic.Quadratics, _Topic.AveragesRangesModeMedian, _Topic.PerimeterAreaVolume };
+        private _Topic[] topicsWithRGQ = { _Topic.SubjectVerbAgreement, _Topic.AdjectivesAdverbs, _Topic.Algebra, _Topic.Graphs, _Topic.Inequalities, _Topic.Sequences, _Topic.RatioProportion, _Topic.SimultaneousEq, _Topic.Quadratics, _Topic.AveragesRangesModeMedian, _Topic.PerimeterAreaVolume };
         int[] indexesOfTopicsWithRGQ;
 
         private DatabaseHelper dbh = new DatabaseHelper();

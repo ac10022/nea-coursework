@@ -38,6 +38,7 @@
             this.TeacherRadioButton = new System.Windows.Forms.RadioButton();
             this.LoginButton = new System.Windows.Forms.Button();
             this.LoggedOutLabel = new System.Windows.Forms.Label();
+            this.ResetPasswordButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -83,6 +84,7 @@
             // 
             this.PasswordField.Location = new System.Drawing.Point(31, 192);
             this.PasswordField.Name = "PasswordField";
+            this.PasswordField.PasswordChar = '*';
             this.PasswordField.Size = new System.Drawing.Size(188, 26);
             this.PasswordField.TabIndex = 3;
             this.PasswordField.TextChanged += new System.EventHandler(this.CheckForData);
@@ -141,11 +143,23 @@
             this.LoggedOutLabel.TabIndex = 9;
             this.LoggedOutLabel.Text = "You have been logged out.";
             // 
+            // ResetPasswordButton
+            // 
+            this.ResetPasswordButton.BackColor = System.Drawing.Color.LightCoral;
+            this.ResetPasswordButton.Location = new System.Drawing.Point(239, 356);
+            this.ResetPasswordButton.Name = "ResetPasswordButton";
+            this.ResetPasswordButton.Size = new System.Drawing.Size(186, 43);
+            this.ResetPasswordButton.TabIndex = 10;
+            this.ResetPasswordButton.Text = "Reset Password?";
+            this.ResetPasswordButton.UseVisualStyleBackColor = false;
+            this.ResetPasswordButton.Click += new System.EventHandler(this.ResetPwdEvent);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ResetPasswordButton);
             this.Controls.Add(this.LoggedOutLabel);
             this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.TeacherRadioButton);
@@ -175,6 +189,7 @@
         private System.Windows.Forms.RadioButton TeacherRadioButton;
         private System.Windows.Forms.Button LoginButton;
         private System.Windows.Forms.Label LoggedOutLabel;
+        private System.Windows.Forms.Button ResetPasswordButton;
     }
 }
 

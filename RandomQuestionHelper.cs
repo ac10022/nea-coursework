@@ -1,4 +1,6 @@
 ﻿using nea_prototype_full;
+using api_handling_for_nea;
+using ListExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 namespace automatic_question_generation_testing
 {
@@ -278,6 +281,60 @@ namespace automatic_question_generation_testing
                         return question3;
                 }
 
+            }
+            else if (topic.TopicId == (int)_Topic.SubjectVerbAgreement)
+            {
+                // use news article api to generate sample sva sentences
+                NewsQuestionHelper nqh = new NewsQuestionHelper();
+                List<(string title, string content)> articles = nqh.NewsArticleQuestion();
+                (string correctTitle, string correctContent) = articles.First();
+
+                // remove first, add last 3 to mca
+                articles.RemoveAt(0);
+
+                RandomlyGeneratedQuestion rgq = new RandomlyGeneratedQuestion(topic, 2, $"Which of the following article titles best matches the article content?\n\n{correctContent}", new List<string> { correctTitle }, -1, null, "No answer key provided for this question.");
+                rgq.ForceMc(articles.Select(x => x.title).ToList());
+                return rgq;
+            }
+            else if (topic.TopicId == (int)_Topic.AdjectivesAdverbs)
+            {
+                // use thesaurus api
+                _randomInt = random.Next(1, 3);
+
+                // chooses random: noun, adjectice, verb
+                _WordType wordType = (_WordType)new Random().Next(0, 3);
+                ThesaurusQuestionHelper tqh = new ThesaurusQuestionHelper(wordType);
+                string word = tqh.WordInput;
+
+                switch (_randomInt)
+                {
+                    case 1:
+
+                        (string[] words, int synIndex) = tqh.SynAntQuestion().Result;
+
+                        RandomlyGeneratedQuestion rgq = new RandomlyGeneratedQuestion(topic, 1, $"Which of the following words is a synonym of: {word}?", new List<string> { words[synIndex] }, -1, null, "No answer key available for this question.");
+
+                        // remove syn and keep antonyms
+                        List<string> nonSyns = words.ToList();
+                        nonSyns.RemoveAt(synIndex);
+
+                        // remove duplicates
+                        nonSyns.Distinct();
+
+                        rgq.ForceMc(nonSyns);
+                        return rgq;
+
+                    case 2:
+
+                        List<string> defs = tqh.DefinitionMatchQuestion(wordType).Result;
+                        RandomlyGeneratedQuestion rgq2 = new RandomlyGeneratedQuestion(topic, 1, $"Which of the following provides the best definition of the word: {word}?", new List<string> { defs.First() }, -1, null, "No answer key available for this question.");
+                        
+                        // remove first (correct) definition and push to mc answers
+                        defs.RemoveAt(0);
+
+                        rgq2.ForceMc(defs);
+                        return rgq2;
+                }
             }
             throw new Exception("No randomly generated questions available for this topic.");
         }

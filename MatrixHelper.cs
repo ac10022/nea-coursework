@@ -93,6 +93,5 @@ namespace automatic_question_generation_testing
             // return a new 2x2 matrix as a result
             return new _2x2Matrix(transposedC);
         }
-
     }
 }

@@ -54,10 +54,14 @@ namespace nea_prototype_full
                     }
                 }
             }
+
+            SOWDisplay.ItemCheck += ItemCheckedEvent;
         }
 
         private void ItemCheckedEvent(object sender, ItemCheckEventArgs e)
         {
+            Console.WriteLine("checked");
+
             Class selectedClass = studentClasses[ClassPicker.SelectedIndex];
             string serialisedChecklistData = SerialiseChecklistData();
 

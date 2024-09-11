@@ -142,9 +142,9 @@
             // 
             // SubmitButton
             // 
-            this.SubmitButton.Location = new System.Drawing.Point(794, 737);
+            this.SubmitButton.Location = new System.Drawing.Point(607, 595);
             this.SubmitButton.Name = "SubmitButton";
-            this.SubmitButton.Size = new System.Drawing.Size(240, 36);
+            this.SubmitButton.Size = new System.Drawing.Size(427, 36);
             this.SubmitButton.TabIndex = 29;
             this.SubmitButton.Text = "Submit";
             this.SubmitButton.UseVisualStyleBackColor = true;
@@ -168,7 +168,7 @@
             // 
             this.MCA_B.AccessibleDescription = "MULTIPLE_CHOICE";
             this.MCA_B.AutoSize = true;
-            this.MCA_B.Location = new System.Drawing.Point(319, 709);
+            this.MCA_B.Location = new System.Drawing.Point(21, 739);
             this.MCA_B.Name = "MCA_B";
             this.MCA_B.Size = new System.Drawing.Size(141, 24);
             this.MCA_B.TabIndex = 31;
@@ -180,7 +180,7 @@
             // 
             this.MCA_D.AccessibleDescription = "MULTIPLE_CHOICE";
             this.MCA_D.AutoSize = true;
-            this.MCA_D.Location = new System.Drawing.Point(319, 743);
+            this.MCA_D.Location = new System.Drawing.Point(21, 798);
             this.MCA_D.Name = "MCA_D";
             this.MCA_D.Size = new System.Drawing.Size(142, 24);
             this.MCA_D.TabIndex = 33;
@@ -192,7 +192,7 @@
             // 
             this.MCA_C.AccessibleDescription = "MULTIPLE_CHOICE";
             this.MCA_C.AutoSize = true;
-            this.MCA_C.Location = new System.Drawing.Point(21, 743);
+            this.MCA_C.Location = new System.Drawing.Point(21, 769);
             this.MCA_C.Name = "MCA_C";
             this.MCA_C.Size = new System.Drawing.Size(141, 24);
             this.MCA_C.TabIndex = 32;
@@ -214,7 +214,7 @@
             // 
             this.FI_FIELD1.AccessibleDescription = "FREE_INPUT";
             this.FI_FIELD1.AutoSize = true;
-            this.FI_FIELD1.Location = new System.Drawing.Point(19, 668);
+            this.FI_FIELD1.Location = new System.Drawing.Point(19, 664);
             this.FI_FIELD1.Name = "FI_FIELD1";
             this.FI_FIELD1.Size = new System.Drawing.Size(73, 20);
             this.FI_FIELD1.TabIndex = 37;
@@ -223,7 +223,7 @@
             // FI_1
             // 
             this.FI_1.AccessibleDescription = "FREE_INPUT";
-            this.FI_1.Location = new System.Drawing.Point(23, 691);
+            this.FI_1.Location = new System.Drawing.Point(23, 687);
             this.FI_1.Name = "FI_1";
             this.FI_1.Size = new System.Drawing.Size(202, 26);
             this.FI_1.TabIndex = 38;
@@ -232,7 +232,7 @@
             // FI_2
             // 
             this.FI_2.AccessibleDescription = "FREE_INPUT";
-            this.FI_2.Location = new System.Drawing.Point(319, 691);
+            this.FI_2.Location = new System.Drawing.Point(23, 741);
             this.FI_2.Name = "FI_2";
             this.FI_2.Size = new System.Drawing.Size(202, 26);
             this.FI_2.TabIndex = 40;
@@ -242,7 +242,7 @@
             // 
             this.FI_FIELD2.AccessibleDescription = "FREE_INPUT";
             this.FI_FIELD2.AutoSize = true;
-            this.FI_FIELD2.Location = new System.Drawing.Point(315, 668);
+            this.FI_FIELD2.Location = new System.Drawing.Point(19, 718);
             this.FI_FIELD2.Name = "FI_FIELD2";
             this.FI_FIELD2.Size = new System.Drawing.Size(73, 20);
             this.FI_FIELD2.TabIndex = 39;
@@ -251,7 +251,7 @@
             // FI_4
             // 
             this.FI_4.AccessibleDescription = "FREE_INPUT";
-            this.FI_4.Location = new System.Drawing.Point(319, 742);
+            this.FI_4.Location = new System.Drawing.Point(23, 848);
             this.FI_4.Name = "FI_4";
             this.FI_4.Size = new System.Drawing.Size(202, 26);
             this.FI_4.TabIndex = 44;
@@ -261,7 +261,7 @@
             // 
             this.FI_FIELD4.AccessibleDescription = "FREE_INPUT";
             this.FI_FIELD4.AutoSize = true;
-            this.FI_FIELD4.Location = new System.Drawing.Point(315, 720);
+            this.FI_FIELD4.Location = new System.Drawing.Point(19, 826);
             this.FI_FIELD4.Name = "FI_FIELD4";
             this.FI_FIELD4.Size = new System.Drawing.Size(73, 20);
             this.FI_FIELD4.TabIndex = 43;
@@ -270,7 +270,7 @@
             // FI_3
             // 
             this.FI_3.AccessibleDescription = "FREE_INPUT";
-            this.FI_3.Location = new System.Drawing.Point(23, 743);
+            this.FI_3.Location = new System.Drawing.Point(23, 796);
             this.FI_3.Name = "FI_3";
             this.FI_3.Size = new System.Drawing.Size(202, 26);
             this.FI_3.TabIndex = 42;
@@ -280,7 +280,7 @@
             // 
             this.FI_FIELD3.AccessibleDescription = "FREE_INPUT";
             this.FI_FIELD3.AutoSize = true;
-            this.FI_FIELD3.Location = new System.Drawing.Point(19, 720);
+            this.FI_FIELD3.Location = new System.Drawing.Point(19, 773);
             this.FI_FIELD3.Name = "FI_FIELD3";
             this.FI_FIELD3.Size = new System.Drawing.Size(73, 20);
             this.FI_FIELD3.TabIndex = 41;
@@ -388,7 +388,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1046, 793);
+            this.ClientSize = new System.Drawing.Size(1046, 913);
             this.Controls.Add(this.QuestionsRemainingLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DrawingBox);

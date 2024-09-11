@@ -64,6 +64,10 @@ namespace nea_ui_testing
                 {
                     newLabel.BackColor = System.Drawing.Color.DarkGreen;
                 }
+                else if (currentAssignment.HomeworkDueDate < DateTime.Today)
+                {
+                    newLabel.BackColor= System.Drawing.Color.IndianRed;
+                }
                 else
                 {
                     newLabel.BackColor = System.Drawing.Color.Azure;
@@ -74,13 +78,13 @@ namespace nea_ui_testing
                 newLabel.Name = $"label{i + 1}";
                 newLabel.Size = new System.Drawing.Size(637, 28);
                 newLabel.TabIndex = 44 + 2 * i;
-                newLabel.Text = $"{currentAssignment.HomeworkName}    set by {currentAssignment.Setter.FirstName}    due {currentAssignment.HomeworkDueDate.ToShortDateString()}";
+                newLabel.Text = $"{((currentAssignment.HomeworkDueDate < DateTime.Today) ? "-PAST DUE- " : "")}{currentAssignment.HomeworkName} set by {currentAssignment.Setter.FirstName} due {currentAssignment.HomeworkDueDate.ToShortDateString()}";
 
                 Controls.Add(newLabel);
 
                 Button newButton = new Button();
 
-                newButton.Location = new System.Drawing.Point(450, 68 + 40 * i);
+                newButton.Location = new System.Drawing.Point(450, 88 + 40 * i);
                 newButton.Name = $"button{i + 1}";
                 newButton.Size = new System.Drawing.Size(70, 25);
                 newButton.TabIndex = 45 + 2 * i;

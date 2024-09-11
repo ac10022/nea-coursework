@@ -74,9 +74,23 @@ namespace nea_ui_testing
 
                     for (int i = 0; i < assignmentsToDisplay; i++)
                     {
+                        // reset colour
+                        SAPs[4 - i].ForeColor = Color.Black;
+
                         if (dbh.StudentCompletedAssignmentTest(studentAssignments[i], selectedStudent) != (double)1)
                         {
-                            SAPs[4 - i].Text = $"{studentAssignments[i].HomeworkName}\t INCOMPLETE";
+                            // did not finish homework on time
+                            if (studentAssignments[i].HomeworkDueDate < DateTime.Today)
+                            {
+                                SAPs[4 - i].Text = $"{studentAssignments[i].HomeworkName}\t --DNF--";
+                                SAPs[4 - i].BackColor = Color.Black;
+                                SAPs[4 - i].ForeColor = Color.White;
+                            }
+                            // homework not due yet, but student has not completed it
+                            else
+                            {
+                                SAPs[4 - i].Text = $"{studentAssignments[i].HomeworkName}\t INCOMPLETE";
+                            }
                         }
                         else
                         {

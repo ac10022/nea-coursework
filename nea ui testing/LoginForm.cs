@@ -15,17 +15,19 @@ namespace nea_ui_testing
     public partial class LoginForm : Form
     {
         private bool canLogIn = false;
+        private bool canForgotPwd = false;
         public LoginForm()
         {
             InitializeComponent();
 
             // disable login button for now as fields are empty
             LoginButton.Enabled = false;
+            ResetPasswordButton.Enabled = false;
             LoggedOutLabel.Visible = false;
 
             // FOR DEBUGGING
-            EmailField.Text = @"test@gmail.com";
-            PasswordField.Text = "password123";
+            EmailField.Text = @"udayjolly@gmail.com";
+            PasswordField.Text = "Password123";
             //
         }
 
@@ -96,8 +98,12 @@ namespace nea_ui_testing
         {
             // can only click log-in if fields are all filled
             canLogIn = EmailField.TextLength != 0 && PasswordField.TextLength != 0 && (StudentRadioButton.Checked || TeacherRadioButton.Checked);
+            canForgotPwd = EmailField.TextLength != 0;
+
             if (canLogIn) LoginButton.Enabled = true;
             else LoginButton.Enabled = false;
+
+            ResetPasswordButton.Enabled = canForgotPwd;
         }
 
         private void ClearFields()
@@ -111,6 +117,19 @@ namespace nea_ui_testing
         static void LogOutEvent()
         {
             Program.loggedInUser = null;
+        }
+
+        private void ResetPwdEvent(object sender, EventArgs e)
+        {
+            Hide();
+            PasswordResetMenu prm = new PasswordResetMenu(EmailField.Text);
+
+            // form closed events
+            prm.Closed += (s, args) =>
+            {
+                Show();
+            };
+            prm.Show();
         }
     }
 }

@@ -71,7 +71,6 @@
             this.SOWDisplay.Name = "SOWDisplay";
             this.SOWDisplay.Size = new System.Drawing.Size(607, 326);
             this.SOWDisplay.TabIndex = 15;
-            this.SOWDisplay.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ItemCheckedEvent);
             // 
             // SchemeOfWorkTracker
             // 

@@ -67,7 +67,7 @@ namespace nea_prototype_full
             if (!email.Contains("@") || !email.Contains(".")) return false;
 
             // the student password must meet the criteria: at least 8 characters long, at least one capital letter, at least one number, no non-ASCII symbols; entries which do not pass these criteria should be omitted
-            if (password.Length < 8) return false;
+            if (password.Length <= 8) return false;
             if (Regex.Matches(password, @"[A-Z]").Count == 0) return false;
             if (Regex.Matches(password, @"[0-9]").Count == 0) return false;
             if (password.Any(c => c > 127)) return false;

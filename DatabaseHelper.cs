@@ -52,7 +52,6 @@ namespace nea_prototype_full
             if (salt == null) throw new Exception("Couldn't find a user by this email in the database.");
             return salt;
         }
-
         /// <summary>
         /// Given the salt, password and user type, returns the user entity.
         /// </summary>
@@ -619,6 +618,29 @@ namespace nea_prototype_full
                     SqlParameter saltParameter = new SqlParameter("@SaltParameter", newSalt);
                     SqlParameter sidParameter = new SqlParameter("@StudentIdParameter", student.Id);
                     cmd.Parameters.AddRange(new SqlParameter[] { fnParameter, lnParameter, emailParameter, hpParameter, saltParameter, sidParameter });
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void EditTeacherDetails(User teacher, string newFirstName, string newLastName, string newEmail, string newHashedPassword, string newSalt)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"UPDATE Teachers SET FirstName =	@FirstnameParameter, Surname = @LastnameParameter, Email = @EmailParameter, Password = @HashedPasswordParameter, Salt = @SaltParameter WHERE TeacherId = @TeacherIdParameter";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter fnParameter = new SqlParameter("@FirstnameParameter", newFirstName);
+                    SqlParameter lnParameter = new SqlParameter("@LastnameParameter", newLastName);
+                    SqlParameter emailParameter = new SqlParameter("@EmailParameter", newEmail);
+                    SqlParameter hpParameter = new SqlParameter("@HashedPasswordParameter", newHashedPassword);
+                    SqlParameter saltParameter = new SqlParameter("@SaltParameter", newSalt);
+                    SqlParameter tidParameter = new SqlParameter("@TeacherIdParameter", teacher.Id);
+                    cmd.Parameters.AddRange(new SqlParameter[] { fnParameter, lnParameter, emailParameter, hpParameter, saltParameter, tidParameter });
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -1344,6 +1366,106 @@ namespace nea_prototype_full
                     conn.Close();
                 }
             }
+        }
+
+        //public int GetStudentIdFromEmail(string email)
+        //{
+        //    int studentId = -1;
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        string query = @"SELECT StudentId FROM Students WHERE Email = @Email";
+
+        //        using (SqlCommand cmd = new SqlCommand(query, conn))
+        //        {
+        //            cmd.Parameters.Add(new SqlParameter("@Email", email));
+
+        //            conn.Open();
+        //            studentId = (int)cmd.ExecuteScalar();
+        //            conn.Close();
+        //        }
+        //    }
+        //    if (studentId == -1) throw new Exception($"Student with email {email} not found in database.");
+        //    return studentId;
+        //}
+
+        //public int GetTeacherIdFromEmail(string email)
+        //{
+        //    int teacherId = -1;
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        string query = @"SELECT TeacherId FROM Teachers WHERE Email = @Email";
+
+        //        using (SqlCommand cmd = new SqlCommand(query, conn))
+        //        {
+        //            cmd.Parameters.Add(new SqlParameter("@Email", email));
+
+        //            conn.Open();
+        //            teacherId = (int)cmd.ExecuteScalar();
+        //            conn.Close();
+        //        }
+        //    }
+        //    if (teacherId == -1) throw new Exception($"Teacher with email {email} not found in database.");
+        //    return teacherId;
+        //}
+
+        public User GetStudentByEmail(string email)
+        {
+            User student = null;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT StudentId, FirstName, Surname, Email FROM Students WHERE Email = @Email";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter emailParameter = new SqlParameter("@Email", email);
+                    cmd.Parameters.Add(emailParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            student = new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Student);
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            if (student == null) throw new Exception($"No student with email {email} found in the database.");
+            return student;
+        }
+
+        public User GetTeacherByEmail(string email)
+        {
+            User teacher = null;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT TeacherId, FirstName, Surname, Email FROM Teachers WHERE Email = @Email";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlParameter emailParameter = new SqlParameter("@Email", email);
+                    cmd.Parameters.Add(emailParameter);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            teacher = new User((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], _UserType.Teacher);
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            if (teacher == null) throw new Exception($"No teacher with email {email} found in the database.");
+            return teacher;
         }
     }
 }

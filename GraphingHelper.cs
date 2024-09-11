@@ -73,11 +73,14 @@ namespace automatic_question_generation_testing
         {
             int panelWidth = panel.Width;
             Graphics g = paintEvent.Graphics;
+            // pen colour gray width 2
             Pen pen = new Pen(Color.Gray, 2f);
 
+            // draw a line between the middle of each side to form a central cross to form the axis
             g.DrawLine(pen, panelWidth / 2, 0, panelWidth / 2, panelWidth); // y-axis
             g.DrawLine(pen, 0, panelWidth / 2, panelWidth, panelWidth / 2); // x-axis
 
+            // font size 8 font face sans serif
             Font font = new Font(FontFamily.GenericSansSerif, 8);
             SolidBrush brush = new SolidBrush(Color.Black);
 
@@ -94,13 +97,17 @@ namespace automatic_question_generation_testing
                 Yscalar = scalar;
             }
 
-            //x-axis
+            // x-axis
+            // write the (integer) domain min at the very left of the panel
+            // then increment by the scalar value, drawing the next integer
+            // continue until reaching the very right of the panel
             for (int x = 0; x <= panelWidth / (int)Xscalar; x++)
             {
                 g.DrawString((x - (0.5*panelWidth / (int)Xscalar)).ToString(), font, brush, (float)(x * Xscalar) - 8, panelWidth / 2 - 8);
             }
 
-            //y-axis
+            // y-axis
+            // same process as for x-axis, rotated
             for (int y = 0; y <= panelWidth / (int)Yscalar; y++)
             {
                 g.DrawString((-1 * (y - (0.5 * panelWidth / (int)Yscalar))).ToString(), font, brush, panelWidth / 2 - 8, (float)(y * Yscalar) - 8);
@@ -110,13 +117,16 @@ namespace automatic_question_generation_testing
         public void DrawPoints(object sender, PaintEventArgs paintEvent)
         {
             Graphics g = paintEvent.Graphics;
+            // new pen colour red width 2
             Pen pen = new Pen(Color.Red, 2f);
+            // for each point besides the last
             for (int i = 0; i < points.Count - 1; i++)
             {
                 PointD point = points[i];
                 PointD nextPoint = points[i + 1];
                 // prevent a line being drawn in place of an asymptote
                 if (Math.Abs(nextPoint.X - point.X) > 100 || Math.Abs(nextPoint.Y - point.Y) > 100) continue;
+                // draw a line between this point and the next point
                 g.DrawLine(pen, (float)point.X, (float)point.Y, (float)nextPoint.X, (float)nextPoint.Y);
             }
         }
@@ -124,8 +134,10 @@ namespace automatic_question_generation_testing
         public double FindScalar()
         {
             double panelHeight = panel.Size.Height;
+            // get range of points from domain
             (double rangeMin, double rangeMax) = GetRange();
             double maxDistanceFromAxis;
+            // if graph never crosses the x-axis
             if ((rangeMin >= 0 && rangeMax >= 0) || rangeMin <= 0 && rangeMax <= 0)
             {
                 maxDistanceFromAxis = Math.Max(Math.Abs(rangeMin), Math.Abs(rangeMax)) + 1;
@@ -134,12 +146,15 @@ namespace automatic_question_generation_testing
             {
                 maxDistanceFromAxis = Math.Min(Math.Abs(rangeMin), Math.Abs(rangeMax)) + 1;
             }
+            // multiply by 2 to account for both sides of the x-axis, then divide panel height by this to find a scalar multiple
             return panelHeight / (maxDistanceFromAxis * 2);
         }
 
         public List<PointD> ScalePoints()
         {
             double Xscalar, Yscalar;
+
+            // if specified on class definition
             if (X_scalar != 0 || Y_scalar != 0)
             {
                 Xscalar = X_scalar;
@@ -153,6 +168,7 @@ namespace automatic_question_generation_testing
             }
             foreach (PointD point in points)
             {
+                // scale via multiplication then translate points to the centre of the panel
                 point.X *= Xscalar;
                 point.X += (panel.Height / 2);
                 point.Y *= -1 * Yscalar;
