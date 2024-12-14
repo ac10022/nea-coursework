@@ -28,7 +28,13 @@ namespace automatic_question_generation_testing
             if (c == 1) return $"({matrix[0, 0]})\n({matrix[1, 0]})";
             else return $"({matrix[0, 0]}, {matrix[0, 1]})\n({matrix[1, 0]}, {matrix[1, 1]})";
         }
-
+        
+        /// <summary>
+        /// Multiplies a 2x2 matrix with another 2x1 matrix for simultaneous equations.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>A new 2x1 matrix: result of the multiplication.</returns>
+        /// <exception cref="Exception"></exception>
         public Matrix MultiplyWith(Matrix other)
         {
             // only multiply a 2x2 matrix with a 2x1 matrix, otherwise throw exception
@@ -76,12 +82,20 @@ namespace automatic_question_generation_testing
             base.c = 2;
         }
 
+        /// <summary>
+        /// Finds the determinant of a 2x2 matrix.
+        /// </summary>
+        /// <returns></returns>
         public double Det()
         {
             // ac - bd
             return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
         }
 
+        /// <summary>
+        /// Finds the shorthand inverse of a 2x2 matrix.
+        /// </summary>
+        /// <returns>A new 2x2 matrix containing the inverse of the matrix.</returns>
         public _2x2Matrix Inverse()
         {
             // inverse: 1/detM * C^T
