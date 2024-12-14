@@ -61,6 +61,7 @@
             this.DrawingBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.QuestionsRemainingLabel = new System.Windows.Forms.Label();
+            this.VideoLinkButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -82,6 +83,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.VideoLinkButton);
             this.groupBox1.Controls.Add(this.AuthorLabel);
             this.groupBox1.Controls.Add(this.DifficultyLabel);
             this.groupBox1.Controls.Add(this.SubjectLabel);
@@ -384,6 +386,16 @@
             this.QuestionsRemainingLabel.Size = new System.Drawing.Size(2, 31);
             this.QuestionsRemainingLabel.TabIndex = 48;
             // 
+            // VideoLinkButton
+            // 
+            this.VideoLinkButton.Location = new System.Drawing.Point(463, 22);
+            this.VideoLinkButton.Name = "VideoLinkButton";
+            this.VideoLinkButton.Size = new System.Drawing.Size(75, 34);
+            this.VideoLinkButton.TabIndex = 49;
+            this.VideoLinkButton.Text = "Video";
+            this.VideoLinkButton.UseVisualStyleBackColor = true;
+            this.VideoLinkButton.Click += new System.EventHandler(this.GetVideoLink);
+            // 
             // QuestionAttemptMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -460,5 +472,6 @@
         private System.Windows.Forms.PictureBox DrawingBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label QuestionsRemainingLabel;
+        private System.Windows.Forms.Button VideoLinkButton;
     }
 }

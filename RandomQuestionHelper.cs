@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.CompilerServices;
+using System.Web.Routing;
 
 namespace automatic_question_generation_testing
 {
@@ -336,6 +337,102 @@ namespace automatic_question_generation_testing
                         return rgq2;
                 }
             }
+            else if (topic.TopicId == (int)_Topic.Sequences)
+            {
+                _randomInt = random.Next(1, 4);
+
+                // define random starting term and common ratio (geometric)/difference (arithmetic)
+                int a = random.Next(1, 21);
+                int r_d = random.Next(1, 11);
+                List<int> terms = new List<int>();
+
+                switch (_randomInt)
+                {
+                    case 1:
+
+                        // arithmetic sequence, find starting term given two terms
+                        int givenTerm1 = random.Next(3, 6);
+                        int givenTerm2 = givenTerm1 + random.Next(1, 4);
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 2, $"Find the starting term (a) of arithmetic sequence T, where T({givenTerm1}) = {a + (r_d * (givenTerm1 - 1))} and T({givenTerm2}) = {a + (r_d * (givenTerm2 - 1))}.", new List<string>() { a.ToString() }, -1, null, $"Form simultaneous equations from given information: a + {givenTerm1 - 1}d = {a + (r_d * (givenTerm1 - 1))}, a + {givenTerm2 - 1}d = {a + (r_d * (givenTerm2 - 1))} [1]\nSolve to find a = {a} [1]");
+
+                    case 2:
+
+                        // arithmetic sequence, find common difference given first 4 terms
+                        for (int i = 0; i < 4; i++)
+                        {
+                            terms.Add(a + (r_d * i));
+                        }
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the common difference (d) of arithmetic sequence T, where T starts: {string.Join(", ", terms)}", new List<string>() { r_d.ToString() }, -1, null, $"Subtract T(n-1) from T(n) to find the common difference: e.g., at n = 3: {terms[2]} - {terms[1]} = {r_d} [1]");
+
+                    case 3:
+
+                        // geometric sequence, find common ratio given first 4 terms
+                        for (int i = 0; i < 4; i++)
+                        {
+                            terms.Add((int)(a * Math.Pow(r_d, i)));
+                        }
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the common ratio (r) of geometric sequence T, where T starts: {string.Join(", ", terms)}", new List<string>() { r_d.ToString() }, -1, null, $"Divide T(n-1) from T(n) to find the common ratio: e.g., at n = 3: {terms[2]} ÷ {terms[1]} = {r_d} [1]");
+
+                }
+            }
+            else if (topic.TopicId == (int)_Topic.AveragesRangesModeMedian)
+            {
+                _randomInt = random.Next(1, 5);
+                List<int> set = new List<int>();
+
+                // create a set to make questions from
+                for (int i = 0; i < 5; i++)
+                {
+                    // add 5 random ints 1-20 to the set
+                    set.Add(random.Next(1, 21));
+                }
+
+                // if no repeated elements, force repeated elements
+                if (set.Distinct().Count() == 5 && _randomInt == 3)
+                {
+                    set[4] = set[random.Next(1, 4)];
+                }
+
+                switch (_randomInt)
+                {
+                    case 1:
+
+                        // average
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the average (to 2dp) of the data set S, where S = {{{string.Join(", ", set)}}}", new List<string>() { Math.Round(set.Average(), 2).ToString() }, -1, null, $"Add all terms of set together: {set.Sum()} [1]\nDetermine size of set and divide the sum by this: size: 5, average = {set.Sum()} ÷ 5 = {Math.Round(set.Average(), 2)} (2dp) [1]");
+
+                    case 2:
+
+                        // range
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the range of the data set S, where S = {{{string.Join(", ", set)}}}", new List<string>() { (set.Max() - set.Min()).ToString() }, -1, null, $"Locate the maximum and minimum of the set and find the difference between these values: {set.Max()} - {set.Min()} = {set.Max() - set.Min()} [1]");
+
+                    case 3:
+
+                        // mode
+                        int mostFrequentItem = set.OrderByDescending(x => set.Count(y => x == y)).FirstOrDefault();
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the mode of the data set S, where S = {{{string.Join(", ", set)}}}", new List<string>() { mostFrequentItem.ToString() }, -1, null, $"Locate the most frequent item in the set: {mostFrequentItem} [1]");
+
+                    case 4:
+
+                        // median, third item in ordered set
+                        int medianItem = set.OrderBy(x => x).ElementAt(2);
+
+                        // return question
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the median of the data set S, where S = {{{string.Join(", ", set)}}}", new List<string>() { medianItem.ToString() }, -1, null, $"Order the set, then locate the middle term: {medianItem} [1]");
+
+                }
+            } 
             throw new Exception("No randomly generated questions available for this topic.");
         }
     }

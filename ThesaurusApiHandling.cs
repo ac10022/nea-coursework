@@ -157,6 +157,7 @@ namespace api_handling_for_nea
             ThesaurusApiHandling thesaurusApiHandling = new ThesaurusApiHandling(wordInput);
             ThesaurusApiResponseModel response = await thesaurusApiHandling.Fetch();
             ThesaurusApiResponseHelper helper = new ThesaurusApiResponseHelper();
+
             return helper.ShuffleWords(response.Syns, response.Ants);
         }
 

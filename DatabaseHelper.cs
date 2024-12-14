@@ -170,6 +170,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Creates a new class in the database given a class name.
+        /// </summary>
+        /// <param name="className"></param>
         public void CreateNewClass(string className)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -188,6 +192,12 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Searches for classes within the database given a class name using a LIKE clause.
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns>A list of classes which match or partially match the classname input.</returns>
+        /// <exception cref="Exception">Throws an exception if no classes matching that name are found.</exception>
         public List<Class> SearchForClasses(string className)
         {
             List<Class> list = new List<Class>();
@@ -218,6 +228,11 @@ namespace nea_prototype_full
             return list;
         }
 
+        /// <summary>
+        /// Given a class, searches the database for the student members of that class.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <returns>A list of students (User objects) which are in the input class.</returns>
         public List<User> GetStudentsInClass(Class _class)
         {
             List<User> studentList = new List<User>();
@@ -248,6 +263,11 @@ namespace nea_prototype_full
             return studentList;
         }
 
+        /// <summary>
+        /// Given a class, searches the database for the teacher members of that class.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <returns>A list of teachers (User objects) which are in the input class.</returns>
         public List<User> GetTeachersInClass(Class _class)
         {
             List<User> teacherList = new List<User>();
@@ -278,6 +298,11 @@ namespace nea_prototype_full
             return teacherList;
         }
 
+        /// <summary>
+        /// Given a first name, searches the database for students whose first name matches or partially matches the input.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>A list of students (User objects) who have first names which match or partially match the input.</returns>
         public List<User> GetStudentsByFirstName(string name)
         {
             List<User> studentList = new List<User>();
@@ -308,6 +333,11 @@ namespace nea_prototype_full
             return studentList;
         }
 
+        /// <summary>
+        /// Given a first name, searches the database for teachers whose first name matches or partially matches the input.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>A list of teachers (User objects) who have first names which match or partially match the input.</returns>
         public List<User> GetTeachersByFirstName(string name)
         {
             List<User> teacherList = new List<User>();
@@ -338,6 +368,13 @@ namespace nea_prototype_full
             return teacherList;
         }
 
+        /// <summary>
+        /// Given a first name and class, searches the database for students whose first name matches or partially matches the input AND who are in the specified class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="_class"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">A list of students (User objects) who match the input criteria.</exception>
         public List<User> GetStudentsMultimetric(string name, Class _class)
         {
             List<User> studentList = new List<User>();
@@ -369,6 +406,11 @@ namespace nea_prototype_full
             return studentList;
         }
 
+        /// <summary>
+        /// Adds a given student (User object) to a specified class (Class object).
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="_class"></param>
         public void AddStudentToClass(User student, Class _class)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -388,6 +430,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Adds a given teacher (User object) to a specified class (Class object).
+        /// </summary>
+        /// <param name="teacher"></param>
+        /// <param name="_class"></param>
         public void AddTeacherToClass(User teacher, Class _class)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -407,6 +454,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Removes a given student (User object) from a given class (Class object). Does nothing if the student does not exist in this class.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="_class"></param>
         public void RemoveStudentFromClass(User student, Class _class)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -426,6 +478,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Removes a given teacher (User object) from a given class (Class object). Does nothing if the teacher does not exist in this class.
+        /// </summary>
+        /// <param name="teacher"></param>
+        /// <param name="_class"></param>
         public void RemoveTeacherFromClass(User teacher, Class _class)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -445,6 +502,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Fetches all classes from the database.
+        /// </summary>
+        /// <returns>A list of all classes in the database (Class objects).</returns>
+        /// <exception cref="Exception"></exception>
         public List<Class> GetAllClasses()
         {
             List<Class> list = new List<Class>();
@@ -472,6 +534,11 @@ namespace nea_prototype_full
             return list;
         }
 
+        /// <summary>
+        /// Fetches all teachers from the database.
+        /// </summary>
+        /// <returns>A list of all teachers from the database (User objects).</returns>
+        /// <exception cref="Exception"></exception>
         public List<User> GetAllTeachers()
         {
             List<User> teacherList = new List<User>();
@@ -499,6 +566,11 @@ namespace nea_prototype_full
             return teacherList;
         }
 
+        /// <summary>
+        /// Fetches the classes from the database which a student is enrolled in.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns>A list of classes (Class objects) which the given student is enrolled in.</returns>
         public List<Class> GetClassesOfStudent(User student)
         {
             List<Class> list = new List<Class>();
@@ -528,6 +600,11 @@ namespace nea_prototype_full
             return list;
         }
 
+        /// <summary>
+        /// Fetches the classes from the database which a teacher teaches.
+        /// </summary>
+        /// <param name="teacher"></param>
+        /// <returns>A list of classes (Class objects) which the given teacher is part of.</returns>
         public List<Class> GetClassesOfTeacher(User teacher)
         {
             List<Class> list = new List<Class>();
@@ -557,6 +634,11 @@ namespace nea_prototype_full
             return list;
         }
 
+        /// <summary>
+        /// Given a class and a new name, modifies the class name to the new name.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <param name="newClassName"></param>
         public void ChangeClassName(Class _class, string newClassName)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -576,6 +658,12 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Fetches the last login date of a student (User object).
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns>A date time object of the last time this student logged into the application.</returns>
+        /// <exception cref="Exception"></exception>
         public DateTime GetLastLoginOfStudent(User student)
         {
             DateTime lastLogin;
@@ -603,6 +691,15 @@ namespace nea_prototype_full
             return lastLogin;
         }
 
+        /// <summary>
+        /// Given a student, and corresponding student data (first name, last name, email, hashed password, password salt), modify the student record in the database to contain this new information.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="newFirstName"></param>
+        /// <param name="newLastName"></param>
+        /// <param name="newEmail"></param>
+        /// <param name="newHashedPassword"></param>
+        /// <param name="newSalt"></param>
         public void EditStudentDetails(User student, string newFirstName, string newLastName, string newEmail, string newHashedPassword, string newSalt)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -626,6 +723,15 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Given a teacher, and corresponding teacher data (first name, last name, email, hashed password, password salt), modify the teacher record in the database to contain this new information.
+        /// </summary>
+        /// <param name="teacher"></param>
+        /// <param name="newFirstName"></param>
+        /// <param name="newLastName"></param>
+        /// <param name="newEmail"></param>
+        /// <param name="newHashedPassword"></param>
+        /// <param name="newSalt"></param>
         public void EditTeacherDetails(User teacher, string newFirstName, string newLastName, string newEmail, string newHashedPassword, string newSalt)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -649,6 +755,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Insert a new question record into the database from a question object.
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns>The QuestionId of the inserted question record.</returns>
         public int CreateNewQuestion(Question question)
         {
             int index;
@@ -676,6 +787,11 @@ namespace nea_prototype_full
             return index;
         }
 
+        /// <summary>
+        /// Given a QuestionId and the byte array representation of an image, insert a image record into the database to attach an image to the given question.
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="imageData"></param>
         public void AppendImageToQuestion(int questionId, byte[] imageData)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -695,6 +811,13 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Given a (required) list of difficulties (integers 1-4), an optional topic and an optional author, fetch the questions in the database which match this criteria.
+        /// </summary>
+        /// <param name="difficulties"></param>
+        /// <param name="topic"></param>
+        /// <param name="author"></param>
+        /// <returns>A list of questions (Question objects) which match ALL criteria given.</returns>
         public List<Question> GetQuestionsMultimetric(List<int> difficulties, Topic topic, User author)
         {
             List<Question> questionList = new List<Question>();
@@ -729,11 +852,21 @@ namespace nea_prototype_full
             return questionList;
         }
 
+        /// <summary>
+        /// Converts a byte array representation of an image to an inbuilt image object.
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <returns>An image object of the byte array representation.</returns>
         private Image ByteArrayToImage(byte[] byteArray)
         {
             return (Bitmap)new ImageConverter().ConvertFrom(byteArray);
         }
 
+        /// <summary>
+        /// Given a question, fetch the images appended to this question from the database.
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns>A list of images (Image objects) which are appended to the given question.</returns>
         public List<Image> GetQuestionImages(Question question)
         {
             List<Image> imageList = new List<Image>();
@@ -763,6 +896,15 @@ namespace nea_prototype_full
             return imageList;
         }
 
+        /// <summary>
+        /// Insert a question attempt into the database given question attempt data (corresponding question, corresponding student, correctness, student answer, time question opened, (optional) corresponding assignment).
+        /// </summary>
+        /// <param name="question"></param>
+        /// <param name="student"></param>
+        /// <param name="wasCorrect"></param>
+        /// <param name="studentAnswer"></param>
+        /// <param name="timeQOpened"></param>
+        /// <param name="assignment"></param>
         public void InsertStudentQuestionAttempt(Question question, User student,  bool wasCorrect, string studentAnswer, DateTime timeQOpened, Assignment assignment = null)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -785,6 +927,15 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Insert a question attempt into the database given question attempt data AND the questions corresponding topic, without the question, for randomly generated questions (corresponding topic, corresponding student, correctness, student answer, time question opened, (optional) corresponding assignment).
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="student"></param>
+        /// <param name="wasCorrect"></param>
+        /// <param name="studentAnswer"></param>
+        /// <param name="timeQOpened"></param>
+        /// <param name="assignment"></param>
         public void InsertStudentQuestionAttemptWithTopic(Topic topic, User student, bool wasCorrect, string studentAnswer, DateTime timeQOpened, Assignment assignment = null)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -808,6 +959,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Create an assignment record in the database given an assignment object. Assigns this to classes immediately.
+        /// </summary>
+        /// <param name="assignment"></param>
         public void CreateAssignment(Assignment assignment)
         {
             int index;
@@ -885,6 +1040,11 @@ namespace nea_prototype_full
             return assignmentList;
         }
 
+        /// <summary>
+        /// Given an assignment (Assignment object), fetches all questions part of that assignment
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns>A list of questions (Question objects) which constitute the assignment.</returns>
         public List<Question> GetQuestionsFromAssignment(Assignment assignment)
         {
             List<Question> questionList = new List<Question>();
@@ -917,6 +1077,12 @@ namespace nea_prototype_full
             return questionList;
         }
 
+        /// <summary>
+        /// Takes in an AssignmentId and StudentId and returns a value 0-1, determining to what extent this student has completed the assignment. 1 would mean the assignment is fully complete.
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <param name="student"></param>
+        /// <returns></returns>
         public double StudentCompletedAssignmentTest(Assignment assignment, User student)
         {
             double studentHasCompleted = 0;
@@ -936,7 +1102,7 @@ namespace nea_prototype_full
             return studentHasCompleted;
         }
 
-        /// <summary>
+       /// <summary>
         /// Given an assignment, fetches questions and their corresponding correctness.
         /// </summary>
         /// <param name="assignment"></param>
@@ -975,6 +1141,11 @@ namespace nea_prototype_full
             return questionCorrectness;
         }
 
+        /// <summary>
+        /// Given an assignment, fetches questions and a percentage which determines the percentage of the cohort who answered the question correctly.
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns>A dictionary: key containing the question, value containing the percentage of the assignment cohort who answered the question correctly.</returns>
         public Dictionary<Question, int> PercentagePerAssignmentQuestion(Assignment assignment)
         {
             Dictionary<Question, int> questionCorrectness = new Dictionary<Question, int>();
@@ -1009,6 +1180,11 @@ namespace nea_prototype_full
             return questionCorrectness;
         }
 
+        /// <summary>
+        /// Given a student, fetches all assignments from the database which the student has assigned to them.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns>A list of assignments (Assignment objects) which the student has due.</returns>
         public List<Assignment> GetAllAssignmentsOfStudent(User student)
         {
             List<Assignment> assignmentList = new List<Assignment>();
@@ -1016,6 +1192,12 @@ namespace nea_prototype_full
             return assignmentList;
         }
 
+        /// <summary>
+        /// Takes in an assignment and student and returns a value 0-1, determining the percentage score the student has achieved on this assignment. 1 would mean the student got full marks on this assignment.
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <param name="student"></param>
+        /// <returns></returns>
         public double StudentCorrectnessAssignmentTest(Assignment assignment, User student)
         {
             double studentCorrectness = 0;
@@ -1035,6 +1217,11 @@ namespace nea_prototype_full
             return studentCorrectness;
         }
 
+        /// <summary>
+        /// Given a student (User object) return all the student's question attempts from the database.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns>A list of question attempts (QuestionAttempt objects) containing all student question attempt data.</returns>
         public List<QuestionAttempt> GetStudentQuestionAttempts(User student)
         {
             List<QuestionAttempt> questionAttempts = new List<QuestionAttempt>();
@@ -1088,6 +1275,11 @@ namespace nea_prototype_full
             return questionAttempts;
         }
 
+        /// <summary>
+        /// Given a topic ID, fetches the topic and all corresponding data from the database.
+        /// </summary>
+        /// <param name="topicId"></param>
+        /// <returns>A topic object corresponding to the given topic ID.</returns>
         public Topic GetTopicFromId(int topicId)
         {
             Topic topic = null;
@@ -1115,6 +1307,11 @@ namespace nea_prototype_full
             return topic;
         }
 
+        /// <summary>
+        /// Takes in a student (User object) and returns all topics they’ve practiced on in order of the last time they practiced that topic.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns>A list of topics (Topic objects).</returns>
         public List<Topic> GetStudentLastPracticedTopics(User student)
         {
             List<Topic> topics = new List<Topic>();
@@ -1142,6 +1339,11 @@ namespace nea_prototype_full
             return topics;
         }
 
+        /// <summary>
+        /// Takes in a class (Class object) and returns a list of the topics which constitute the SOW of that class.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <returns>A list of topics (Topic objects).</returns>
         public List<Topic> GetClassSOWTopics(Class _class)
         {
             List<Topic> topics = new List<Topic>();
@@ -1168,6 +1370,11 @@ namespace nea_prototype_full
             return topics;
         }
 
+        /// <summary>
+        /// Given a class (Class object) and a list of topics which constitute the new class SOW, modifies the current class SOW to match the new one.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <param name="newSOW"></param>
         public void ChangeClassSOW(Class _class, List<Topic> newSOW)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1195,6 +1402,12 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Given a class and a student, fetches the saved serialised SOW data for that student, and deserialises it.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <param name="student"></param>
+        /// <returns>A deserialised list of checked-off SOW topics, 1 indicating the topic has been checked off, a 0 indicating it has not.</returns>
         public List<int> GetStudentChecklistData(Class _class, User student)
         {
             try
@@ -1224,6 +1437,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// A method to deseralise checklist data as it is stored in the database.
+        /// </summary>
+        /// <param name="serialisedData"></param>
+        /// <returns>A list of deserialised integers (0,1), indicating whether a topic from the SOW has been ticked off or not. </returns>
         private List<int> DeserialiseChecklistData(string serialisedData)
         {
             List<int> result = new List<int>();
@@ -1235,6 +1453,12 @@ namespace nea_prototype_full
             return result;
         }
 
+        /// <summary>
+        /// Given a class a student is in, a student user, and a string of new serialised SOW data, modifies the existing record to update the serialised SOW data for that student.
+        /// </summary>
+        /// <param name="_class"></param>
+        /// <param name="student"></param>
+        /// <param name="serialisedData"></param>
         public void UpdateSeralisedSOWData(Class _class, User student, string serialisedData)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1254,6 +1478,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// For teacher use: given a student question attempt, modifies the correctness value of this question attempt.
+        /// </summary>
+        /// <param name="questionAttempt"></param>
+        /// <param name="newCorrectness"></param>
         public void OverrideAttemptCorrectness(QuestionAttempt questionAttempt, bool newCorrectness)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1271,6 +1500,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Takes in an assignment and deletes all references of that assignment from the database.
+        /// </summary>
+        /// <param name="assignment"></param>
         public void DeleteAssignment(Assignment assignment)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1287,6 +1520,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Takes in a question and deletes all images appended to that question from the database.
+        /// </summary>
+        /// <param name="question"></param>
         public void DeleteQuestionImages(Question question)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1304,6 +1541,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Given new question data in the form of a Question object with the same QuestionId as that being modified, modifies the record of that question in the database to contain the new data.
+        /// </summary>
+        /// <param name="question"></param>
         public void UpdateQuestion(Question question)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1336,6 +1577,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Takes in a question and deletes all references of that question from the database.
+        /// </summary>
+        /// <param name="question"></param>
         public void DeleteQuestion(Question question)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1352,6 +1597,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// Takes in a student and deletes all references of that student from the database.
+        /// </summary>
+        /// <param name="student"></param>
         public void DeleteStudent(User student)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -1368,46 +1617,12 @@ namespace nea_prototype_full
             }
         }
 
-        //public int GetStudentIdFromEmail(string email)
-        //{
-        //    int studentId = -1;
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        string query = @"SELECT StudentId FROM Students WHERE Email = @Email";
-
-        //        using (SqlCommand cmd = new SqlCommand(query, conn))
-        //        {
-        //            cmd.Parameters.Add(new SqlParameter("@Email", email));
-
-        //            conn.Open();
-        //            studentId = (int)cmd.ExecuteScalar();
-        //            conn.Close();
-        //        }
-        //    }
-        //    if (studentId == -1) throw new Exception($"Student with email {email} not found in database.");
-        //    return studentId;
-        //}
-
-        //public int GetTeacherIdFromEmail(string email)
-        //{
-        //    int teacherId = -1;
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        string query = @"SELECT TeacherId FROM Teachers WHERE Email = @Email";
-
-        //        using (SqlCommand cmd = new SqlCommand(query, conn))
-        //        {
-        //            cmd.Parameters.Add(new SqlParameter("@Email", email));
-
-        //            conn.Open();
-        //            teacherId = (int)cmd.ExecuteScalar();
-        //            conn.Close();
-        //        }
-        //    }
-        //    if (teacherId == -1) throw new Exception($"Teacher with email {email} not found in database.");
-        //    return teacherId;
-        //}
-
+        /// <summary>
+        /// Given an email, fetch the first student who has an account registered with that email.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>A student (User object) corresponding to that email.</returns>
+        /// <exception cref="Exception"></exception>
         public User GetStudentByEmail(string email)
         {
             User student = null;
@@ -1438,6 +1653,12 @@ namespace nea_prototype_full
             return student;
         }
 
+        /// <summary>
+        /// Given an email, fetch the first teacher who has an account registered with that email.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>A teacher (User object) corresponding to that email.</returns>
+        /// <exception cref="Exception"></exception>
         public User GetTeacherByEmail(string email)
         {
             User teacher = null;

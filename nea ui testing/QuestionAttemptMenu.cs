@@ -371,5 +371,14 @@ namespace nea_ui_testing
             drawing.Clear(Color.White);
             DrawingBox.Refresh();
         }
+
+        private void GetVideoLink(object sender, EventArgs e)
+        {
+            if (questionRef.Topic != null)
+            {
+                Clipboard.SetText(questionRef.Topic.VideoLink);
+                MessageBox.Show("Video help link copied to clipboard.", questionRef.Topic.VideoLink, MessageBoxButtons.OK);
+            }
+        }
     }
 }
