@@ -13,6 +13,10 @@ namespace nea_prototype_full
 
         public HashingHelper() { }
 
+        /// <summary>
+        /// Generates a random salt for inclusion in the database.
+        /// </summary>
+        /// <returns>A random 5 character ASCII salt string.</returns>
         private string GenerateSalt()
         {
             byte[] salt = new byte[SALT_LENGTH];
@@ -25,6 +29,11 @@ namespace nea_prototype_full
             return Convert.ToBase64String(salt).Substring(0, 5);
         }
 
+        /// <summary>
+        /// A method to hash an ASCII string using the SHA256 hashing algorithm.
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns>A hexadecimal string of the hashed password.</returns>
         private string SHA256HashString(string inputString)
         {
             byte[] result;
@@ -38,6 +47,11 @@ namespace nea_prototype_full
             return Convert.ToBase64String(result);
         }
 
+        /// <summary>
+        /// Given a plaintext password, produces a salt and hashes this password.
+        /// </summary>
+        /// <param name="plaintextPassword"></param>
+        /// <returns>A tuple containing: the 5 character salt, the hashed version of the plaintext password.</returns>
         public (string salt, string encryptedPassword) ComputeSaltAndHash(string plaintextPassword)
         {
             string salt = GenerateSalt();
@@ -45,6 +59,13 @@ namespace nea_prototype_full
             return (salt, hashedPassword);
         }
 
+        /// <summary>
+        /// Hashes the plaintext password and salt together.
+        /// </summary>
+        /// <param name="plaintextPassword"></param>
+        /// <param name="salt"></param>
+        /// <returns>A hexadecimal string containing the hashed version of the plaintext password and string put together.</returns>
+        /// <exception cref="Exception"></exception>
         public string GetHashFromSaltAndPassword(string plaintextPassword, string salt)
         {
             if (salt.Length != SALT_LENGTH) throw new Exception("Attempted to hash password with a salt of incorrect length.");
