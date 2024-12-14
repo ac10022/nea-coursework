@@ -46,6 +46,10 @@ namespace automatic_question_generation_testing
             this.Y_scalar = Y_scalar;
         }
 
+        /// <summary>
+        /// By using the domain of the functions, calculates the points which lie in the domain of this function.
+        /// </summary>
+        /// <returns>A list of points which are in the function range.</returns>
         public List<PointD> GetPointsInFunctionRange()
         {
             List<PointD> pointList = new List<PointD>();
@@ -59,16 +63,30 @@ namespace automatic_question_generation_testing
             return pointList;
         }
 
+        /// <summary>
+        /// A method which fetches the range of the function (class defined function).
+        /// </summary>
+        /// <returns>A tuple containing: the local minimumm, the local maximum.</returns>
         private (double rangeMin, double rangeMax) GetRange()
         {
             return (points.Min(x => x.Y), points.Max(x => x.Y));
         }
 
+        /// <summary>
+        /// A method which fetches the range of a function given a list of points.
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns>A tuple containing: the local minimumm, the local maximum.</returns>
         public (double rangeMin, double rangeMax) GetRangeFromPoints(List<PointD> points)
         {
             return (points.Min(x => x.Y), points.Max(x => x.Y));
         }
 
+        /// <summary>
+        /// A method which draws the axis on the panel appended to this object.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="paintEvent"></param>
         public void DrawAxis(object sender, PaintEventArgs paintEvent)
         {
             int panelWidth = panel.Width;
@@ -114,6 +132,11 @@ namespace automatic_question_generation_testing
             }
         }
 
+        /// <summary>
+        /// A method which draws the calculated points on the panel appended to this object, and then draws lines between these points to produce a smooth curve.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="paintEvent"></param>
         public void DrawPoints(object sender, PaintEventArgs paintEvent)
         {
             Graphics g = paintEvent.Graphics;
@@ -131,6 +154,10 @@ namespace automatic_question_generation_testing
             }
         }
 
+        /// <summary>
+        /// Finds the scalar multiple to scale the graph down by to match the panel size.
+        /// </summary>
+        /// <returns>A double representing the scalar</returns>
         public double FindScalar()
         {
             double panelHeight = panel.Size.Height;
@@ -150,6 +177,10 @@ namespace automatic_question_generation_testing
             return panelHeight / (maxDistanceFromAxis * 2);
         }
 
+        /// <summary>
+        /// Finds the scalar, than scales all points to be plotted on the graph.
+        /// </summary>
+        /// <returns>A list of points representing the scaled points.</returns>
         public List<PointD> ScalePoints()
         {
             double Xscalar, Yscalar;
@@ -177,6 +208,13 @@ namespace automatic_question_generation_testing
             return points;
         }
 
+        /// <summary>
+        /// A method to clamp a double to a range.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns>If the number is greater than the max, returns the max, if the number is smaller than the min, returns the min.</returns>
         public double DoubleClamp(double num, double min, double max)
         {
             if (num < min)
@@ -186,6 +224,10 @@ namespace automatic_question_generation_testing
             return num;
         }
 
+        /// <summary>
+        /// Abstracted method to find points and plot the function on the panel.
+        /// </summary>
+        /// <returns>A tuple: the bitmap image of the function on the panel, the list of points which constitute the function (in the range).</returns>
         public (Bitmap image, List<PointD> points) PlotFunction()
         {
             GetPointsInFunctionRange();
@@ -199,6 +241,10 @@ namespace automatic_question_generation_testing
             return (graphImage, pointRef);
         }
 
+        /// <summary>
+        /// Creates an image of the panel.
+        /// </summary>
+        /// <returns>A bitmap object of the current drawn state of the panel.</returns>
         private Bitmap ExportGraph()
         {
             Bitmap bmp = new Bitmap(panel.Width, panel.Height);
@@ -207,6 +253,9 @@ namespace automatic_question_generation_testing
         }
     }
 
+    /// <summary>
+    /// A class for points which can have doubles as x, and y co-ordinates.
+    /// </summary>
     public class PointD
     {
         public double X;
