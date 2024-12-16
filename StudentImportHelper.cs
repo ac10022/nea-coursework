@@ -16,6 +16,10 @@ namespace nea_prototype_full
             this.path = path;
         }
 
+        /// <summary>
+        /// A method, which given a path, parses in all student data from the given CSV file, validates this information, and forms a list of students to accept and students to reject into the system.
+        /// </summary>
+        /// <returns>A tuple: list of students to be accepted, list of students to be rejected.</returns>
         public (List<StudentImportLayout> students, List<StudentImportLayout> rejectedStudents) ImportStudents()
         {
             // open stream
