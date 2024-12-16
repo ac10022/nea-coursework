@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace api_handling_for_nea
 {
+    /// <summary>
+    /// A class to handle english comprehension questions which require headlines: this API, NewsAPI provides access to current news articles, which are fetched using this class.
+    /// </summary>
     internal class NewsApiHandling
     {
         private string topic;
@@ -23,6 +26,11 @@ namespace api_handling_for_nea
             this.topic = topic;
         }
 
+        /// <summary>
+        /// A method to fetch articles with the constructor specified topic.
+        /// </summary>
+        /// <returns>A list of articles (NewsAPI Article objects).</returns>
+        /// <exception cref="Exception"></exception>
         public List<Article> Execute()
         {
             if (topic == null) throw new Exception("No topic for NewsAPI specified");
@@ -40,6 +48,12 @@ namespace api_handling_for_nea
             }
         }
 
+        /// <summary>
+        /// A method which fetches articles, given a topic and a client. All articles in english from the last month are fetched.
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="apiClient"></param>
+        /// <returns>An articles result object (NewsAPI), articles fetched by using the Articles attribute.</returns>
         private ArticlesResult FetchArticles(string topic, NewsApiClient apiClient)
         {
             return apiClient.GetEverything(new EverythingRequest
@@ -51,6 +65,11 @@ namespace api_handling_for_nea
             });
         }
 
+        /// <summary>
+        /// A method to sanitise the raw articles HTML markup to sanitised strings to use within questions.
+        /// </summary>
+        /// <param name="articles"></param>
+        /// <returns>A list of sanitised articles (NewsAPI Article objects)</returns>
         private List<Article> SanitiseArticles(List<Article> articles)
         {
             List<Article> result = new List<Article>();
@@ -80,6 +99,9 @@ namespace api_handling_for_nea
         }
     }
 
+    /// <summary>
+    /// A class to construct questions from articles fetched using the NewsApiHandling class.
+    /// </summary>
     public class NewsQuestionHelper
     {
         private string topic;
@@ -94,7 +116,7 @@ namespace api_handling_for_nea
         /// <summary>
         /// Get an array of 4 random news articles (title and content), with the first always relating best to the topic given.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of tuples: article name, article content. The first item of the list is the "correct" answer.</returns>
         public List<(string title, string content)> NewsArticleQuestion()
         {
             List<(string title, string content)> result = new List<(string title, string content)>();
@@ -112,6 +134,10 @@ namespace api_handling_for_nea
             return result;
         }
 
+        /// <summary>
+        /// A method to fetch a random topic from the list of predefined topics.
+        /// </summary>
+        /// <returns></returns>
         private string GetRandomPredefTopic()
         {
             return predefTopics[new Random().Next(predefTopics.Length)];
