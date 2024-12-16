@@ -12,6 +12,9 @@ using System.Web.Caching;
 
 namespace nea_prototype_full
 {
+    /// <summary>
+    /// A class used to print out questions: i.e. fetching data from questions, processing this and converting it into a printable word document.
+    /// </summary>
     internal class PrintingHelper
     {
         private Question questionRef;
@@ -26,6 +29,10 @@ namespace nea_prototype_full
             questionImages = dbh.GetQuestionImages(questionRef);
         }
 
+        /// <summary>
+        /// A method which uses the Word application to add question content (including images) to a new word document, then save this at the specified file path.
+        /// Question data is ordered: images, author name, topic name, difficulty, question conent, answer field
+        /// </summary>
         public void PrintQuestion()
         {
             Word.Application app = new Word.Application();
@@ -42,6 +49,7 @@ namespace nea_prototype_full
                     {
                         Word.Paragraph imageP = document.Content.Paragraphs.Add();
 
+                        // create a new temp path for each image to save them to the document
                         string tempPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid().ToString()}.png");
                         tempImagePaths.Add(tempPath);
 
@@ -59,6 +67,8 @@ namespace nea_prototype_full
                 document.Close();
                 app.Quit();
             }
+
+            // ensure that the app is quit even if unsuccessful
             finally
             {
                 if (app != null) app.Quit();
@@ -71,6 +81,10 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// A method to create a single string from all question data for easy implementation into the Word document.
+        /// </summary>
+        /// <returns></returns>
         private string BuildTextFromQuestion()
         {
             StringBuilder sb = new StringBuilder();
@@ -83,6 +97,7 @@ namespace nea_prototype_full
 
             if (questionRef.IsMc)
             {
+                // order multiple-choice answers randomly
                 List<string> answers = questionRef.Answer.Union(questionRef.McAnswers).ToList().RandomiseList();
 
                 foreach (string s in answers)
