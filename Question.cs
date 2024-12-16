@@ -34,8 +34,8 @@ namespace nea_prototype_full
         public int Difficulty
         {
             get { return difficulty; }
-            // limits the difficulty to an integer between 1 and 4
-            private set { difficulty = Math.Abs(value) > 4 ? 4 : value; }
+            // limits the difficulty to a positive integer between 1 and 4
+            private set { difficulty = Math.Abs(value) > 4 ? 4 : Math.Abs(value); }
         }
         public string QuestionContent { get { return questionContent; } private set { questionContent = value; } }
         public bool IsMc { get { return isMc; } private set { isMc = value; } }
@@ -60,15 +60,14 @@ namespace nea_prototype_full
             this.mcAnswers = new List<string>();
         }
 
+        /// <summary>
+        /// A method to make a question multiple choice: requires other multiple choice answers.
+        /// </summary>
+        /// <param name="mcAnswers"></param>
         public void ForceMc(List<string> mcAnswers)
         {
             this.isMc = true;
             this.mcAnswers = mcAnswers;
-        }
-
-        public override string ToString()
-        {
-            return $"QuestionId:\t{questionId}\nTopicId:\t{topic}\nAuthorId:\t{author}\nDifficulty:\t{difficulty}\nContent:\t{questionContent}\nAnswer(s):\t{string.Join(", ", answer)}\nAnswer Key\t{answerKey}\nMultiple Choice?\t{isMc}\nMC Answers\t{string.Join(", ", mcAnswers)}";
         }
     }
 

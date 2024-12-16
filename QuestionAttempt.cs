@@ -8,7 +8,7 @@ namespace nea_prototype_full
 {
     internal class QuestionAttempt
     {
-        //QA.WasCorrect, QA.StudentAns, QA.TimeOfAtt, QA.TimeQuOpened, QA.AttemptId
+        // fields
         private int attemptId;
         private bool wasCorrect;
         private string studentAns;
@@ -38,6 +38,7 @@ namespace nea_prototype_full
             this.question = question;
         }
 
+        // pseudotopics are used by randomly generated questions so that topic evalulation can be calculated statistically
         public void AppendPseudotopic(_Topic topic)
         {
             this.pseudotopic = topic;

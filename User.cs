@@ -54,6 +54,10 @@ namespace nea_prototype_full
             this.password = password;
         }
 
+        /// <summary>
+        /// A method which ensures that a student being imported into the program has sanitised data.
+        /// </summary>
+        /// <returns>A bool which determines whether to accept or reject the user (dependent on the data given)</returns>
         public bool ValidateStudent()
         {
             // omit if any field is empty
