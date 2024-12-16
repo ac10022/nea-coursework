@@ -10,13 +10,20 @@ namespace nea_prototype_full
     internal class StatisticsHelper
     {
         // assignment performance analysis
-        
+
+        /// <summary>
+        /// Analyses student performance on an assignment by calculating the scaled z-scores for correctness.
+        /// This method adjusts scores based on difficulty and returns a dictionary of questions mapped to their scaled performance values.
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns>A dictionary of questions mapped to their scaled performance values.</returns>
         public Dictionary<Question, double> AnalyseAssignmentPerformace(Assignment assignment)
         {
             DatabaseHelper dbh = new DatabaseHelper();
 
             Dictionary<Question, int> questionCorrectness = dbh.PerformancePerAssignmentQuestion(assignment);
 
+            // calculate standard deviation
             int questionCount = questionCorrectness.Count;
             double correctnessMean = questionCorrectness.Values.Average();
             int sumOfSquares = questionCorrectness.Values.Sum(x => x * x);
@@ -34,6 +41,11 @@ namespace nea_prototype_full
             return questionZScores;
         }
 
+        /// <summary>
+        /// Retrieves a list of questions that were answered the worst based on performance scores.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A list of questions sorted in ascending order of performance (worst first).</returns>
         public List<Question> GetWorstAnsweredQuestions(Dictionary<Question, double> performanceData)
         {
             return performanceData.OrderBy(x => x.Value)
@@ -41,6 +53,11 @@ namespace nea_prototype_full
                                   .ToList();
         }
 
+        /// <summary>
+        /// Retrieves a list of questions that were answered the best based on performance scores.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A list of questions sorted in descending order of performance (best first).</returns>
         public List<Question> GetBestAnsweredQuestions(Dictionary<Question, double> performanceData)
         {
             return performanceData.OrderByDescending(x => x.Value)
@@ -49,6 +66,12 @@ namespace nea_prototype_full
         }
 
         // if multiple topics appear, their scaled z-score should be averaged
+
+        /// <summary>
+        /// A method which aggregates performance data by topic by averaging the scaled z-scores for each topic.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A dictionary mapping topic names to their averaged performance scores.</returns>
         public Dictionary<string, double> OrganisePerformanceDataByTopic(Dictionary<Question, double> performanceData)
         {
             // aggregate z-score then divide by the times the topic appeared in the assignment to calculate an average
@@ -77,6 +100,11 @@ namespace nea_prototype_full
             return sortingResultDivided;
         }
 
+        /// <summary>
+        /// Retrieves a list of topics that were answered the worst based on performance scores.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A list of topic names sorted in ascending order of performance (worst first).</returns>
         public List<string> GetWorstAnsweredTopics(Dictionary<string, double> performanceData)
         {
             return performanceData.OrderBy(x => x.Value)
@@ -84,6 +112,11 @@ namespace nea_prototype_full
                                   .ToList();
         }
 
+        /// <summary>
+        /// Retrieves a list of topics that were answered the best based on performance scores.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A list of topic names sorted in descending order of performance (best first).</returns>
         public List<string> GetBestAnsweredTopics(Dictionary<string, double> performanceData)
         {
             return performanceData.OrderByDescending(x => x.Value)
@@ -91,6 +124,11 @@ namespace nea_prototype_full
                                   .ToList();
         }
 
+        /// <summary>
+        /// Retrieves a list of topics that were answered the worst based on performance scores.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A list of topic names sorted in ascending order of performance (worst first).</returns>
         public List<int> GetWorstAnsweredTopics(Dictionary<int, double> performanceData)
         {
             return performanceData.OrderBy(x => x.Value)
@@ -98,6 +136,11 @@ namespace nea_prototype_full
                                   .ToList();
         }
 
+        /// <summary>
+        /// Retrieves a list of topics that were answered the best based on performance scores.
+        /// </summary>
+        /// <param name="performanceData"></param>
+        /// <returns>A list of topic names sorted in descending order of performance (best first).</returns>
         public List<int> GetBestAnsweredTopics(Dictionary<int, double> performanceData)
         {
             return performanceData.OrderByDescending(x => x.Value)
@@ -107,6 +150,12 @@ namespace nea_prototype_full
 
         // student performance analysis
 
+        /// <summary>
+        /// A method which scales question correctness score based on difficulty. Correct answers receive a scaled score, while incorrect answers receive a score of 0.
+        /// </summary>
+        /// <param name="wasCorrect"></param>
+        /// <param name="difficulty"></param>
+        /// <returns>A scaled correctness score (double) between 0 and 1.</returns>
         public double ScaleCorrectness(bool wasCorrect, int difficulty)
         {
             // if incorrect do not scale
@@ -118,6 +167,13 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// A method which scales the time spent answering a question based on the question's length and type (e.g., multiple choice or free input).
+        /// </summary>
+        /// <param name="seconds"></param>
+        /// <param name="questionLength"></param>
+        /// <param name="questionType"></param>
+        /// <returns>A scaled time score (double) adjusted for question characteristics.</returns>
         public double ScaleQuestionTime(int seconds, int questionLength, _QuestionType questionType)
         {
             const double a = 1.2;
@@ -125,6 +181,7 @@ namespace nea_prototype_full
             const double c = 1.0;
             const double d = 0.01;
 
+            // logarithmic scaling, see 1.6.4
             if (questionType == _QuestionType.MultipleChoice)
             {
                 return seconds / (a * Math.Log(b * questionLength + 1));
@@ -135,12 +192,22 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// A method which converts a pseudotopic (from enum) to a proper topic object.
+        /// </summary>
+        /// <param name="pseudotopic"></param>
+        /// <returns>A topic (Topic object) representation of the pseudotopic.</returns>
         public Topic GetTopicFromPseudotopic(_Topic pseudotopic)
         {
             int subjectId = (int)pseudotopic <= 8 ? 1 : 2;
             return new Topic((int)pseudotopic, null, null, new Subject(subjectId, null));
         }
 
+        /// <summary>
+        /// A method which aggregates and averages the performance scores for topics. If a topic appears multiple times, its scores are summed and averaged.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>A dictionary mapping topic IDs to their averaged performance scores.</returns>
         public Dictionary<int, double> AggregateAndAverageTopics(Dictionary<Topic, double> input)
         {
             Dictionary<int, double> sortingResult = new Dictionary<int, double>();
@@ -230,6 +297,11 @@ namespace nea_prototype_full
             return result;
         }
 
+        /// <summary>
+        /// A method which analyses a student's question and attempts to calculate a combined performance score for each topic. Normalises scaled correctness and time using z-scores, aggregates them, and returns a topic performance analysis.
+        /// </summary>
+        /// <param name="questionAttempts"></param>
+        /// <returns>A dictionary mapping topic IDs to their aggregated performance scores.</returns>
         public Dictionary<int, double> AnalyseStudentQuestionAttempts(List<QuestionAttempt> questionAttempts)
         {
             List<Tuple<int, double, double>> organisedPerformance = OrganiseStudentQuestionAttempts(questionAttempts);
