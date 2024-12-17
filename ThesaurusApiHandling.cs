@@ -11,6 +11,9 @@ using System.Linq;
 
 namespace api_handling_for_nea
 {
+    /// <summary>
+    /// A class to manage calls to the Thesaurus API, which is used for vocabulary questions in my program.
+    /// </summary>
     public class ThesaurusApiHandling
     {
         // require newtonsoft library
@@ -40,6 +43,10 @@ namespace api_handling_for_nea
 
         public string[] Adjectives { get { return adjectives; } }
 
+        /// <summary>
+        /// A method to initialise a HttpClient for requesting JSON formatted responses from the thesaurus API.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         public void Initialise()
         {
             if (WordInput == null)
@@ -54,6 +61,11 @@ namespace api_handling_for_nea
             ApiHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        /// <summary>
+        /// A method which makes a request to the API, given the word input parameter.
+        /// </summary>
+        /// <returns>A JSON string of the raw API response.</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<string> MakeRequest()
         {
             if (ApiHttpClient == null) Initialise();
@@ -71,6 +83,10 @@ namespace api_handling_for_nea
             }
         }
 
+        /// <summary>
+        /// A method to abstract the process of initialising and making the request. Makes a request to the API with the given word input and deserialises the result.
+        /// </summary>
+        /// <returns>A deserialised response (ThesaurusApiResponseModel object).</returns>
         public async Task<ThesaurusApiResponseModel> Fetch()
         {
             string json = await MakeRequest();
@@ -78,6 +94,9 @@ namespace api_handling_for_nea
             return helper.DeserialiseResult(json);
         }
 
+        /// <summary>
+        /// A method to dispose of the HttpClient used for API calls.
+        /// </summary>
         public void Deinitialise()
         {
             ApiHttpClient.Dispose();
@@ -89,7 +108,11 @@ namespace api_handling_for_nea
     {
         private Random random = new Random();
 
-        // deserialise to synonyms, antonyms, and short definitions
+        /// <summary>
+        /// A method which trims the raw JSON of the response and creates a response object consisting of synonyms, antonyms, and short definitions.
+        /// </summary>
+        /// <param name="wholeJsonResponse"></param>
+        /// <returns>A deserialised response (ThesaurusApiResponseModel object).</returns>
         public ThesaurusApiResponseModel DeserialiseResult(string wholeJsonResponse)
         {
             StringBuilder parsedJson = new StringBuilder();
@@ -104,6 +127,13 @@ namespace api_handling_for_nea
             return JsonConvert.DeserializeObject<ThesaurusApiResponseModel>(parsedJson.ToString());
         }
 
+        /// <summary>
+        /// Used for the syn/ant question types. A method that takes in a list of synonyms and antonyms and creates a string array of 4 words, shuffles them, and identifies the correct synonym (correct answer).
+        /// </summary>
+        /// <param name="synonyms"></param>
+        /// <param name="antonyms"></param>
+        /// <returns>A tuple: shuffled string array consisting of 3 antonyms and 1 synonym, the index of the synonym (correct answer).</returns>
+        /// <exception cref="Exception"></exception>
         public (string[] words, int synonymIndex) ShuffleWords(List<string> synonyms, List<string> antonyms)
         {
             if (synonyms.Count == 0) throw new Exception("Synonyms list does not contain any elements");
@@ -115,10 +145,8 @@ namespace api_handling_for_nea
             int newSynIndex = random.Next(0, 4);
             shuffledWords[newSynIndex] = synonyms[randomSynIndex];
 
-            Console.WriteLine(string.Concat(shuffledWords));
             for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine($"{i}: {shuffledWords[i] == null}");
                 if (shuffledWords[i] == null)
                 {
                     shuffledWords[i] = antonyms[random.Next(0, antonyms.Count)];
@@ -136,6 +164,9 @@ namespace api_handling_for_nea
         Adjective
     }
 
+    /// <summary>
+    /// A class which is used with the API helper class to help generate questions from the API responses.
+    /// </summary>
     public class ThesaurusQuestionHelper
     {
         private string wordInput;
@@ -147,11 +178,19 @@ namespace api_handling_for_nea
             this.wordInput = wordInput;
         }
 
+        /// <summary>
+        /// If no word is given, fetch a random word based on the word type (noun, verb, adjective).
+        /// </summary>
+        /// <param name="wordType"></param>
         public ThesaurusQuestionHelper(_WordType wordType)
         {
             this.wordInput = GetRandomWordFromType(wordType);
         }
 
+        /// <summary>
+        /// A method which finds the synonyms and antonyms of a word and generates a syn/ant question for this word.
+        /// </summary>
+        /// <returns>A tuple: shuffled string array consisting of 3 antonyms and 1 synonym, the index of the synonym (correct answer).</returns>
         public async Task<(string[] words, int synonymIndex)> SynAntQuestion()
         {
             ThesaurusApiHandling thesaurusApiHandling = new ThesaurusApiHandling(wordInput);
@@ -186,6 +225,11 @@ namespace api_handling_for_nea
             return defs;
         }
 
+        /// <summary>
+        /// A method which, given a word type, uses the predefined word arrays to fetch a random word of that type.
+        /// </summary>
+        /// <param name="wordType"></param>
+        /// <returns>A word string.</returns>
         private string GetRandomWordFromType(_WordType wordType)
         {
             string result;
@@ -214,6 +258,11 @@ namespace api_handling_for_nea
         public List<List<string>> ants;
         public List<string> shortdef;
 
+        /// <summary>
+        /// A general-purpose method which takes in a list of lists of strings and flattens this to a single list of strings.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns>A flattened list of strings.</returns>
         private List<string> Flatten(List<List<string>> list)
         {
             List<string> result = new List<string>();
