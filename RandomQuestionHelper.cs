@@ -22,6 +22,12 @@ namespace automatic_question_generation_testing
 
         public Panel PanelForDrawing { get { return panelForDrawing; } set { panelForDrawing = value; } }
 
+        /// <summary>
+        /// A method which given a topic which supports RQG, generates and returns a question for that topic.
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <returns>A question (Question object)</returns>
+        /// <exception cref="Exception"></exception>
         public Question GenerateQuestionFromTopic(Topic topic)
         {
             int _randomInt;
@@ -432,7 +438,63 @@ namespace automatic_question_generation_testing
                         return new RandomlyGeneratedQuestion(topic, 1, $"Find the median of the data set S, where S = {{{string.Join(", ", set)}}}", new List<string>() { medianItem.ToString() }, -1, null, $"Order the set, then locate the middle term: {medianItem} [1]");
 
                 }
-            } 
+            }
+            else if (topic.TopicId == (int)_Topic.PerimeterAreaVolume)
+            {
+                // shapes: rectangle, right-angled triangle, trapezium, circle, cuboid, cone, cylinder, sphere
+                _randomInt = random.Next(1, 9);
+
+                int width = random.Next(1, 21);
+                int height = random.Next(1, 21);
+                int length = random.Next(1, 21);
+                int radius = random.Next(1, 21);
+
+                switch (_randomInt)
+                {
+                    case 1:
+                        
+                        // rectangle
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the area of rectangle R, with a width of {width} units and a height of {height} units, in units squared.", new List<string>() { (width*height).ToString() }, -1, null, $"Use the rectangle area formula (width * height) => {width} * {height} = {width * height} [1]");
+
+                    case 2:
+
+                        // right-angled triangle
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the area of right-angled triangle T, with a width of {width} units and a height of {height} units, in units squared.", new List<string>() { ((width * height) / 2.0).ToString() }, -1, null, $"Use the right-angled triangle area formula (width * height) ÷ 2 => ({width} * {height}) ÷ 2 = {(width * height) / 2.0} [1]");
+
+                    case 3:
+
+                        // trapezium
+                        int topLength = random.Next(1, 21);
+
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the area of trapezium T, with a base width of {width} units, a top width of {topLength} units, and a height of {height} units, in units squared.", new List<string>() { (((width * topLength) / 2.0) * height).ToString() }, -1, null, $"Use the trapezium area formula (average of top and bottom widths * height) => ({(width * topLength) / 2.0} * {height}) = {((width * topLength) / 2.0) * height} [1]");
+
+                    case 4:
+
+                        // circle
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the area of circle C, with a radius of {radius} units, in units squared to 2dp.", new List<string>() { (Math.Round(Math.Pow(radius, 2) * Math.PI, 2)).ToString() }, -1, null, $"Use the circle area formula (radius * radius * PI), then round to 2dp => {radius} * {radius} * {Math.PI} = {Math.Round(Math.Pow(radius, 2) * Math.PI, 2)} [1]");
+
+                    case 5:
+
+                        // cuboid
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the volume of cuboid C, with a width of {width} units, a height of {height} units, and a depth of {length} units, in units squared.", new List<string>() { (width * height * length).ToString() }, -1, null, $"Use the cuboid volume formula (width * height * depth) => {width} * {height} * {length} = {width * height * length} [1]");
+
+                    case 6:
+
+                        // cone
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the volume of cone C, with a radius of {radius} units and a height of {height} units, in units squared to 2dp.", new List<string>() { (Math.Round((1 / 3.0) * Math.PI * radius * radius * height, 2)).ToString() }, -1, null, $"Use the cone volume formula (1/3 * PI * radius * radius * height), then round to 2dp => 1/3 * {Math.PI} * {radius} * {radius} * {height} = {Math.Round((1 / 3.0) * Math.PI * radius * radius * height, 2)} [1]");
+
+                    case 7:
+
+                        // cylinder
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the volume of cylinder C, with a radius of {radius} units and a height of {height} units, in units squared to 2dp.", new List<string>() { (Math.Round(Math.PI * radius * radius * height, 2)).ToString() }, -1, null, $"Use the cylinder volume formula (PI * radius * radius * height), then round to 2dp => {Math.PI} * {radius} * {radius} * {height} = {Math.Round(Math.PI * radius * radius * height, 2)} [1]");
+
+                    case 8:
+
+                        // sphere
+                        return new RandomlyGeneratedQuestion(topic, 1, $"Find the volume of sphere S, with a radius of {radius} units, in units squared to 2dp.", new List<string>() { (Math.Round((4/3.0) * Math.PI * radius * radius * radius, 2)).ToString() }, -1, null, $"Use the sphere volume formula (4/3 * PI * radius * radius * radius), then round to 2dp => 4/3 * {Math.PI} * {radius} * {radius} * {radius} = {Math.Round((4/3.0) * Math.PI * radius * radius * radius, 2)} [1]");
+
+                }
+            }
             throw new Exception("No randomly generated questions available for this topic.");
         }
     }
