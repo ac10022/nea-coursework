@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace nea_ui_testing
 {
+    /// <summary>
+    /// A form which allows the user to log-in as a student/teacher and redirect the student to either the dashboard/reset password menu
+    /// </summary>
     public partial class LoginForm : Form
     {
         private bool canLogIn = false;
@@ -31,6 +34,11 @@ namespace nea_ui_testing
             //
         }
 
+        /// <summary>
+        /// On login: fetch field inputs, determine whether the user is trying to log in as a student or teacher and check the credentials. If they are correct, redirect user to their corresponding dashboard, otherwise alarm them about the error.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AttemptLogin(object sender, EventArgs e)
         {
             try
@@ -94,6 +102,11 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// A method to test fields for data. Here: only allow to click log-in if all fields are filled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckForData(object sender, EventArgs e)
         {
             // can only click log-in if fields are all filled
@@ -106,6 +119,9 @@ namespace nea_ui_testing
             ResetPasswordButton.Enabled = canForgotPwd;
         }
 
+        /// <summary>
+        /// A method to clear all log-in fields.
+        /// </summary>
         private void ClearFields()
         {
             EmailField.Text = string.Empty;
@@ -114,11 +130,19 @@ namespace nea_ui_testing
             TeacherRadioButton.Checked = false;
         }
 
+        /// <summary>
+        /// A method to "log out" the user, by removing the reference to this user as the logged-in user in the program.
+        /// </summary>
         static void LogOutEvent()
         {
             Program.loggedInUser = null;
         }
 
+        /// <summary>
+        /// A method to redirect the user to the reset password menu, hide this form, open the password reset form, then return to this form once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResetPwdEvent(object sender, EventArgs e)
         {
             Hide();

@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace nea_prototype_full
 {
+    /// <summary>
+    /// A form through which teachers can import a CSV of students, check these are suitable for the program, and create them automatically.
+    /// </summary>
     public partial class StudentImportMenu : Form
     {
         private List<StudentImportLayout> acceptedStudents;
@@ -23,8 +26,14 @@ namespace nea_prototype_full
             InitializeComponent();
         }
 
+        /// <summary>
+        /// On upload: let the user locate the CSV file, if this is successful, read the CSV, use the student import helper to check each entry and parse the successful entries into the DB.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UploadEvent(object sender, EventArgs e)
         {
+            // use an open-file directory to allow the user to choose exclusively CSV files
             OFD.InitialDirectory = @"C:\";
             OFD.RestoreDirectory = true;
             OFD.Title = "Choose the student CSV file";
@@ -33,18 +42,23 @@ namespace nea_prototype_full
 
             OFD.CheckPathExists = true;
             OFD.CheckFileExists = true;
-
+            
+            // if file exists
             if (OFD.ShowDialog() == DialogResult.OK)
             {
+                // use student import helper to filter students to accept/reject
                 StudentImportHelper sh = new StudentImportHelper(OFD.FileName);
                 (acceptedStudents, rejectedStudents) = sh.ImportStudents();
 
+                // accepted students
                 foreach (StudentImportLayout student in acceptedStudents)
                 {
+                    // create a new salt and hashed password, then parse the data into the program
                     (string salt, string hashedPassword) = hh.ComputeSaltAndHash(student.Password);
                     dbh.CreateNewStudent(student.FirstName, student.Surname, student.Email, hashedPassword, salt);
                 }
 
+                // rejected students: build notice
                 StringBuilder notice = new StringBuilder();
                 notice.AppendLine($"Accepted {acceptedStudents.Count} students.");
                 notice.AppendLine();
@@ -58,6 +72,7 @@ namespace nea_prototype_full
                     }
                 }
 
+                // display notice in a message box
                 MessageBox.Show(notice.ToString());
                 Close();
             }

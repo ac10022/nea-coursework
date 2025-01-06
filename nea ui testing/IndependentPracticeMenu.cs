@@ -32,25 +32,32 @@ namespace nea_ui_testing
             PracticeThisQButton.Enabled = false;
             RGQCheckbox.Enabled = false;
 
+            // initialise a panel for graph drawing
             PanelForDrawing.SendToBack();
             PanelForDrawing.Width = 400;
             PanelForDrawing.Height = 400;
 
             topicList = dbh.GetAllTopics();
 
+            // fetch the indexes from the topicList where the topic has rgqs available
             indexesOfTopicsWithRGQ = topicList.Where(x => topicsWithRGQ.Contains((_Topic)x.TopicId)).Select(x => topicList.IndexOf(x)).ToArray();
 
-            // from database
+            // practice qs individually from database
             TopicPicker.DataSource = topicList.Select(x => x.TopicName).ToArray();
             TopicPicker.SelectedIndex = -1;
 
-            // by topic
+            // practice qs by topic
             TopicPicker2.DataSource = topicList.Select(x => x.TopicName).ToArray();
             TopicPicker2.SelectedIndex = -1;
 
             LoadStudentAnalysis();
         }
 
+        /// <summary>
+        /// A method to test fields for data. Here: only allow questions to be searched for if at least one difficulty has been selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TestForData(object sender, EventArgs e)
         {
             PracticeThisQButton.Enabled = false;
@@ -58,21 +65,30 @@ namespace nea_ui_testing
             SearchButton.Enabled = canSubmit;
         }
 
+        /// <summary>
+        /// On search: take inputs from fields and parse these into a database query to fetch all questions which match these criteria.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SubmitSearch(object sender, EventArgs e)
         {
             try
             {
+                // create a list of difficulties which are selected
                 List<int> selectedDifficulties = new List<int>();
                 if (DifficultyCheckbox1.Checked) selectedDifficulties.Add(1);
                 if (DifficultyCheckbox2.Checked) selectedDifficulties.Add(2);
                 if (DifficultyCheckbox3.Checked) selectedDifficulties.Add(3);
                 if (DifficultyCheckbox4.Checked) selectedDifficulties.Add(4);
 
+                // determine if/which topic is selected from the dropdown
                 Topic selectedTopic = null;
                 if (TopicPicker.SelectedIndex != -1) selectedTopic = topicList[TopicPicker.SelectedIndex];
 
+                // fetch questions based on these two criteria
                 questionsFromSearch = dbh.GetQuestionsMultimetric(selectedDifficulties, selectedTopic, null);
 
+                // display questions in the listbox, truncate question content.
                 QuestionMatches.DataSource = questionsFromSearch.Select(x => $"{x.Topic.TopicName}\t{x.QuestionContent.Substring(0, Math.Min(x.QuestionContent.Length, 20))}...\tD{x.Difficulty}\tby {x.Author.FirstName} {x.Author.Surname}").ToArray();
             }
             catch (Exception ex)
@@ -82,28 +98,52 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// If a question is selected, allow the student to practice this question.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuestionSelectedEvent(object sender, EventArgs e)
         {
             PracticeThisQButton.Enabled = true;
         }
 
+        /// <summary>
+        /// A method to close this form and return to the student dashboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoBackToDashboard(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// On practice start (from single question): once a student selects a question, start a question attempt series with this question only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartPracticeFromQuestion(object sender, EventArgs e)
         {
+            // fetch the selected question
             Question selectedQuestion = questionsFromSearch[QuestionMatches.SelectedIndex];
 
+            // hide this form and create a new QuestionAttemptMenu form, referencing this question as the only one to complete.
             Hide();
             QuestionAttemptMenu qam = new QuestionAttemptMenu(new List<Question> { selectedQuestion }, null, this);
             qam.Show();
         }
 
+        /// <summary>
+        /// A method to determine whether there are randomly generated questions for the selected topic.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckForRandomQs(object sender, EventArgs e)
         {
+            // if no index selected
             if (TopicPicker2.SelectedIndex == -1) return; 
+            // if the selected topic has possible rgqs
             if (indexesOfTopicsWithRGQ.Contains(TopicPicker2.SelectedIndex)) RGQCheckbox.Enabled = true;
             else
             {
@@ -112,10 +152,16 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// On practice start (from topic select): using criteria, fetch questions from database, then start a practice with this list of questions.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartPracticeFromTopic(object sender, EventArgs e)
         {
             try
             {
+                // fetch the number of qs and selected topic as criteria
                 int noOfQuestions = (int)Math.Abs(Math.Round(NoQuestionSelector.Value));
                 Topic selectedTopic = topicList[TopicPicker2.SelectedIndex];
 
@@ -125,17 +171,22 @@ namespace nea_ui_testing
                 List<Question> listToPractice;
 
                 RandomQuestionHelper rqh = new RandomQuestionHelper();
+
+                // panel for drawing in case the graphs topic has been selected
                 rqh.PanelForDrawing = PanelForDrawing;
 
                 // cases: less qs than noOfQuestions and no rgqs, <= qs than noOfQuestions and no rgqs, less qs than noOfQuestions and rgqs, <= qs than noOfQuestions and rgqs
 
+                // if NOT using rgqs
                 if (!RGQCheckbox.Checked)
                 {
+                    // if there are fewer questions available than requested
                     if (topicQuestions.Count < noOfQuestions)
                     {
                         // use questions available and tell user that practice has been shortened
                         listToPractice = topicQuestions.RandomiseList();
                     }
+                    // otherwise
                     else
                     {
                         // take first noOfQuestions questions as practice list
@@ -144,13 +195,14 @@ namespace nea_ui_testing
                 }
                 else
                 {
+                    // if there are fewer questions available than requested
                     if (topicQuestions.Count < noOfQuestions)
                     {
                         int questionsToAdd = noOfQuestions - topicQuestions.Count;
                         // use all questions available and fill gaps with rgqs
                         for (int i = 0; i < questionsToAdd; i++)
                         {
-                            // panel refresh
+                            // panel refresh for new drawings
                             PanelForDrawing.Invalidate();
                             PanelForDrawing.Refresh();
 
@@ -158,6 +210,7 @@ namespace nea_ui_testing
                         }
                         listToPractice = topicQuestions.RandomiseList();
                     }
+                    // otherwise
                     else
                     {
                         // use random questions and database questions in a 50/50 split
@@ -175,6 +228,7 @@ namespace nea_ui_testing
                 }
 
                 Hide();
+                // start practice using this question set
                 QuestionAttemptMenu qam = new QuestionAttemptMenu(listToPractice, null, this);
                 qam.Show();
 
@@ -186,15 +240,23 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// A method to fetch student performance to allow the student to find out their strengths and weaknesses, and to suggest what to practice next.
+        /// </summary>
         private void LoadStudentAnalysis()
         {
+            // fetch student question attempts from DB
             List<QuestionAttempt> questionAttempts = dbh.GetStudentQuestionAttempts(Program.loggedInUser);
+            // use the statistical analysis method to find out which topics the student performs best in/worst in
             Dictionary<int, double> topicAnalysis = sh.AnalyseStudentQuestionAttempts(questionAttempts);
 
+            // in the case the student has practiced fewer than 3 topics overall
             int topicsToTake = Math.Min(3, topicAnalysis.Count);
+            // since the sh method returns only topic ID, fetch topic based on ID from DB
             List<Topic> worstAnsweredTopics = sh.GetWorstAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
             List<Topic> bestAnsweredTopics = sh.GetBestAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
 
+            // create a string containing topics of strength and weakness and display this
             StringBuilder analysisText = new StringBuilder();
             analysisText.AppendLine("Topics to practice:");
 
@@ -213,11 +275,14 @@ namespace nea_ui_testing
 
             AnalysisLabel.Text = analysisText.ToString();
 
+            // fetch last practiced topics from the database.
             List<Topic> lastPracticedTopics = dbh.GetStudentLastPracticedTopics(Program.loggedInUser);
             lastPracticedTopics.Reverse();
 
+            // in the case less than 3 topics have been studied overall
             int lastPracticedTopicsToTake = Math.Min(3, lastPracticedTopics.Count);
 
+            // create a string containing topics not studied in a while and display this
             StringBuilder whileText = new StringBuilder();
             whileText.AppendLine("Not covered in a while:");
             

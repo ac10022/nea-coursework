@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace nea_ui_testing
 {
+    /// <summary>
+    /// A form through which students can view their upcoming and past assignments, and start them.
+    /// </summary>
     public partial class StudentAssignmentMenu : Form
     {
         private List<Assignment> assignmentList = new List<Assignment>();
@@ -24,12 +27,14 @@ namespace nea_ui_testing
             ShowCompletedButton.Checked = showCompleted;
             ShowCompletedButton.CheckedChanged += ToggleCompletedEvent;
 
+            // include assignments student has completed
             if (showCompleted)
             {
                 this.showCompleted = true;
                 // for each class the student is in, fetch all assignments for that class
                 foreach (Class _class in dbh.GetClassesOfStudent(Program.loggedInUser)) assignmentList.AddRange(dbh.GetClassAssignments(_class));
             }
+            // exclude assignments student has completed
             else
             {
                 foreach (Class _class in dbh.GetClassesOfStudent(Program.loggedInUser))
@@ -45,9 +50,13 @@ namespace nea_ui_testing
                 }
             }
 
+            // create assignment labels
             DrawAssignmentLabels();
         }
 
+        /// <summary>
+        /// A method to create controls (one per assignment), which display upcoming assignments and allows student to begin an assignment by clicking on the corresponding button.
+        /// </summary>
         private void DrawAssignmentLabels()
         {
             for (int i = 0; i < assignmentList.Count; i++)
@@ -55,11 +64,13 @@ namespace nea_ui_testing
                 Assignment currentAssignment = assignmentList[i];
                 bool studentHasCompleted = false;
 
+                // check if the student has completed this assignment
                 if (showCompleted) studentHasCompleted = dbh.StudentCompletedAssignmentTest(currentAssignment, Program.loggedInUser) == (double)1;
 
                 Label newLabel = new Label();
 
                 newLabel.AutoSize = true;
+                // if has completed: dark green, if past due: red, if upcoming and incomplete: blue
                 if (studentHasCompleted)
                 {
                     newLabel.BackColor = System.Drawing.Color.DarkGreen;
@@ -72,6 +83,8 @@ namespace nea_ui_testing
                 {
                     newLabel.BackColor = System.Drawing.Color.Azure;
                 }
+
+                // create a new label to display on screen which displays assignment info
                 newLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                 newLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 newLabel.Location = new System.Drawing.Point(16, 70 + 40 * i);
@@ -84,6 +97,7 @@ namespace nea_ui_testing
 
                 Button newButton = new Button();
 
+                // create a button through which the student can start this assignment
                 newButton.Location = new System.Drawing.Point(450, 88 + 40 * i);
                 newButton.Name = $"button{i + 1}";
                 newButton.Size = new System.Drawing.Size(70, 25);
@@ -92,6 +106,7 @@ namespace nea_ui_testing
                 newButton.UseVisualStyleBackColor = true;
                 newButton.BringToFront();
 
+                // if the student has already completed this assignment, they shouldn't be able to do it again
                 if (studentHasCompleted) newButton.Enabled = false;
 
                 // when this button is clicked, start the assignment it references
@@ -103,26 +118,44 @@ namespace nea_ui_testing
                 Controls.Add(newButton);
             }
 
+            // refresh form with new controls
             this.Invalidate();
         }
         
+        /// <summary>
+        /// On start assignment: hide this form, fetch and start the assignment.
+        /// </summary>
+        /// <param name="assignment"></param>
         private void StartAssignment(Assignment assignment)
         {
             DatabaseHelper dbh = new DatabaseHelper();
+            // fetch assignment questions
             List<Question> assignmentQuestions = dbh.GetQuestionsFromAssignment(assignment);
 
             Hide();
+            // reference these questions and this assignment
             QuestionAttemptMenu qam = new QuestionAttemptMenu(assignmentQuestions, assignment, this);
             qam.Show();
         }
 
+        /// <summary>
+        /// A method to close this form and return the user to the dashboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoBackToDashboard(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// A method which refreshes this form to show/hide completed assignments in assignment selection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToggleCompletedEvent(object sender, EventArgs e)
         {
+            // show completed assignments
             if (ShowCompletedButton.Checked)
             {
                 StudentAssignmentMenu sam = new StudentAssignmentMenu(true);
@@ -134,6 +167,7 @@ namespace nea_ui_testing
                 };
                 sam.Show();
             }
+            // hide completed assignments
             else
             {
                 StudentAssignmentMenu sam = new StudentAssignmentMenu(false);

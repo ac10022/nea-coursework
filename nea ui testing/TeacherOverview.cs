@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace nea_ui_testing
 {
+    /// <summary>
+    /// A form through which teachers can manage class performance, students within classes, and see statistical overviews.
+    /// </summary>
     public partial class TeacherOverview : Form
     {
         private List<Class> classList;
@@ -26,6 +29,7 @@ namespace nea_ui_testing
         {
             InitializeComponent();
 
+            // fetch classes from DB, display these in the class picker
             classList = dbh.GetAllClasses();
             ClassPicker.DataSource = classList.Select(x => x.ClassName).ToArray();
             ClassPicker.SelectedIndex = -1;
@@ -41,42 +45,56 @@ namespace nea_ui_testing
             Close();
         }
 
+        /// <summary>
+        /// On student selection: show student data and assignment performance.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StudentSelected(object sender, EventArgs e)
         {
             try
             {
+                // if a student is selected
                 if (StudentsInClass.SelectedIndex != -1)
                 {
+                    // fetch selected student
                     User selectedStudent = studentsInSelectedClass[StudentsInClass.SelectedIndex];
                     SeeQHistoryButton.Enabled = true;
 
+                    // show name and last login of student in corresponding fields
                     NameField.Text = $"Name: {selectedStudent.FirstName} {selectedStudent.Surname}";
                     LastLoginField.Text = $"Last log-in: {dbh.GetLastLoginOfStudent(selectedStudent).ToShortDateString()}";
 
                     // student assignment performance
 
+                    // show assignment labels
                     foreach (Control c in SAPs)
                     {
                         SetVisible(c);
                     }
 
+                    // fetch student assignments from the DB
                     List<Assignment> studentAssignments = dbh.GetAllAssignmentsOfStudent(selectedStudent);
 
+                    // fetch at max the last 5 assignments
                     int assignmentsToDisplay = Math.Min(studentAssignments.Count, 5);
 
+                    // hide assignment labels if less than 5 assignments overall have been completed
                     if (assignmentsToDisplay < 5)
                     {
-                        for (int i = 0; i < 5-assignmentsToDisplay; i++)
+                        for (int i = 0; i < 5 - assignmentsToDisplay; i++)
                         {
                             SetHidden(SAPs[i]);
                         }
                     }
 
+                    // iterate over each assignment and show student completeness data
                     for (int i = 0; i < assignmentsToDisplay; i++)
                     {
                         // reset colour
                         SAPs[4 - i].ForeColor = Color.Black;
 
+                        // if the assignment is incomplete
                         if (dbh.StudentCompletedAssignmentTest(studentAssignments[i], selectedStudent) != (double)1)
                         {
                             // did not finish homework on time
@@ -92,9 +110,13 @@ namespace nea_ui_testing
                                 SAPs[4 - i].Text = $"{studentAssignments[i].HomeworkName}\t INCOMPLETE";
                             }
                         }
+                        // assignment is complete
                         else
                         {
+                            // fetch student performance (as %) from DB
                             double studentPerformance = Math.Round(dbh.StudentCorrectnessAssignmentTest(studentAssignments[i], selectedStudent), 2) * 100;
+                            
+                            // switch label colour based on assignment performance
                             switch (studentPerformance)
                             {
                                 case double pct when pct < 50:
@@ -116,6 +138,7 @@ namespace nea_ui_testing
                         }
                     }
                 }
+                // if no student is selected
                 else
                 {
                     SeeQHistoryButton.Enabled = false;
@@ -128,17 +151,25 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// On class selection: show class students and assignments
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClassSelected(object sender, EventArgs e)
         {
             try
             {
                 if (ClassPicker.SelectedIndex != -1)
                 {
+                    // fetch selected class
                     Class selectedClass = classList[ClassPicker.SelectedIndex];
 
+                    // fetch class students/assignments from DB
                     studentsInSelectedClass = dbh.GetStudentsInClass(selectedClass);
                     selectedClassAssignments = dbh.GetClassAssignments(selectedClass);
 
+                    // display class students/assignments in corresponding listboxes
                     StudentsInClass.DataSource = studentsInSelectedClass.Select(x => $"{x.FirstName} {x.Surname}").ToArray();
                     StudentsInClass.ClearSelected();
 
@@ -156,6 +187,11 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// On assignment selection: fetch assignment performance, perform statistical analysis and display results
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AssignmentSelected(object sender, EventArgs e)
         {
             try
@@ -164,14 +200,20 @@ namespace nea_ui_testing
                 {
                     // performance analysis
                     StatisticsHelper sh = new StatisticsHelper();
+
+                    // fetch selected assignment
                     Assignment selectedAssignment = selectedClassAssignments[AssignmentPicker.SelectedIndex];
 
+                    // calculate performance per question
                     Dictionary<Question, double> analysisData = sh.AnalyseAssignmentPerformace(selectedAssignment);
 
+                    // calculate performance per topic
                     Dictionary<string, double> topicAnalysisData = sh.OrganisePerformanceDataByTopic(analysisData);
 
+                    // take at max 3 topics from the assignment, if there were fewer than 3 topics overall in the assignemnt questions, use this amount instead
                     int topicsToTake = Math.Min(topicAnalysisData.Count, 3);
 
+                    // create a string containing best and worse answered topics
                     List<string> topicsForTopicDisplay = new List<string>();
                     topicsForTopicDisplay.AddRange(sh.GetWorstAnsweredTopics(topicAnalysisData).Take(topicsToTake));
                     topicsForTopicDisplay.AddRange(sh.GetBestAnsweredTopics(topicAnalysisData).Take(topicsToTake));
@@ -197,6 +239,7 @@ namespace nea_ui_testing
                     // correctness percentage per question
                     Dictionary<Question, int> questionPercentages = dbh.PercentagePerAssignmentQuestion(selectedAssignment);
 
+                    // show the percentage correctness of each assignment question
                     CorrectnessPerQuestion.DataSource = questionPercentages.Select(x => $"ID{x.Key.QuestionId}: {x.Value}%").ToArray();
 
                 }
@@ -208,6 +251,10 @@ namespace nea_ui_testing
             }
         }
 
+        /// <summary>
+        /// A method to hide and disable a control.
+        /// </summary>
+        /// <param name="c"></param>
         private void SetHidden(Control c)
         {
             c.Visible = false;
@@ -216,6 +263,10 @@ namespace nea_ui_testing
             c.BackColor = Color.Transparent;
         }
 
+        /// <summary>
+        /// A method to show and enable a control.
+        /// </summary>
+        /// <param name="c"></param>
         private void SetVisible(Control c)
         {
             c.Visible = true;
@@ -224,6 +275,11 @@ namespace nea_ui_testing
             c.BackColor = Color.Transparent;
         }
 
+        /// <summary>
+        /// A method to redirect the user to the student history form: hides this form then reopens this form once the new form has been closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SeeStudentHistory(object sender, EventArgs e)
         {
             Hide();

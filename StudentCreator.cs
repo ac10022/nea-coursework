@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace nea_prototype_full
 {
+    /// <summary>
+    /// A form through which teachers can input the relevant data to create/modify a student.
+    /// </summary>
     public partial class StudentCreator : Form
     {
         private bool canCreate = false;
@@ -22,6 +25,7 @@ namespace nea_prototype_full
             SubmitButton.Enabled = false;
             SuccessMessage.Visible = false;
 
+            // if modifying a student: preload fields
             if (studentRef != null)
             {
                 this.studentRef = studentRef;
@@ -31,11 +35,17 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// On submit: confirm action, then hash new password and parse the new data into the database to create/modify the student.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserSubmit(object sender, EventArgs e)
         {
             try
             {
                 Hide();
+                // confirm action through confirmation form
                 ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to create student {FirstnameInput.Text} {LastnameInput.Text}?");
                 bool wasSuccess = false;
 
@@ -47,20 +57,30 @@ namespace nea_prototype_full
                 cf.Closed += (s, args) =>
                 {
                     Show();
+
+                    // if the user confirmed the action
                     if (wasSuccess)
                     {
+                        // hash the new plaintext password and create a salt
                         HashingHelper hh = new HashingHelper();
                         (string salt, string hashedPassword) = hh.ComputeSaltAndHash(PasswordInput.Text);
                         DatabaseHelper dbh = new DatabaseHelper();
+
+                        // if creating a new student
                         if (studentRef == null)
                         {
                             dbh.CreateNewStudent(FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
+                            
+                            // show success message
                             SuccessMessage.Visible = true;
                             SuccessMessage.Text = $"Successfully created student: {FirstnameInput.Text} {LastnameInput.Text}";
                         }
+                        // if editing a pre-existing student
                         else
                         {
                             dbh.EditStudentDetails(studentRef, FirstnameInput.Text, LastnameInput.Text, EmailInput.Text, hashedPassword, salt);
+
+                            // show success message
                             SuccessMessage.Visible = true;
                             SuccessMessage.Text = $"Successfully edited student";
                         }
@@ -75,6 +95,11 @@ namespace nea_prototype_full
             }
         }
 
+        /// <summary>
+        /// A method to test fields for data. Here: only allow data to be submitted if all fields are filled and password matches strength criteria.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TestForData(object sender, EventArgs e)
         {
             // hide success message - new student being created

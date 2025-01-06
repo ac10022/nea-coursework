@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace nea_ui_testing
 {
+    /// <summary>
+    /// A form to act as the homepage for students: students can view their details and go to the other parts of the program.
+    /// </summary>
     public partial class TeacherDashboard : Form
     {
         public TeacherDashboard()
@@ -24,11 +27,21 @@ namespace nea_ui_testing
             NameLabel.Text = $"Name: {Program.loggedInUser.FirstName} {Program.loggedInUser.Surname}";
         }
 
+        /// <summary>
+        /// Closes the dashboard and logs the user out: redirects to the login form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogoutFromHere(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Hides this form, opens the student management menu, then shows this form again once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoToStudentManager(object sender, EventArgs e)
         {
             Hide();
@@ -42,6 +55,11 @@ namespace nea_ui_testing
             smm.Show();
         }
 
+        /// <summary>
+        /// Hides this form, opens the class management menu, then shows this form again once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoToClassManager(object sender, EventArgs e)
         {
             Hide();
@@ -55,6 +73,11 @@ namespace nea_ui_testing
             cmm.Show();
         }
 
+        /// <summary>
+        /// Hides this form, opens the question management menu, then shows this form again once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoToQuestionManager(object sender, EventArgs e)
         {
             Hide();
@@ -68,6 +91,11 @@ namespace nea_ui_testing
             qmm.Show();
         }
 
+        /// <summary>
+        /// Hides this form, opens the assignment management menu, then shows this form again once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoToAssignmentManager(object sender, EventArgs e)
         {
             Hide();
@@ -81,6 +109,11 @@ namespace nea_ui_testing
             am.Show();
         }
 
+        /// <summary>
+        /// Hides this form, opens the teacher overview menu, then shows this form again once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoToTeacherOverview(object sender, EventArgs e)
         {
             Hide();
@@ -94,6 +127,11 @@ namespace nea_ui_testing
             to.Show();
         }
 
+        /// <summary>
+        /// Hides this form, opens the SOW management menu, then shows this form again once that form closes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoToSOWManager(object sender, EventArgs e)
         {
             Hide();
