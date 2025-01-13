@@ -73,6 +73,8 @@ namespace nea_ui_testing
         {
             SuccessMessage.Visible = false;
             canSubmit = ContentField.TextLength != 0 && DifficultyPicker.SelectedIndex != -1 && TopicPicker.SelectedIndex != -1 && AnswerField.TextLength != 0;
+            // if mc selected, only allow once one other incorrect answer is inputted
+            if (MultipleChoiceCheckbox.Checked && IncorrectAnswersField.TextLength == 0) canSubmit = false;
             SubmitButton.Enabled = canSubmit;
         }
 
@@ -320,8 +322,16 @@ namespace nea_ui_testing
             {
                 foreach (string s in tempImagePaths)
                 {
-                    // if the temp image still exists, delete it
-                    if (File.Exists(s)) File.Delete(s);
+                    try
+                    {
+                        // if the temp image still exists, delete it
+                        if (File.Exists(s)) File.Delete(s);
+                    }
+                    catch { }
+                    finally
+                    {
+                        // image stays stored in the temp folder, unsucessful deletion
+                    }
                 }
             }
         }

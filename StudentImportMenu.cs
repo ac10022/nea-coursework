@@ -33,48 +33,56 @@ namespace nea_prototype_full
         /// <param name="e"></param>
         private void UploadEvent(object sender, EventArgs e)
         {
-            // use an open-file directory to allow the user to choose exclusively CSV files
-            OFD.InitialDirectory = @"C:\";
-            OFD.RestoreDirectory = true;
-            OFD.Title = "Choose the student CSV file";
-            OFD.DefaultExt = "csv";
-            OFD.Filter = "CSV files (*.csv)|*.csv";
-
-            OFD.CheckPathExists = true;
-            OFD.CheckFileExists = true;
-            
-            // if file exists
-            if (OFD.ShowDialog() == DialogResult.OK)
+            try
             {
-                // use student import helper to filter students to accept/reject
-                StudentImportHelper sh = new StudentImportHelper(OFD.FileName);
-                (acceptedStudents, rejectedStudents) = sh.ImportStudents();
+                // use an open-file directory to allow the user to choose exclusively CSV files
+                OFD.InitialDirectory = @"C:\";
+                OFD.RestoreDirectory = true;
+                OFD.Title = "Choose the student CSV file";
+                OFD.DefaultExt = "csv";
+                OFD.Filter = "CSV files (*.csv)|*.csv";
 
-                // accepted students
-                foreach (StudentImportLayout student in acceptedStudents)
-                {
-                    // create a new salt and hashed password, then parse the data into the program
-                    (string salt, string hashedPassword) = hh.ComputeSaltAndHash(student.Password);
-                    dbh.CreateNewStudent(student.FirstName, student.Surname, student.Email, hashedPassword, salt);
-                }
+                OFD.CheckPathExists = true;
+                OFD.CheckFileExists = true;
 
-                // rejected students: build notice
-                StringBuilder notice = new StringBuilder();
-                notice.AppendLine($"Accepted {acceptedStudents.Count} students.");
-                notice.AppendLine();
-                
-                if (rejectedStudents.Count != 0)
+                // if file exists
+                if (OFD.ShowDialog() == DialogResult.OK)
                 {
-                    notice.AppendLine($"Rejected the following {rejectedStudents.Count}:");
-                    foreach (StudentImportLayout student in rejectedStudents)
+                    // use student import helper to filter students to accept/reject
+                    StudentImportHelper sh = new StudentImportHelper(OFD.FileName);
+                    (acceptedStudents, rejectedStudents) = sh.ImportStudents();
+
+                    // accepted students
+                    foreach (StudentImportLayout student in acceptedStudents)
                     {
-                        notice.AppendLine(student.ToString());
+                        // create a new salt and hashed password, then parse the data into the program
+                        (string salt, string hashedPassword) = hh.ComputeSaltAndHash(student.Password);
+                        dbh.CreateNewStudent(student.FirstName, student.Surname, student.Email, hashedPassword, salt);
                     }
-                }
 
-                // display notice in a message box
-                MessageBox.Show(notice.ToString());
-                Close();
+                    // rejected students: build notice
+                    StringBuilder notice = new StringBuilder();
+                    notice.AppendLine($"Accepted {acceptedStudents.Count} students.");
+                    notice.AppendLine();
+
+                    if (rejectedStudents.Count != 0)
+                    {
+                        notice.AppendLine($"Rejected the following {rejectedStudents.Count}:");
+                        foreach (StudentImportLayout student in rejectedStudents)
+                        {
+                            notice.AppendLine(student.ToString());
+                        }
+                    }
+
+                    // display notice in a message box
+                    MessageBox.Show(notice.ToString());
+                    Close();
+                }
+            }
+            catch
+            {
+                ErrorHandler eh = new ErrorHandler($"Student import failed; this is most likely as the CSV was formatted incorrectly.");
+                eh.DisplayErrorForm();
             }
         }
     }

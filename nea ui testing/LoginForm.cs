@@ -27,11 +27,6 @@ namespace nea_ui_testing
             LoginButton.Enabled = false;
             ResetPasswordButton.Enabled = false;
             LoggedOutLabel.Visible = false;
-
-            // FOR DEBUGGING
-            EmailField.Text = @"udayjolly@gmail.com";
-            PasswordField.Text = "Password123";
-            //
         }
 
         /// <summary>

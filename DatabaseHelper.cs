@@ -1688,5 +1688,25 @@ namespace nea_prototype_full
             if (teacher == null) throw new Exception($"No teacher with email {email} found in the database.");
             return teacher;
         }
+
+        /// <summary>
+        /// Takes in a class and deletes all references of that class from the database.
+        /// </summary>
+        /// <param name="_class"></param>
+        public void DeleteClass(Class _class)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("DeleteClass", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@ClassId", _class.ClassId));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
     }
 }

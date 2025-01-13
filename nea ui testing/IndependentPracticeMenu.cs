@@ -163,10 +163,17 @@ namespace nea_ui_testing
             {
                 // fetch the number of qs and selected topic as criteria
                 int noOfQuestions = (int)Math.Abs(Math.Round(NoQuestionSelector.Value));
+
+                // if no questions or topic selected, prevent user from starting practice
+                if (noOfQuestions == 0) throw new Exception("Cannot start a practice of 0 questions.");
+                if (TopicPicker2.SelectedIndex == -1) throw new Exception("A topic needs to be selected to practice with.");
+
                 Topic selectedTopic = topicList[TopicPicker2.SelectedIndex];
 
                 // any difficulty, selected topic, any teacher
                 List<Question> topicQuestions = dbh.GetQuestionsMultimetric(new List<int> { 1, 2, 3, 4 }, selectedTopic, null);
+
+                if (topicQuestions.Count == 0) throw new Exception("Could not find any questions which matched the criteria.");
 
                 List<Question> listToPractice;
 
@@ -245,53 +252,61 @@ namespace nea_ui_testing
         /// </summary>
         private void LoadStudentAnalysis()
         {
-            // fetch student question attempts from DB
-            List<QuestionAttempt> questionAttempts = dbh.GetStudentQuestionAttempts(Program.loggedInUser);
-            // use the statistical analysis method to find out which topics the student performs best in/worst in
-            Dictionary<int, double> topicAnalysis = sh.AnalyseStudentQuestionAttempts(questionAttempts);
-
-            // in the case the student has practiced fewer than 3 topics overall
-            int topicsToTake = Math.Min(3, topicAnalysis.Count);
-            // since the sh method returns only topic ID, fetch topic based on ID from DB
-            List<Topic> worstAnsweredTopics = sh.GetWorstAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
-            List<Topic> bestAnsweredTopics = sh.GetBestAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
-
-            // create a string containing topics of strength and weakness and display this
-            StringBuilder analysisText = new StringBuilder();
-            analysisText.AppendLine("Topics to practice:");
-
-            foreach (Topic topic in worstAnsweredTopics)
+            try
             {
-                analysisText.AppendLine($"- {topic.TopicName}: {Math.Round(topicAnalysis[topic.TopicId], 2)}");
+                // fetch student question attempts from DB
+                List<QuestionAttempt> questionAttempts = dbh.GetStudentQuestionAttempts(Program.loggedInUser);
+                // use the statistical analysis method to find out which topics the student performs best in/worst in
+                Dictionary<int, double> topicAnalysis = sh.AnalyseStudentQuestionAttempts(questionAttempts);
+
+                // in the case the student has practiced fewer than 3 topics overall
+                int topicsToTake = Math.Min(3, topicAnalysis.Count);
+                // since the sh method returns only topic ID, fetch topic based on ID from DB
+                List<Topic> worstAnsweredTopics = sh.GetWorstAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
+                List<Topic> bestAnsweredTopics = sh.GetBestAnsweredTopics(topicAnalysis).Take(topicsToTake).Select(x => dbh.GetTopicFromId(x)).ToList();
+
+                // create a string containing topics of strength and weakness and display this
+                StringBuilder analysisText = new StringBuilder();
+                analysisText.AppendLine("Topics to practice:");
+
+                foreach (Topic topic in worstAnsweredTopics)
+                {
+                    analysisText.AppendLine($"- {topic.TopicName}: {Math.Round(topicAnalysis[topic.TopicId], 2)}");
+                }
+
+                analysisText.AppendLine();
+                analysisText.AppendLine("Strengths:");
+
+                foreach (Topic topic in bestAnsweredTopics)
+                {
+                    analysisText.AppendLine($"- {topic.TopicName}: {Math.Round(topicAnalysis[topic.TopicId], 2)}");
+                }
+
+                AnalysisLabel.Text = analysisText.ToString();
+
+                // fetch last practiced topics from the database.
+                List<Topic> lastPracticedTopics = dbh.GetStudentLastPracticedTopics(Program.loggedInUser);
+                lastPracticedTopics.Reverse();
+
+                // in the case less than 3 topics have been studied overall
+                int lastPracticedTopicsToTake = Math.Min(3, lastPracticedTopics.Count);
+
+                // create a string containing topics not studied in a while and display this
+                StringBuilder whileText = new StringBuilder();
+                whileText.AppendLine("Not covered in a while:");
+
+                foreach (Topic topic in lastPracticedTopics.Take(lastPracticedTopicsToTake))
+                {
+                    whileText.AppendLine($"- {topic.TopicName}");
+                }
+
+                WhileLabel.Text = whileText.ToString();
             }
-
-            analysisText.AppendLine();
-            analysisText.AppendLine("Strengths:");
-
-            foreach (Topic topic in bestAnsweredTopics)
+            catch
             {
-                analysisText.AppendLine($"- {topic.TopicName}: {Math.Round(topicAnalysis[topic.TopicId], 2)}");
+                AnalysisLabel.Text = "Unable to load statistical analysis.";
+                WhileLabel.Text = "Unable to load statistical analysis";
             }
-
-            AnalysisLabel.Text = analysisText.ToString();
-
-            // fetch last practiced topics from the database.
-            List<Topic> lastPracticedTopics = dbh.GetStudentLastPracticedTopics(Program.loggedInUser);
-            lastPracticedTopics.Reverse();
-
-            // in the case less than 3 topics have been studied overall
-            int lastPracticedTopicsToTake = Math.Min(3, lastPracticedTopics.Count);
-
-            // create a string containing topics not studied in a while and display this
-            StringBuilder whileText = new StringBuilder();
-            whileText.AppendLine("Not covered in a while:");
-            
-            foreach (Topic topic in lastPracticedTopics.Take(lastPracticedTopicsToTake))
-            {
-                whileText.AppendLine($"- {topic.TopicName}");
-            }
-
-            WhileLabel.Text = whileText.ToString();
         }
     }
 }

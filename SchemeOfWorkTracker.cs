@@ -82,7 +82,7 @@ namespace nea_prototype_full
         {
             // fetch selected class and produce a new set of seralised data
             Class selectedClass = studentClasses[ClassPicker.SelectedIndex];
-            string serialisedChecklistData = SerialiseChecklistData();
+            string serialisedChecklistData = SerialiseChecklistData(e);
 
             // update seralised SOW data in the DB
             dbh.UpdateSeralisedSOWData(selectedClass, Program.loggedInUser, serialisedChecklistData);
@@ -92,13 +92,15 @@ namespace nea_prototype_full
         /// A method to fetch all items from a SOW, see if they're checked off, and produce a seralised binary string to store this information. If a topic is checked off, produce a 1, if not, produce a 0.
         /// </summary>
         /// <returns>A seralised binary string.</returns>
-        private string SerialiseChecklistData()
+        private string SerialiseChecklistData(ItemCheckEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < SOWDisplay.Items.Count; i++)
             {
-                if (SOWDisplay.GetItemChecked(i)) sb.Append("1");
-                else sb.Append("0");
+                // in the case that this was the last item checked
+                if (i == e.Index) sb.Append(e.NewValue == CheckState.Checked ? "1" : "0");
+                // otherwise
+                else sb.Append(SOWDisplay.GetItemChecked(i) ? "1" : "0");
             }
             return sb.ToString();
         }

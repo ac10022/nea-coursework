@@ -43,7 +43,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.TeachersInClass = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.RemoveUserButton = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.DeleteAssignmentButton = new System.Windows.Forms.Button();
             this.AssignmentsListBox = new System.Windows.Forms.ListBox();
@@ -51,6 +51,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.EditClassnameButton = new System.Windows.Forms.Button();
             this.SuccessMessage = new System.Windows.Forms.Label();
+            this.DeleteClassButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button4
@@ -138,7 +139,7 @@
             this.ClassListBox.ItemHeight = 20;
             this.ClassListBox.Location = new System.Drawing.Point(23, 269);
             this.ClassListBox.Name = "ClassListBox";
-            this.ClassListBox.Size = new System.Drawing.Size(393, 324);
+            this.ClassListBox.Size = new System.Drawing.Size(393, 244);
             this.ClassListBox.TabIndex = 27;
             this.ClassListBox.SelectedIndexChanged += new System.EventHandler(this.NewClassSelected);
             // 
@@ -206,15 +207,15 @@
             this.label7.TabIndex = 33;
             this.label7.Text = "Teachers";
             // 
-            // button2
+            // RemoveUserButton
             // 
-            this.button2.Location = new System.Drawing.Point(451, 536);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(189, 57);
-            this.button2.TabIndex = 35;
-            this.button2.Text = "Remove selected student/teacher";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.RemoveUserEvent);
+            this.RemoveUserButton.Location = new System.Drawing.Point(451, 536);
+            this.RemoveUserButton.Name = "RemoveUserButton";
+            this.RemoveUserButton.Size = new System.Drawing.Size(189, 57);
+            this.RemoveUserButton.TabIndex = 35;
+            this.RemoveUserButton.Text = "Remove selected student/teacher";
+            this.RemoveUserButton.UseVisualStyleBackColor = true;
+            this.RemoveUserButton.Click += new System.EventHandler(this.RemoveUserEvent);
             // 
             // button5
             // 
@@ -289,11 +290,22 @@
             this.SuccessMessage.TabIndex = 45;
             this.SuccessMessage.Text = "Success";
             // 
+            // DeleteClassButton
+            // 
+            this.DeleteClassButton.Location = new System.Drawing.Point(227, 536);
+            this.DeleteClassButton.Name = "DeleteClassButton";
+            this.DeleteClassButton.Size = new System.Drawing.Size(189, 57);
+            this.DeleteClassButton.TabIndex = 46;
+            this.DeleteClassButton.Text = "Delete selected class";
+            this.DeleteClassButton.UseVisualStyleBackColor = true;
+            this.DeleteClassButton.Click += new System.EventHandler(this.DeleteClassEvent);
+            // 
             // ClassManagementMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1241, 632);
+            this.Controls.Add(this.DeleteClassButton);
             this.Controls.Add(this.SuccessMessage);
             this.Controls.Add(this.EditClassnameButton);
             this.Controls.Add(this.DeleteAssignmentButton);
@@ -301,7 +313,7 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.RemoveUserButton);
             this.Controls.Add(this.TeachersInClass);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.StudentsInClass);
@@ -341,7 +353,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox TeachersInClass;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button RemoveUserButton;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button DeleteAssignmentButton;
         private System.Windows.Forms.ListBox AssignmentsListBox;
@@ -349,5 +361,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button EditClassnameButton;
         private System.Windows.Forms.Label SuccessMessage;
+        private System.Windows.Forms.Button DeleteClassButton;
     }
 }

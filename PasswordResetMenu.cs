@@ -47,8 +47,18 @@ namespace nea_prototype_full
         /// <exception cref="Exception"></exception>
         private void SendConfirmationEvent(object sender, EventArgs e)
         {
-            // check if this email matches the correct email format
-            if (!ValidateEmail(EmailField.Text)) throw new Exception("Email is in an invalid format.");
+            try
+            {
+                // check if this email matches the correct email format
+                if (!ValidateEmail(EmailField.Text)) throw new Exception("Email is in an invalid format, please re-enter in correct email format.");
+            } 
+            catch (Exception ex)
+            {
+                ErrorHandler eh = new ErrorHandler(ex.Message);
+                eh.DisplayErrorForm();
+                Close();
+                return;
+            }
 
             // create a SMTP client using the gmail SMTP service, from a predefined project email address.
             SmtpClient client = new SmtpClient(@"smtp.gmail.com")

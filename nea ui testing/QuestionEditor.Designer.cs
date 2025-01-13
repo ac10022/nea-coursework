@@ -184,6 +184,7 @@
             this.IncorrectAnswersField.Name = "IncorrectAnswersField";
             this.IncorrectAnswersField.Size = new System.Drawing.Size(360, 26);
             this.IncorrectAnswersField.TabIndex = 28;
+            this.IncorrectAnswersField.TextChanged += new System.EventHandler(this.TestForData);
             // 
             // tabControl1
             // 

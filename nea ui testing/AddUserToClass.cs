@@ -65,9 +65,9 @@ namespace nea_ui_testing
                 SuccessMessage.Text = $"Successfully added {selectedUser.FirstName} {selectedUser.Surname} to {classRef.ClassName}";
                 SuccessMessage.Visible = true;
             }
-            catch (Exception ex)
+            catch
             {
-                ErrorHandler eh = new ErrorHandler(ex.Message);
+                ErrorHandler eh = new ErrorHandler($"Unable to add this user to {classRef.ClassName}; this may be because this user is already in this class, or either the class or user no longer exists.");
                 eh.DisplayErrorForm();
             }
         }

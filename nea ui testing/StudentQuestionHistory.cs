@@ -29,8 +29,16 @@ namespace nea_ui_testing
 
             this.studentRef = studentRef;
 
-            // loads student question history into the listbox
-            RefreshQuestionHistoryData();
+            try
+            {
+                // loads student question history into the listbox
+                RefreshQuestionHistoryData();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler eh = new ErrorHandler(ex.Message);
+                eh.DisplayErrorForm();
+            }
         }
 
         /// <summary>
@@ -127,6 +135,8 @@ namespace nea_ui_testing
             
             // fetch question attempts from DB
             questionAttempts = dbh.GetStudentQuestionAttempts(studentRef);
+
+            if (questionAttempts.Count == 0) throw new Exception("This user has no question attempts. No question attempt/statistical analysis data is available for this user yet.");
 
             // perform statistical analysis
             topicAnalysis = sh.AnalyseStudentQuestionAttempts(questionAttempts);

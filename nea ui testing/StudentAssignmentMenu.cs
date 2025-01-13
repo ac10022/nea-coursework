@@ -27,17 +27,24 @@ namespace nea_ui_testing
             ShowCompletedButton.Checked = showCompleted;
             ShowCompletedButton.CheckedChanged += ToggleCompletedEvent;
 
+            List<Class> studentClasses = dbh.GetClassesOfStudent(Program.loggedInUser);
+
+            if (studentClasses.Count == 0)
+            {
+                new ErrorForm("You are not in any classes! Ask your teacher to add you to the class.").Show();
+            }
+
             // include assignments student has completed
             if (showCompleted)
             {
                 this.showCompleted = true;
                 // for each class the student is in, fetch all assignments for that class
-                foreach (Class _class in dbh.GetClassesOfStudent(Program.loggedInUser)) assignmentList.AddRange(dbh.GetClassAssignments(_class));
+                foreach (Class _class in studentClasses) assignmentList.AddRange(dbh.GetClassAssignments(_class));
             }
             // exclude assignments student has completed
             else
             {
-                foreach (Class _class in dbh.GetClassesOfStudent(Program.loggedInUser))
+                foreach (Class _class in studentClasses)
                 {
                     foreach (Assignment assignment in dbh.GetClassAssignments(_class))
                     {
