@@ -308,40 +308,52 @@ namespace automatic_question_generation_testing
                 // use thesaurus api
                 _randomInt = random.Next(1, 3);
 
-                // chooses random: noun, adjectice, verb
-                _WordType wordType = (_WordType)new Random().Next(0, 3);
-                ThesaurusQuestionHelper tqh = new ThesaurusQuestionHelper(wordType);
-                string word = tqh.WordInput;
+                RandomlyGeneratedQuestion rgq = null;
 
-                switch (_randomInt)
+                do
                 {
-                    case 1:
+                    try
+                    {
+                        // chooses random: noun, adjectice, verb
+                        _WordType wordType = (_WordType)new Random().Next(0, 3);
+                        ThesaurusQuestionHelper tqh = new ThesaurusQuestionHelper(wordType);
+                        string word = tqh.WordInput;
 
-                        (string[] words, int synIndex) = tqh.SynAntQuestion().Result;
+                        switch (_randomInt)
+                        {
+                            case 1:
 
-                        RandomlyGeneratedQuestion rgq = new RandomlyGeneratedQuestion(topic, 1, $"Which of the following words is a synonym of: {word}?", new List<string> { words[synIndex] }, -1, null, "No answer key available for this question.");
+                                (string[] words, int synIndex) = tqh.SynAntQuestion().Result;
 
-                        // remove syn and keep antonyms
-                        List<string> nonSyns = words.ToList();
-                        nonSyns.RemoveAt(synIndex);
+                                rgq = new RandomlyGeneratedQuestion(topic, 1, $"Which of the following words is a synonym of: {word}?", new List<string> { words[synIndex] }, -1, null, "No answer key available for this question.");
 
-                        // remove duplicates
-                        nonSyns.Distinct();
+                                // remove syn and keep antonyms
+                                List<string> nonSyns = words.ToList();
+                                nonSyns.RemoveAt(synIndex);
 
-                        rgq.ForceMc(nonSyns);
-                        return rgq;
+                                // remove duplicates
+                                nonSyns.Distinct();
 
-                    case 2:
+                                rgq.ForceMc(nonSyns);
+                                break;
 
-                        List<string> defs = tqh.DefinitionMatchQuestion(wordType).Result;
-                        RandomlyGeneratedQuestion rgq2 = new RandomlyGeneratedQuestion(topic, 1, $"Which of the following provides the best definition of the word: {word}?", new List<string> { defs.First() }, -1, null, "No answer key available for this question.");
-                        
-                        // remove first (correct) definition and push to mc answers
-                        defs.RemoveAt(0);
+                            case 2:
 
-                        rgq2.ForceMc(defs);
-                        return rgq2;
+                                List<string> defs = tqh.DefinitionMatchQuestion(wordType).Result;
+                                rgq = new RandomlyGeneratedQuestion(topic, 1, $"Which of the following provides the best definition of the word: {word}?", new List<string> { defs.First() }, -1, null, "No answer key available for this question.");
+
+                                // remove first (correct) definition and push to mc answers
+                                defs.RemoveAt(0);
+
+                                rgq.ForceMc(defs);
+                                break;
+                        }
+                    }
+                    catch { }
                 }
+                while (rgq == null);
+
+                return rgq;
             }
             else if (topic.TopicId == (int)_Topic.Sequences)
             {

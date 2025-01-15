@@ -19,7 +19,7 @@ namespace nea_ui_testing
         private List<Topic> topicList;
         private List<Question> questionsFromSearch;
 
-        private _Topic[] topicsWithRGQ = { _Topic.SubjectVerbAgreement, _Topic.AdjectivesAdverbs, _Topic.Algebra, _Topic.Graphs, _Topic.Inequalities, _Topic.Sequences, _Topic.RatioProportion, _Topic.SimultaneousEq, _Topic.Quadratics, _Topic.AveragesRangesModeMedian, _Topic.PerimeterAreaVolume };
+        private _Topic[] topicsWithRGQ = { _Topic.AdjectivesAdverbs, _Topic.Graphs, _Topic.Inequalities, _Topic.Sequences, _Topic.SimultaneousEq, _Topic.Quadratics, _Topic.AveragesRangesModeMedian, _Topic.PerimeterAreaVolume };
         int[] indexesOfTopicsWithRGQ;
 
         private DatabaseHelper dbh = new DatabaseHelper();
@@ -173,8 +173,6 @@ namespace nea_ui_testing
                 // any difficulty, selected topic, any teacher
                 List<Question> topicQuestions = dbh.GetQuestionsMultimetric(new List<int> { 1, 2, 3, 4 }, selectedTopic, null);
 
-                if (topicQuestions.Count == 0) throw new Exception("Could not find any questions which matched the criteria.");
-
                 List<Question> listToPractice;
 
                 RandomQuestionHelper rqh = new RandomQuestionHelper();
@@ -221,7 +219,7 @@ namespace nea_ui_testing
                     else
                     {
                         // use random questions and database questions in a 50/50 split
-                        listToPractice = topicQuestions.RandomiseList().Take(noOfQuestions / 2).ToList();
+                        listToPractice = topicQuestions.RandomiseList().Take(Math.Max(noOfQuestions / 2, 1)).ToList();
                         for (int i = 0; i < noOfQuestions / 2; i++)
                         {
                             // panel refresh
@@ -233,6 +231,8 @@ namespace nea_ui_testing
                         listToPractice.RandomiseList().ToList();
                     }
                 }
+
+                if (listToPractice.Count == 0) throw new Exception("Could not find any questions which matched the criteria.");
 
                 Hide();
                 // start practice using this question set

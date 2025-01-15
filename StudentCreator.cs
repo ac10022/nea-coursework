@@ -105,15 +105,9 @@ namespace nea_prototype_full
             // hide success message - new student being created
             SuccessMessage.Visible = false;
             // can only click log-in if fields are all filled
-            canCreate = FirstnameInput.TextLength != 0 && LastnameInput.TextLength != 0 && EmailInput.TextLength != 0 && PasswordInput.TextLength != 0;
-            // password and email validation
-            if (canCreate)
-            {
-                // if email is in the form ___@___.___
-                canCreate = Regex.IsMatch(EmailInput.Text, @".+@.+\..+", RegexOptions.None);
-                // tests for: is longer than 8 characters, contains at least one capital letter, contains at least one number, contains no non-ascii symbols
-                canCreate = PasswordInput.TextLength >= 8 && PasswordInput.Text.Count(x => (int)x >= 65 && (int)x <= 90) != 0 && Regex.Matches(PasswordInput.Text, @"[0-9]").Count != 0 && PasswordInput.Text.Count(x => (int)x >= 128) == 0;
-            }
+            // if email is in the form ___@___.___
+            // tests for: is longer than 8 characters, contains at least one capital letter, contains at least one number, contains no non-ascii symbols
+            canCreate = FirstnameInput.TextLength != 0 && LastnameInput.TextLength != 0 && EmailInput.TextLength != 0 && PasswordInput.TextLength >= 8 && PasswordInput.Text.Count(x => (int)x >= 65 && (int)x <= 90) != 0 && Regex.Matches(PasswordInput.Text, @"[0-9]").Count != 0 && PasswordInput.Text.Count(x => (int)x >= 128) == 0 && Regex.IsMatch(EmailInput.Text, @".+@.+\..+", RegexOptions.None);
             if (canCreate) SubmitButton.Enabled = true;
             else SubmitButton.Enabled = false;
         }

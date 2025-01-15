@@ -89,15 +89,24 @@ namespace nea_ui_testing
 
         private void EditStudentEvent(object sender, EventArgs e)
         {
-            Hide();
-            StudentCreator sc = new StudentCreator(usersFromSelection[StudentMatches.SelectedIndex]);
-
-            // form closed events
-            sc.Closed += (s, args) =>
+            try
             {
-                Show();
-            };
-            sc.Show();
+                Hide();
+                User selectedStudent = usersFromSelection[StudentMatches.SelectedIndex];
+                StudentCreator sc = new StudentCreator(selectedStudent);
+
+                // form closed events
+                sc.Closed += (s, args) =>
+                {
+                    Show();
+                };
+                sc.Show();
+            }
+            catch
+            {
+                ErrorHandler eh = new ErrorHandler("No student has been selected to edit!");
+                eh.DisplayErrorForm();
+            }
         }
 
         private void GoToStudentImportMenu(object sender, EventArgs e)
@@ -115,31 +124,39 @@ namespace nea_ui_testing
 
         private void DeleteStudentEvent(object sender, EventArgs e)
         {
-            User selectedStudent = usersFromSelection[StudentMatches.SelectedIndex];
-
-            Hide();
-            ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to delete student {selectedStudent.FirstName} {selectedStudent.Surname}?");
-            bool wasSuccess = false;
-
-            // form closed events
-            cf.FormClosing += (s, args) =>
+            try
             {
-                wasSuccess = cf.wasSuccess;
-                
-                if (wasSuccess)
+                User selectedStudent = usersFromSelection[StudentMatches.SelectedIndex];
+
+                Hide();
+                ConfirmationForm cf = new ConfirmationForm($"Are you sure you want to delete student {selectedStudent.FirstName} {selectedStudent.Surname}?");
+                bool wasSuccess = false;
+
+                // form closed events
+                cf.FormClosing += (s, args) =>
                 {
-                    dbh.DeleteStudent(selectedStudent);
-                    MessageBox.Show($"Successfully deleted student {selectedStudent.FirstName} {selectedStudent.Surname}");
-                }
-            };
-            cf.Closed += (s, args) =>
-            {
-                Show();
+                    wasSuccess = cf.wasSuccess;
 
-                // refresh search
-                SearchForStudents_Click(null, null);
-            };
-            cf.Show();
+                    if (wasSuccess)
+                    {
+                        dbh.DeleteStudent(selectedStudent);
+                        MessageBox.Show($"Successfully deleted student {selectedStudent.FirstName} {selectedStudent.Surname}");
+                    }
+                };
+                cf.Closed += (s, args) =>
+                {
+                    Show();
+
+                    // refresh search
+                    SearchForStudents_Click(null, null);
+                };
+                cf.Show();
+            }
+            catch
+            {
+                ErrorHandler eh = new ErrorHandler("No student has been selected to delete!");
+                eh.DisplayErrorForm();
+            }
         }
     }
 }

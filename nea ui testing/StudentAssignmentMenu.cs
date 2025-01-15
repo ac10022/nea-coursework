@@ -64,7 +64,7 @@ namespace nea_ui_testing
         /// <summary>
         /// A method to create controls (one per assignment), which display upcoming assignments and allows student to begin an assignment by clicking on the corresponding button.
         /// </summary>
-        private void DrawAssignmentLabels()
+        public void DrawAssignmentLabels()
         {
             for (int i = 0; i < assignmentList.Count; i++)
             {
@@ -120,6 +120,9 @@ namespace nea_ui_testing
                 newButton.Click += delegate (object sender, EventArgs e)
                 {
                     StartAssignment(currentAssignment);
+
+                    // disable button, so that once the user returns to the form after completion they cannot reattempt the assignment
+                    (sender as Button).Enabled = false;
                 };
 
                 Controls.Add(newButton);
@@ -144,6 +147,7 @@ namespace nea_ui_testing
             QuestionAttemptMenu qam = new QuestionAttemptMenu(assignmentQuestions, assignment, this);
             qam.Show();
         }
+
 
         /// <summary>
         /// A method to close this form and return the user to the dashboard.

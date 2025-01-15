@@ -236,7 +236,8 @@ namespace automatic_question_generation_testing
             panel.Paint += new PaintEventHandler(DrawPoints);
             Bitmap graphImage = ExportGraph();
             panel.Refresh();
-            List<PointD> pointRef = points;
+            // clone points list
+            List<PointD> pointRef = new List<PointD>(points);
             points.Clear();
             return (graphImage, pointRef);
         }
