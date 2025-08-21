@@ -85,6 +85,7 @@ namespace nea_backend
                     userType = _UserType.Student;
                 }
 
+                // edit
                 // send the user an email with the one time code as the email body
                 client.Send(@"neaproject4@gmail.com", emailTo, "EMAIL VERIFICATION", $"Use code {oneTimeCode} to verify your email and reset your password.");
 

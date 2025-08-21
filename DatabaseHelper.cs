@@ -15,7 +15,7 @@ namespace nea_backend
 {
     internal class DatabaseHelper
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""C:\Users\lucam\Documents\Visual Studio 2022\All Projects\nea ui testing\Database.mdf"";Integrated Security=True";
+        private string connectionString = @"**";
 
         /// <summary>
         /// Given an email and user type, returns the 5 character salt for the user.
