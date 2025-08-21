@@ -270,15 +270,14 @@
     <None Include=".vs\nea ui testing\v17\.suo" />
     <None Include=".vs\nea ui testing\v17\DocumentLayout.json" />
     <None Include="app.config" />
-    <None Include="nea ui testing\App.config" />
-    <None Include="nea ui testing\bin\Debug\nea ui testing.exe.config" />
-    <None Include="nea ui testing\nea ui testing.csproj" />
-    <None Include="nea ui testing\obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
-    <None Include="nea ui testing\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="nea ui testing\obj\Debug\nea ui testing.csproj.AssemblyReference.cache" />
-    <None Include="nea ui testing\obj\Debug\nea ui testing.csproj.CoreCompileInputs.cache" />
-    <None Include="nea ui testing\obj\Debug\nea ui testing.csproj.GenerateResource.cache" />
-    <None Include="nea ui testing\Properties\Settings.settings" />
+    <None Include="nea_old\bin\Debug\nea ui testing.exe.config" />
+    <None Include="nea ui testing.csproj" />
+    <None Include="nea_old\obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="nea_old\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="nea_old\obj\Debug\nea ui testing.csproj.AssemblyReference.cache" />
+    <None Include="nea_old\obj\Debug\nea ui testing.csproj.CoreCompileInputs.cache" />
+    <None Include="nea_old\obj\Debug\nea ui testing.csproj.GenerateResource.cache" />
+    <None Include="nea_old\Properties\Settings.settings" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -290,117 +289,117 @@
     <Compile Include="GraphingHelper.cs" />
     <Compile Include="HashingHelper.cs" />
     <Compile Include="MatrixHelper.cs" />
-    <Compile Include="nea ui testing\AddQToAssignment.cs">
+    <Compile Include="AddQToAssignment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\AddQToAssignment.Designer.cs">
+    <Compile Include="AddQToAssignment.Designer.cs">
       <DependentUpon>AddQToAssignment.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\AddUserToClass.cs">
+    <Compile Include="AddUserToClass.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\AddUserToClass.Designer.cs">
+    <Compile Include="AddUserToClass.Designer.cs">
       <DependentUpon>AddUserToClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\AssignmentMenu.cs">
+    <Compile Include="AssignmentMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\AssignmentMenu.Designer.cs">
+    <Compile Include="AssignmentMenu.Designer.cs">
       <DependentUpon>AssignmentMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\ClassManagementMenu.cs">
+    <Compile Include="ClassManagementMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\ClassManagementMenu.Designer.cs">
+    <Compile Include="ClassManagementMenu.Designer.cs">
       <DependentUpon>ClassManagementMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\ConfirmationForm.cs">
+    <Compile Include="ConfirmationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\ConfirmationForm.Designer.cs">
+    <Compile Include="ConfirmationForm.Designer.cs">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\ErrorForm.cs">
+    <Compile Include="ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\ErrorForm.Designer.cs">
+    <Compile Include="ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\LoginForm.cs">
+    <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\LoginForm.Designer.cs">
+    <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\IndependentPracticeMenu.cs">
+    <Compile Include="IndependentPracticeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\IndependentPracticeMenu.Designer.cs">
+    <Compile Include="IndependentPracticeMenu.Designer.cs">
       <DependentUpon>IndependentPracticeMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\InstantFeedbackForm.cs">
+    <Compile Include="InstantFeedbackForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\InstantFeedbackForm.Designer.cs">
+    <Compile Include="InstantFeedbackForm.Designer.cs">
       <DependentUpon>InstantFeedbackForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Include="nea ui testing\Program.cs" />
-    <Compile Include="nea ui testing\Properties\AssemblyInfo.cs" />
-    <Compile Include="nea ui testing\Properties\Resources.Designer.cs" />
-    <Compile Include="nea ui testing\Properties\Settings.Designer.cs" />
-    <Compile Include="nea ui testing\QuestionAttemptMenu.cs">
+    <Compile Include="nea_old\obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="nea_old\Properties\AssemblyInfo.cs" />
+    <Compile Include="nea_old\Properties\Resources.Designer.cs" />
+    <Compile Include="nea_old\Properties\Settings.Designer.cs" />
+    <Compile Include="QuestionAttemptMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\QuestionAttemptMenu.Designer.cs">
+    <Compile Include="QuestionAttemptMenu.Designer.cs">
       <DependentUpon>QuestionAttemptMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\QuestionEditor.cs">
+    <Compile Include="QuestionEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\QuestionEditor.Designer.cs">
+    <Compile Include="QuestionEditor.Designer.cs">
       <DependentUpon>QuestionEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\QuestionManagement.cs">
+    <Compile Include="QuestionManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\QuestionManagement.Designer.cs">
+    <Compile Include="QuestionManagement.Designer.cs">
       <DependentUpon>QuestionManagement.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\StudentAssignmentMenu.cs">
+    <Compile Include="StudentAssignmentMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\StudentAssignmentMenu.Designer.cs">
+    <Compile Include="StudentAssignmentMenu.Designer.cs">
       <DependentUpon>StudentAssignmentMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\ClassCreator.cs">
+    <Compile Include="ClassCreator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\ClassCreator.Designer.cs">
+    <Compile Include="ClassCreator.Designer.cs">
       <DependentUpon>ClassCreator.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\TeacherDashboard.cs">
+    <Compile Include="TeacherDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\TeacherDashboard.Designer.cs">
+    <Compile Include="TeacherDashboard.Designer.cs">
       <DependentUpon>TeacherDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\StudentManagementMenu.cs">
+    <Compile Include="StudentManagementMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\StudentManagementMenu.Designer.cs">
+    <Compile Include="StudentManagementMenu.Designer.cs">
       <DependentUpon>StudentManagementMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\StudentQuestionHistory.cs">
+    <Compile Include="StudentQuestionHistory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\StudentQuestionHistory.Designer.cs">
+    <Compile Include="StudentQuestionHistory.Designer.cs">
       <DependentUpon>StudentQuestionHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="nea ui testing\TeacherOverview.cs">
+    <Compile Include="TeacherOverview.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="nea ui testing\TeacherOverview.Designer.cs">
+    <Compile Include="TeacherOverview.Designer.cs">
       <DependentUpon>TeacherOverview.cs</DependentUpon>
     </Compile>
     <Compile Include="NewsApiHandling.cs" />
@@ -452,78 +451,78 @@
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="nea ui testing\AddQToAssignment.resx">
+    <EmbeddedResource Include="AddQToAssignment.resx">
       <DependentUpon>AddQToAssignment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\AddUserToClass.resx">
+    <EmbeddedResource Include="AddUserToClass.resx">
       <DependentUpon>AddUserToClass.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\AssignmentMenu.resx">
+    <EmbeddedResource Include="AssignmentMenu.resx">
       <DependentUpon>AssignmentMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\ClassManagementMenu.resx">
+    <EmbeddedResource Include="ClassManagementMenu.resx">
       <DependentUpon>ClassManagementMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\ConfirmationForm.resx">
+    <EmbeddedResource Include="ConfirmationForm.resx">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\ErrorForm.resx">
+    <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\LoginForm.resx">
+    <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\IndependentPracticeMenu.resx">
+    <EmbeddedResource Include="IndependentPracticeMenu.resx">
       <DependentUpon>IndependentPracticeMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\InstantFeedbackForm.resx">
+    <EmbeddedResource Include="InstantFeedbackForm.resx">
       <DependentUpon>InstantFeedbackForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.AddQToAssignment.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.AddStudentToClass.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.AssignmentMenu.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.ClassManagementMenu.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.ConfirmationForm.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.ErrorForm.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.Form1.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.IndependentPracticeMenu.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.InstantFeedbackForm.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.Properties.Resources.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.QuestionAttemptMenu.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.QuestionEitor.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.QuestionManagement.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.StudentAssignmentMenu.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.StudentCreator.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.StudentDashboard.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.StudentManagementMenu.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.StudentQuestionHistory.resources" />
-    <EmbeddedResource Include="nea ui testing\obj\Debug\nea_ui_testing.TeacherOverview.resources" />
-    <EmbeddedResource Include="nea ui testing\Properties\Resources.resx" />
-    <EmbeddedResource Include="nea ui testing\QuestionAttemptMenu.resx">
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.AddQToAssignment.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.AddStudentToClass.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.AssignmentMenu.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.ClassManagementMenu.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.ConfirmationForm.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.ErrorForm.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.Form1.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.IndependentPracticeMenu.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.InstantFeedbackForm.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.Properties.Resources.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.QuestionAttemptMenu.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.QuestionEitor.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.QuestionManagement.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.StudentAssignmentMenu.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.StudentCreator.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.StudentDashboard.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.StudentManagementMenu.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.StudentQuestionHistory.resources" />
+    <EmbeddedResource Include="nea_old\obj\Debug\nea_ui_testing.TeacherOverview.resources" />
+    <EmbeddedResource Include="nea_old\Properties\Resources.resx" />
+    <EmbeddedResource Include="QuestionAttemptMenu.resx">
       <DependentUpon>QuestionAttemptMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\QuestionEditor.resx">
+    <EmbeddedResource Include="QuestionEditor.resx">
       <DependentUpon>QuestionEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\QuestionManagement.resx">
+    <EmbeddedResource Include="QuestionManagement.resx">
       <DependentUpon>QuestionManagement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\StudentAssignmentMenu.resx">
+    <EmbeddedResource Include="StudentAssignmentMenu.resx">
       <DependentUpon>StudentAssignmentMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\ClassCreator.resx">
+    <EmbeddedResource Include="ClassCreator.resx">
       <DependentUpon>ClassCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\TeacherDashboard.resx">
+    <EmbeddedResource Include="TeacherDashboard.resx">
       <DependentUpon>TeacherDashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\StudentManagementMenu.resx">
+    <EmbeddedResource Include="StudentManagementMenu.resx">
       <DependentUpon>StudentManagementMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\StudentQuestionHistory.resx">
+    <EmbeddedResource Include="StudentQuestionHistory.resx">
       <DependentUpon>StudentQuestionHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="nea ui testing\TeacherOverview.resx">
+    <EmbeddedResource Include="TeacherOverview.resx">
       <DependentUpon>TeacherOverview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PasswordResetMenu.resx">
@@ -553,16 +552,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
-    <Content Include="nea ui testing\bin\Debug\nea ui testing.exe" />
-    <Content Include="nea ui testing\bin\Debug\nea ui testing.pdb" />
-    <Content Include="nea ui testing\obj\Debug\nea ui testing.csproj.FileListAbsolute.txt" />
-    <Content Include="nea ui testing\obj\Debug\nea ui testing.exe" />
-    <Content Include="nea ui testing\obj\Debug\nea ui testing.pdb" />
+    <Content Include="nea_old\bin\Debug\nea ui testing.exe" />
+    <Content Include="nea_old\bin\Debug\nea ui testing.pdb" />
+    <Content Include="nea_old\obj\Debug\nea ui testing.csproj.FileListAbsolute.txt" />
+    <Content Include="nea_old\obj\Debug\nea ui testing.exe" />
+    <Content Include="nea_old\obj\Debug\nea ui testing.pdb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\nea prototype full\v17\" />
-    <Folder Include="nea ui testing\bin\Release\" />
-    <Folder Include="nea ui testing\obj\Debug\TempPE\" />
+    <Folder Include="nea_old\bin\Release\" />
+    <Folder Include="nea_old\obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

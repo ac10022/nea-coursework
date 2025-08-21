@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     enum _QuestionType
     {

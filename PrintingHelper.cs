@@ -10,7 +10,7 @@ using ListExtensionMethods;
 using Word = Microsoft.Office.Interop.Word;
 using System.Web.Caching;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     /// <summary>
     /// A class used to print out questions: i.e. fetching data from questions, processing this and converting it into a printable word document.

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     /// <summary>
     /// A form through which teachers can manage and modify the SOW for each of their classes.

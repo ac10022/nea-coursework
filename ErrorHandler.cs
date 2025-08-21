@@ -1,11 +1,11 @@
-﻿using nea_ui_testing;
+﻿using nea_ui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     // class for cleaner exception handling, if an exception does not crash the program, it will be displayed in the error box instead
     internal class ErrorHandler

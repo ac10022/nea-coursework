@@ -1,4 +1,4 @@
-﻿namespace nea_prototype_full
+﻿namespace nea_backend
 {
     partial class StudentCreator
     {

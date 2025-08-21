@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     public enum _UserType
     {

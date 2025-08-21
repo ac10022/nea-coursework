@@ -9,9 +9,9 @@ using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Data.Common;
 using System.Reflection;
-using nea_ui_testing;
+using nea_ui;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     internal class DatabaseHelper
     {

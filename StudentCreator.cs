@@ -1,4 +1,4 @@
-﻿using nea_ui_testing;
+﻿using nea_ui;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     /// <summary>
     /// A form through which teachers can input the relevant data to create/modify a student.

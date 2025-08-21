@@ -1,4 +1,4 @@
-﻿using nea_ui_testing;
+﻿using nea_ui;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     /// <summary>
     /// A form to act as the homepage for students: students can view their details and go to the other parts of the program

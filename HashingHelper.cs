@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     internal class HashingHelper
     {

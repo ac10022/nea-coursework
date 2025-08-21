@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     /// <summary>
     /// A form through which the user can reset their password, by recieving an email and inputting a one-time code.

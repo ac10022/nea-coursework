@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace nea_prototype_full
+namespace nea_backend
 {
     public enum _Topic
     {
